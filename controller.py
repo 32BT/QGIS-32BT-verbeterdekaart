@@ -7,23 +7,21 @@ from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtWidgets import *
 from qgis.PyQt.QtGui import *
 
-from .canvas import MapCanvas
 from .settings import Settings
+from .mapcanvas import MapCanvas
 
 ################################################################################
-### Plugin
+### Controller
 ################################################################################
 
-class Plugin:
+class Controller:
 
     def __init__(self, iface):
         self._iface = iface
-
-    def initGui(self):
-        self._mapCanvas = MapCanvas(self._iface)
+        self._mapCanvas = MapCanvas(self._iface.mapCanvas())
         self._mapCanvas.connectMenuHandler(self.prepareContextMenu)
 
-    def unload(self):
+    def __del__(self):
         self._mapCanvas.disconnectMenuHandler(self.prepareContextMenu)
         self._mapCanvas = None
 
@@ -82,7 +80,8 @@ class Plugin:
     # Action 2: Open verbeterdekaart in default webbrowser
     def startBrowser(self, mapPoint):
         url = self._getURL(mapPoint)
-        webbrowser.open(url)
+        QDesktopServices.openUrl(QUrl(url))
+        #webbrowser.open(url)
 
     ########################################################################
     ### verbeterdekaart URL

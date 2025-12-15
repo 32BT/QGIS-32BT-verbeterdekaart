@@ -12,9 +12,8 @@ readability and ease of access.
 
 class MapCanvas:
 
-    def __init__(self, iface):
-        self._iface = iface
-        self._mapCanvas = iface.mapCanvas()
+    def __init__(self, mapCanvas):
+        self._mapCanvas = mapCanvas
 
     ########################################################################
 
