@@ -41,8 +41,11 @@ class Controller:
     _WEB_ACTION_NAME = "Melding aanmaken..."
 
     def prepareContextMenu(self, menu: QMenu, event: QgsMapMouseEvent):
-        # Translate mousePoint to mapPoint
-        mapPoint = self._mapCanvas.getMapPointForEventPosition(event.pos())
+        if event:
+            # Translate mousePoint to mapPoint
+            mapPoint = self._mapCanvas.getMapPointForEventPosition(event.pos())
+        else:
+            mapPoint = self._mapCanvas.getCenter()
 
         # Add context menu
         menu = menu.addMenu(self._MENU_TITLE)
@@ -72,13 +75,13 @@ class Controller:
         Settings.adjustSettings(parent)
 
     # Action 1: Copy location
-    def saveToClipboard(self, mapPoint):
+    def saveToClipboard(self, mapPoint=None):
         url = self._getURL(mapPoint)
         clipBoard = QgsApplication.clipboard()
         clipBoard.setText(url)
 
     # Action 2: Open verbeterdekaart in default webbrowser
-    def startBrowser(self, mapPoint):
+    def startBrowser(self, mapPoint=None):
         url = self._getURL(mapPoint)
         QDesktopServices.openUrl(QUrl(url))
         #webbrowser.open(url)
