@@ -10,6 +10,10 @@ from qgis.PyQt.QtGui import *
 from .settings import Settings
 from .mapcanvas import MapCanvas
 
+import sys
+_MOD = sys.modules.get(__name__.split('.')[0])
+_STR = _MOD.LANGUAGE.STR
+
 ################################################################################
 ### Controller
 ################################################################################
@@ -35,10 +39,10 @@ class Controller:
 
     This will add a menuitem "verbeterdekaart" with 3 submenus.
     '''
-    _MENU_TITLE = "verbeterdekaart"
-    _PRF_ACTION_NAME = "Voorkeuren..."
-    _URL_ACTION_NAME = "Kopieer locatie"
-    _WEB_ACTION_NAME = "Melding aanmaken..."
+    _MENU_TITLE = _STR("verbeterdekaart")
+    _PRF_ACTION_NAME = _STR("Settings...")
+    _URL_ACTION_NAME = _STR("Copy URL to clipboard")
+    _WEB_ACTION_NAME = _STR("Open URL in browser...")
 
     def prepareContextMenu(self, menu: QMenu, event: QgsMapMouseEvent):
         if event:
