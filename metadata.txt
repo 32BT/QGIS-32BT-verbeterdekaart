@@ -1,11 +1,10 @@
 [general]
-name=Verbeter de kaart
+name=32BT Verbeter de kaart
 description=Open verbeterdekaart.nl vanuit QGIS
 about=Verbeter de kaart is een  QGIS plugin om vanuit de QGIS applicatie eenvoudig de verbeterdekaart.nl website te openen. Meldingen kunnen aangemaakt worden via je standaard browser of middels een url. Klik met de rechtermuisknop op je QGIS kaart en kies de gewenste optie uit het verbeterdekaart submenu.
 version=1.0
 qgisMinimumVersion=3.0
 author=32BT
-email=bgt@kadaster.nl
 homepage=https://verbeterdekaart.nl
 repository=https://github.com/32bt/verbeterdekaart
 tracker=https://github.com/32bt/verbeterdekaart/issues
