@@ -1,0 +1,4 @@
+
+AUTHOR = '32bt'
+MODULE = 'vdk'
+PREFIX = AUTHOR+'.'+MODULE+'.'

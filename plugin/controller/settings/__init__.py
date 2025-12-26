@@ -46,6 +46,10 @@ class Settings:
 
     A guestimate can be retreived from the QGIS python console via:
         QgsApplication.instance().primaryScreen().physicalDotsPerInch() / 96
+
+    Note that for Linux the backend seems to make a differences:
+    The Wayland backend has a 1.5 scalefactor, where the X11 backend does not.
+    This needs further investigation.
     '''
     @classmethod
     def compensateScale(cls, s):
@@ -56,5 +60,3 @@ class Settings:
         value = cls.loadScale()
         value = SettingsDialog(parent).askScale(value)
         if value: return cls.saveScale(value)
-
-
