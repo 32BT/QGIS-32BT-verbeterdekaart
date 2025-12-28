@@ -10,9 +10,18 @@ from qgis.PyQt.QtGui import *
 from .settings import Settings
 from .mapcanvas import MapCanvas
 
+################################################################################
+### Contextmenu
+################################################################################
+
 import sys
-_MOD = sys.modules.get(__name__.split('.')[0])
-_STR = _MOD.LANGUAGE.STR
+_MODULE = sys.modules.get(__name__.split('.')[0])
+
+_LABELS = _MODULE.LANGUAGE.LABELS({
+    "MENU_TITLE": "verbeterdekaart",
+    "MENU_ITEM1": "Voorkeuren...",
+    "MENU_ITEM2": "Kopieer locatie",
+    "MENU_ITEM3": "Melding aanmaken..."})
 
 ################################################################################
 ### Controller
@@ -39,10 +48,10 @@ class Controller:
 
     This will add a menuitem "verbeterdekaart" with 3 submenus.
     '''
-    _MENU_TITLE = _STR("verbeterdekaart")
-    _PRF_ACTION_NAME = _STR("Settings...")
-    _URL_ACTION_NAME = _STR("Copy URL to clipboard")
-    _WEB_ACTION_NAME = _STR("Open URL in browser...")
+    _MENU_TITLE = _LABELS.MENU_TITLE
+    _ACTION_NAME1 = _LABELS.MENU_ITEM1
+    _ACTION_NAME2 = _LABELS.MENU_ITEM2
+    _ACTION_NAME3 = _LABELS.MENU_ITEM3
 
     def prepareContextMenu(self, menu: QMenu, event: QgsMapMouseEvent):
         if event:
@@ -53,11 +62,11 @@ class Controller:
 
         # Add context menu
         menu = menu.addMenu(self._MENU_TITLE)
-        action = menu.addAction(self._PRF_ACTION_NAME)
+        action = menu.addAction(self._ACTION_NAME1)
         action.triggered.connect(self.adjustSettings)
-        action = menu.addAction(self._URL_ACTION_NAME)
+        action = menu.addAction(self._ACTION_NAME2)
         action.triggered.connect(lambda *args: self.saveToClipboard(mapPoint))
-        action = menu.addAction(self._WEB_ACTION_NAME)
+        action = menu.addAction(self._ACTION_NAME3)
         action.triggered.connect(lambda *args: self.startBrowser(mapPoint))
 
     ########################################################################

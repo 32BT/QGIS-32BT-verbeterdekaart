@@ -2,6 +2,27 @@
 from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtWidgets import *
 
+################################################################################
+### Labels
+################################################################################
+
+import sys
+_MODULE = sys.modules.get(__name__.split('.')[0])
+
+_LABELS = _MODULE.LANGUAGE.LABELS({
+    "SETTINGSDIALOG_TITLE":
+        "Voorkeuren",
+
+    "SETTINGSDIALOG_LABEL1":
+        "Voer een percentage in om de schaal van\n"+
+        "verbeterdekaart aan te passen.",
+
+    "SETTINGSDIALOG_LABEL2":
+        "Schalingspercentage:"})
+
+################################################################################
+### Dialog
+################################################################################
 
 class Dialog(QDialog):
 
@@ -20,14 +41,10 @@ class Dialog(QDialog):
     def __init__(self, parent):
         super().__init__(parent=parent)
 
-        title = "Voorkeuren"
-        label = "Voer een percentage in om de schaal van\n"
-        label += "verbeterdekaart aan te passen."
-
         # setup dialog box items
-        self.setWindowTitle(title)
-        self._label = QLabel(label)
-        self._scaleLabel = QLabel("Schalingspercentage:")
+        self.setWindowTitle(_LABELS.SETTINGSDIALOG_TITLE)
+        self._label = QLabel(_LABELS.SETTINGSDIALOG_LABEL1)
+        self._scaleLabel = QLabel(_LABELS.SETTINGSDIALOG_LABEL2)
         self._scaleValue = QSpinBox()
         self._scaleValue.setMinimum(1)
         self._scaleValue.setMaximum(500)

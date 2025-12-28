@@ -47,7 +47,7 @@ class Settings:
     A guestimate can be retreived from the QGIS python console via:
         QgsApplication.instance().primaryScreen().physicalDotsPerInch() / 96
 
-    Note that for Linux the backend seems to make a differences:
+    Note that for Linux the backend seems to make a difference:
     The Wayland backend has a 1.5 scalefactor, where the X11 backend does not.
     This needs further investigation.
     '''
