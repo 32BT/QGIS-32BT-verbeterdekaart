@@ -2,11 +2,19 @@
 
 from qgis.core import QgsApplication
 
-import os, json
 
 ################################################################################
 ### Labels
 ################################################################################
+'''
+Following will all return the same result:
+
+    LABELS.CUSTOM_LABEL
+    LABELS("CUSTOM_LABEL")
+    LABELS["CUSTOM_LABEL"]
+    LABELS.get("CUSTOM_LABEL")
+'''
+import os, json
 
 class LABELS(dict):
     def __init__(self, *args, **kwargs):
@@ -14,13 +22,19 @@ class LABELS(dict):
         super().update(self.loadLanguage() or {})
 
     def __call__(self, k):
-        return self.__getattr__(k) or k or ""
+        return self.get(k)
 
     def __getattr__(self, k):
-        v = self.get(k)
+        return self.get(k)
+
+    def __getitem__(self, k):
+        return self.get(k)
+
+    def get(self, k):
+        v = super().get(k)
         if isinstance(v, list):
             v = '\n'.join(v)
-        return v or ""
+        return v or k or ""
 
     @classmethod
     def loadLanguage(cls, lang=None):
