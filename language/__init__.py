@@ -5,13 +5,16 @@ from qgis.core import QgsApplication
 import os, json
 
 ################################################################################
-### Library
+### Labels
 ################################################################################
 
 class LABELS(dict):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         super().update(self.loadLanguage() or {})
+
+    def __call__(self, k):
+        return self.__getattr__(k) or k or ""
 
     def __getattr__(self, k):
         v = self.get(k)

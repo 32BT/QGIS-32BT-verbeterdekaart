@@ -1,0 +1,20 @@
+{
+    "MENU_ITEM1":
+    "Voorkeuren...",
+
+    "MENU_ITEM2":
+    "Kopieer locatie",
+
+    "MENU_ITEM3":
+    "Melding aanmaken...",
+
+    "SETTINGSDIALOG_TITLE":
+    "Voorkeuren",
+
+    "SETTINGSDIALOG_LABEL1":
+    ["Voer een percentage in om de schaal van",
+    "verbeterdekaart aan te passen."],
+
+    "SETTINGSDIALOG_LABEL2":
+    "Schalingspercentage:"
+}

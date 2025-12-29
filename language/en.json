@@ -1,0 +1,20 @@
+{
+    "MENU_ITEM1":
+    "Settings...",
+
+    "MENU_ITEM2":
+    "Copy URL to clipboard",
+
+    "MENU_ITEM3":
+    "Open URL in browser...",
+
+    "SETTINGSDIALOG_TITLE":
+    "Settings",
+
+    "SETTINGSDIALOG_LABEL1":
+    ["Enter a percentage to adjust the scale of",
+    "the verbeterdekaart representation."],
+
+    "SETTINGSDIALOG_LABEL2":
+    "Adjust scale:"
+}
