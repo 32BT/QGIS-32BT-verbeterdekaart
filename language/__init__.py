@@ -7,12 +7,16 @@ from qgis.core import QgsApplication
 ### Labels
 ################################################################################
 '''
-Following will all return the same result:
+Given an instance of LABELS:
 
-    LABELS.CUSTOM_LABEL
-    LABELS("CUSTOM_LABEL")
-    LABELS["CUSTOM_LABEL"]
-    LABELS.get("CUSTOM_LABEL")
+    _LABELS = LABELS(...)
+
+Then following will all return the same result:
+
+    _LABELS.CUSTOM_LABEL
+    _LABELS("CUSTOM_LABEL")
+    _LABELS["CUSTOM_LABEL"]
+    _LABELS.get("CUSTOM_LABEL")
 '''
 import os, json
 

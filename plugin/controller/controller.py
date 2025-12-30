@@ -13,7 +13,8 @@ from .mapcanvas import MapCanvas
 ################################################################################
 ### Contextmenu
 ################################################################################
-
+'''
+'''
 import sys
 _MODULE = sys.modules.get(__name__.split('.')[0])
 
@@ -42,17 +43,14 @@ class Controller:
     ### Contextmenu preparation
     ########################################################################
     '''
-    The process is started by right-clicking the mapCanvas. This presents
-    a contextmenu. Just before the contextmenu will be shown, we will receive
-    a signal: contextMenuAboutToShow. That signal is handled here.
+    The process is started by right-clicking the mapCanvas. This will present
+    a contextmenu. Just before the contextmenu will be shown, a signal will be
+    emitted: contextMenuAboutToShow. This signal allows us to append the menu
+    with our actions.
 
-    This will add a menuitem "verbeterdekaart" with 3 submenus.
+    The menu starts out empty each time the signal is triggered.
+    Following will add a menuitem "verbeterdekaart" with 3 submenus.
     '''
-    _MENU_TITLE = _LABELS.MENU_TITLE
-    _ACTION_NAME1 = _LABELS.MENU_ITEM1
-    _ACTION_NAME2 = _LABELS.MENU_ITEM2
-    _ACTION_NAME3 = _LABELS.MENU_ITEM3
-
     def prepareContextMenu(self, menu: QMenu, event: QgsMapMouseEvent):
         if event:
             # Translate mousePoint to mapPoint
@@ -61,12 +59,12 @@ class Controller:
             mapPoint = self._mapCanvas.getCenter()
 
         # Add context menu
-        menu = menu.addMenu(self._MENU_TITLE)
-        action = menu.addAction(self._ACTION_NAME1)
+        menu = menu.addMenu(_LABELS.MENU_TITLE)
+        action = menu.addAction(_LABELS.MENU_ITEM1)
         action.triggered.connect(self.adjustSettings)
-        action = menu.addAction(self._ACTION_NAME2)
+        action = menu.addAction(_LABELS.MENU_ITEM2)
         action.triggered.connect(lambda *args: self.saveToClipboard(mapPoint))
-        action = menu.addAction(self._ACTION_NAME3)
+        action = menu.addAction(_LABELS.MENU_ITEM3)
         action.triggered.connect(lambda *args: self.startBrowser(mapPoint))
 
     ########################################################################
