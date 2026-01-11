@@ -25,7 +25,7 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
     "MENU_TITLE": "verbeterdekaart",
     "MENU_ITEM1": "Voorkeuren...",
     "MENU_ITEM2": "Kopieer locatie",
-    "MENU_ITEM3": "Open webpagina"})
+    "MENU_ITEM3": "Open verbeterdekaart.nl"})
 
 ################################################################################
 ### VDKController
@@ -149,6 +149,11 @@ class Controller:
     ### verbeterdekaart URL
     ########################################################################
     '''
+    TODO:
+    https://bagviewer.kadaster.nl/?
+    theme=BGT+Achtergrond&
+    geometry.x=203062.302&
+    geometry.y=511784.386&zoomlevel=13.760
     '''
     _TARGET_CRS = QgsCoordinateReferenceSystem('EPSG:28992')
 
