@@ -81,7 +81,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="codeFilter"/>
+      <widget class="QLineEdit" name="filterString"/>
      </item>
      <item>
       <spacer name="horizontalSpacer_2">

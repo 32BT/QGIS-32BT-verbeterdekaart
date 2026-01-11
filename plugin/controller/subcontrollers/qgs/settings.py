@@ -19,7 +19,7 @@ def os_path_shrinkuser(path):
 
 import sys
 _MODULE = sys.modules.get(__name__.split('.')[0])
-_AUTHOR = _MODULE.identity.AUTHOR
+_HEADER = _MODULE.identity.HEADER
 _MODULE = _MODULE.identity.MODULE
 
 from qgis.core import QgsSettings
@@ -40,7 +40,7 @@ class Settings(QgsSettings):
     def __enter__(self):
         # start with group '32bt' which will create a section [32bt]
         # (add section=self.Plugins if it needs to go in section [plugins])
-        self.beginGroup(_AUTHOR)
+        self.beginGroup(_HEADER)
         self.beginGroup(_MODULE)
         return self
 

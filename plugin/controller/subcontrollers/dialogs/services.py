@@ -74,15 +74,16 @@ class Dialog(QDialog, _form()):
 
     def loadSettings(self):
         service = Settings.load_group('service')
-        serviceType = service.get('type') or 'BGT'
-        codeFilter = service.get('filter') or ''
-        self.serviceCombo.setCurrentText(serviceType)
-        self.codeFilter.setText(codeFilter)
+        _type = service.get('type') or 'BGT'
+        _code = service.get('code') or ''
+        self.serviceCombo.setCurrentText(_type)
+        self.filterString.setText(_code)
 
     def saveSettings(self):
-        serviceType = self.serviceCombo.currentText()
-        codeFilter = self.codeFilter.text()
-        service['type'] = serviceType
-        service['filter'] = codeFilter
+        _type = self.serviceCombo.currentText()
+        _code = self.filterString.text()
+        service = dict(
+            type = _type,
+            code = _code)
         Settings.save_group('service', service)
-        return serviceType, codeFilter
+        return _type, _code
