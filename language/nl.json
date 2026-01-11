@@ -1,4 +1,7 @@
 {
+    "TOOLBAR_TITLE":
+    "Werkbalk verbeterdekaart",
+
     "MENU_ITEM1":
     "Voorkeuren...",
 
@@ -6,7 +9,7 @@
     "Kopieer locatie",
 
     "MENU_ITEM3":
-    "Melding aanmaken...",
+    "Open webpagina",
 
     "SETTINGSDIALOG_TITLE":
     "Voorkeuren",

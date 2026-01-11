@@ -4,10 +4,12 @@ description=Open verbeterdekaart.nl vanuit QGIS
 about=The verbeterdekaart.nl website allows users to submit corrections for digital maps of the Netherlands. This plugin simplifies the process by opening the verbeterdekaart.nl website directly from the QGIS application, showing the same location and scale as the current QGIS mapcanvas. Click the right mousebutton anywhere in a map of the Netherlands, and select the corresponding menuitem from the contextmenu.
 
     Verbeter de kaart is een  QGIS plugin om vanuit de QGIS applicatie eenvoudig de verbeterdekaart.nl website te openen. Meldingen kunnen aangemaakt worden via je standaard browser of middels een url. Klik met de rechtermuisknop op je QGIS kaart en kies de gewenste optie uit het verbeterdekaart submenu.
-version=1.0
+version=1.1
 qgisMinimumVersion=3.0
 author=32BT
 email=32beat(at)gmail.com
 homepage=https://verbeterdekaart.nl
 repository=https://github.com/32bt/QGIS-32BT-verbeterdekaart
 tracker=https://github.com/32bt/QGIS-32BT-verbeterdekaart/issues
+changelog=version 1.1
+    added WFS layer, some spiffy icons, and a toolbar.

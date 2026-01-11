@@ -6,6 +6,7 @@
 '''
 '''
 
+from .controller import ToolBar
 from .controller import Controller
 
 class Plugin:
@@ -13,9 +14,11 @@ class Plugin:
         self._iface = iface
 
     def initGui(self):
-        self._controller = Controller(self._iface)
+        self._toolBar = ToolBar(self._iface)
+        self._controller = Controller(self._iface, self._toolBar)
 
     def unload(self):
         self._controller = None
+        self._toolBar = None
 
 ################################################################################

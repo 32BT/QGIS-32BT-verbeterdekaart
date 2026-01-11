@@ -1,4 +1,7 @@
 {
+    "TOOLBAR_TITLE":
+    "verbeterdekaart Toolbar",
+
     "MENU_ITEM1":
     "Settings...",
 
@@ -6,7 +9,7 @@
     "Copy URL to clipboard",
 
     "MENU_ITEM3":
-    "Open URL in browser...",
+    "Open URL in browser",
 
     "SETTINGSDIALOG_TITLE":
     "Settings",
