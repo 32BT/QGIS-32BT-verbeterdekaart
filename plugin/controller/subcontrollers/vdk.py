@@ -9,7 +9,8 @@ from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtWidgets import *
 from qgis.PyQt.QtGui import *
 
-from ..settings import Settings
+from .dialogs import SettingsDialog
+from .qgs.settings import Settings
 from .qgs.mapcanvas import MapCanvas
 
 ################################################################################
@@ -31,6 +32,18 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
 ################################################################################
 
 class Controller:
+    ########################################################################
+    ### Voorkeuren
+    ########################################################################
+    class SETTINGS:
+        GROUP = 'voorkeuren'
+        SCALE = 'schalingspercentage'
+
+    def _loadSettings(self):
+        return Settings.load_group(self.SETTINGS.GROUP)
+    def _saveSettings(self, settings):
+        Settings.save_group(self.SETTINGS.GROUP, settings)
+    ########################################################################
 
     def __init__(self, iface, toolBar):
         self._iface = iface
@@ -46,6 +59,9 @@ class Controller:
         action.setIcon(self._loadIcon())
         action.setObjectName('vdk:startBrowser')
         toolBar.addAction(action)
+
+        settings = self._loadSettings()
+        self._scaleValue = int(settings.get(self.SETTINGS.SCALE) or 100)
 
 
     def __del__(self):
@@ -109,7 +125,11 @@ class Controller:
     # Action 1: adjust preferences
     def adjustSettings(self):
         parent = self._iface.mainWindow()
-        Settings.adjustSettings(parent)
+        settings = self._loadSettings()
+        result = SettingsDialog(parent).askInput(settings)
+        if result:
+            self._saveSettings(result)
+            self._scaleValue = result.get(self.SETTINGS.SCALE) or 100
 
     # Action 2: Copy location
     def saveToClipboard(self):
@@ -140,7 +160,7 @@ class Controller:
             scale = self._mapCanvas.getScale()
 
         # Compensate scalefactor for webbrowser-scale differences
-        scale = Settings.compensateScale(scale)
+        scale = scale * 100. / self._scaleValue
 
         # Convert location & scale to verbeterkaart url
         # Zoomlevel starts at 3 for scale of 1536000,
@@ -156,6 +176,5 @@ class Controller:
             'zoomlevel={:.03f}'.format(s)))
         return url
 
-    ########################################################################
 
 ################################################################################
