@@ -1,7 +1,5 @@
 
 
-
-
 import sys
 _MODULE = sys.modules.get(__name__.split('.')[0])
 _IDENTITY = _MODULE.IDENTITY
@@ -31,7 +29,6 @@ from .subcontrollers import WFSController
 class Controller:
 
     def __init__(self, iface, toolBar):
-        self._iface = iface
         self._Wfs = WFSController(iface, toolBar)
         self._vdk = VDKController(iface, toolBar)
 

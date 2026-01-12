@@ -42,4 +42,18 @@ class Controller:
             url = PDOK.WFS.get_url(*result)
             print(url)
             layer = QgsVectorLayer(url, serviceType+' Terugmeldingen', 'WFS')
+            self.setStyle(layer, 'BGT')
             QgsProject.instance().addMapLayer(layer)
+
+
+    def setStyle(self, layer, name='BGT'):
+        path = os.path.split(__file__)[0]
+        path = os.path.join(path, 'qml')
+        path = os.path.join(path, name.lower()+'.qml')
+        if os.path.exists(path):
+            layer.loadNamedStyle(path,
+                flags=Qgis.LoadStyleFlag.IgnoreMissingStyleErrors)
+        else:
+            symbol = layer.renderer().symbol()
+            symbol.setColor(QColor.fromRgb(255,255,0))
+
