@@ -13,6 +13,8 @@ from .dialogs import SettingsDialog
 from .qgs.settings import Settings
 from .qgs.mapcanvas import MapCanvas
 
+from . import pdok as PDOK
+
 ################################################################################
 ### Contextmenu
 ################################################################################
@@ -57,7 +59,7 @@ class Controller:
 
         action = self._menu.actions()[2]
         action.setIcon(self._loadIcon())
-        action.setObjectName('vdk:startBrowser')
+        action.setObjectName('vdk:openURL')
         toolBar.addAction(action)
 
         settings = self._loadSettings()
@@ -103,7 +105,7 @@ class Controller:
     def prepareContextMenu(self, menu, event):
         if len(menu.actions()) == 1:
             menu.addSeparator()
-        # Add to context menu
+        # Add submenu to context menu
         action = menu.addMenu(self._menu)
 
     ########################################################################
@@ -133,15 +135,13 @@ class Controller:
 
     # Action 2: Copy location
     def saveToClipboard(self):
-        mapPoint = None
-        url = self._getURL(mapPoint)
+        url = self._getURL()
         clipBoard = QgsApplication.clipboard()
         clipBoard.setText(url)
 
     # Action 3: Open verbeterdekaart in default webbrowser
     def startBrowser(self):
-        mapPoint = None
-        url = self._getURL(mapPoint)
+        url = self._getURL()
         QDesktopServices.openUrl(QUrl(url))
         #webbrowser.open(url)
 
@@ -149,37 +149,19 @@ class Controller:
     ### verbeterdekaart URL
     ########################################################################
     '''
-    TODO:
-    https://bagviewer.kadaster.nl/?
-    theme=BGT+Achtergrond&
-    geometry.x=203062.302&
-    geometry.y=511784.386&zoomlevel=13.760
     '''
-    _TARGET_CRS = QgsCoordinateReferenceSystem('EPSG:28992')
-
-    def _getURL(self, location=None, scale=None):
+    def _getURL(self, service='BAG', point=None, scale=None):
         # Fetch default values if necessary
-        if location is None:
-            location = self._mapCanvas.getCenter()
-        if scale is None:
-            scale = self._mapCanvas.getScale()
+        if point is None: point = self._mapCanvas.getCenter()
+        if scale is None: scale = self._mapCanvas.getScale()
 
+        # Compensate for CRS if necessary
+        target_crs = PDOK.VDK.get_service_crs(service)
+        target_crs = QgsCoordinateReferenceSystem(target_crs)
+        point = self._mapCanvas.convertMapPoint(point, target_crs)
         # Compensate scalefactor for webbrowser-scale differences
         scale = scale * 100. / self._scaleValue
 
-        # Convert location & scale to verbeterkaart url
-        # Zoomlevel starts at 3 for scale of 1536000,
-        # each halving of scale adds one zoomlevel
-        p = self._mapCanvas.convertMapPoint(location, self._TARGET_CRS)
-        s = 3. + math.log2(1536000./scale)
-
-        # Create url with parameters
-        url = 'https://verbeterdekaart.nl/#?'
-        url += '&'.join((
-            'geometry.x={:.03f}'.format(p.x()),
-            'geometry.y={:.03f}'.format(p.y()),
-            'zoomlevel={:.03f}'.format(s)))
-        return url
-
+        return PDOK.VDK.get_service_url(service, point, scale)
 
 ################################################################################
