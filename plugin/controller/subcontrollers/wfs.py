@@ -3,6 +3,7 @@
 import os
 
 from qgis.PyQt.QtGui import *
+from qgis.PyQt.QtWidgets import *
 from qgis.core import *
 
 from .dialogs import ServicesDialog

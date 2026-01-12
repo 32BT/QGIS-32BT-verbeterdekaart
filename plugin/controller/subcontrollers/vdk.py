@@ -40,6 +40,8 @@ class Controller:
     class SETTINGS:
         GROUP = 'voorkeuren'
         SCALE = 'schalingspercentage'
+        SOURCE = 'bron'
+        TARGET = 'doel'
 
     def _loadSettings(self):
         return Settings.load_group(self.SETTINGS.GROUP)
@@ -60,15 +62,50 @@ class Controller:
         action = self._menu.actions()[2]
         action.setIcon(self._loadIcon())
         action.setObjectName('vdk:openURL')
-        toolBar.addAction(action)
 
-        settings = self._loadSettings()
+        self._optionsMenu = self.initOptionsMenu()
+        toolButton = QToolButton()
+        toolButton.setMenu(self._optionsMenu)
+        toolButton.setDefaultAction(action)
+        toolBar.addWidget(toolButton)
+
+        self._settings = settings = self._loadSettings()
         self._scaleValue = int(settings.get(self.SETTINGS.SCALE) or 100)
-
+        self._targetPage = settings.get(self.SETTINGS.TARGET) or 'BGT'
+        self.updateOptionsMenu()
 
     def __del__(self):
         self._mapCanvas.disconnectMenuHandler(self.prepareContextMenu)
         self._mapCanvas = None
+
+
+    ########################################################################
+    ### Options
+    ########################################################################
+
+    def initOptionsMenu(self):
+        menu = QMenu("TargetService")
+        menu.addAction('BAG')
+        menu.addAction('BGT')
+        menu.addAction('AERO')
+        menu.triggered.connect(self.setOption)
+        return menu
+
+    def setOption(self, action):
+        self._targetPage = action.text()
+        self._settings[self.SETTINGS.TARGET] = self._targetPage
+        self._saveSettings(self._settings)
+        self.updateOptionsMenu()
+
+    def updateOptionsMenu(self):
+        icon0 = QIcon()
+        icon1 = self._loadIcon('chk')
+        for action in self._optionsMenu.actions():
+            if action.text() != self._targetPage:
+                action.setIcon(icon0)
+            else:
+                action.setIcon(icon1)
+                self._optionsMenu.setDefaultAction(action)
 
     ########################################################################
     ### Submenu
@@ -135,13 +172,13 @@ class Controller:
 
     # Action 2: Copy location
     def saveToClipboard(self):
-        url = self._getURL()
+        url = self._getURL(self._targetPage)
         clipBoard = QgsApplication.clipboard()
         clipBoard.setText(url)
 
     # Action 3: Open verbeterdekaart in default webbrowser
     def startBrowser(self):
-        url = self._getURL()
+        url = self._getURL(self._targetPage)
         QDesktopServices.openUrl(QUrl(url))
         #webbrowser.open(url)
 

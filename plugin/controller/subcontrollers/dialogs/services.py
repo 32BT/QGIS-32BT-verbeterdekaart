@@ -6,18 +6,27 @@ from qgis.PyQt.QtGui import *
 from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtWidgets import QDialog
 
-
 from ..pdok import WFS
-from ..qgs.settings import Settings
 
 ################################################################################
+### Settings Definitions
+################################################################################
+'''
+QGIS.ini:
 
-import os
+[32bt.verbeterdekaart]
+vdk/services/selectie=BGT
+vdk/services/BGT/filter/code='K0001'
+'''
 
-def _form():
-    path, ext = os.path.splitext(__file__)
-    form, _ = uic.loadUiType(path+'.ui')
-    return form
+from ..qgs.settings import Settings
+
+class _SETTINGS:
+    NAME = 'services'
+    TYPE = 'selectie'
+    class FILTER:
+        NAME = 'filter'
+        CODE = 'code'
 
 ################################################################################
 ### Labels
@@ -46,6 +55,16 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
 _LABELS.SERVICEDIALOG_OWNERINFO = '\n'.join(_LABELS.SERVICEDIALOG_OWNERINFO)
 
 ################################################################################
+### .ui file
+################################################################################
+
+import os
+
+def _form():
+    path, ext = os.path.splitext(__file__)
+    return uic.loadUiType(path+'.ui')[0]
+
+################################################################################
 ### Dialog
 ################################################################################
 
@@ -62,28 +81,47 @@ class Dialog(QDialog, _form()):
         self.ownerLabel.setText(_LABELS.SERVICEDIALOG_OWNERLABEL)
 
         self.serviceCombo.addItems(list(WFS._URLS))
+        self.serviceCombo.currentTextChanged.connect(self.serviceChanged)
+
+        self._services = Settings.load_group(_SETTINGS.NAME) or {}
+
+
+    def serviceChanged(self, selected):
+        # Get service settings for selected service
+        services = self._services
+        service = services.get(selected) or {}
+        filters = service.get(_SETTINGS.FILTER.NAME) or {}
+        codestr = filters.get(_SETTINGS.FILTER.CODE) or ''
+        # Stuff UI controls
+        self.filterString.setText(codestr)
 
     ########################################################################
     ### Entrypoint
     ########################################################################
 
     def askInput(self):
-        self.loadSettings()
+        self.load()
         if self.exec():
-            return self.saveSettings()
+            return self.save()
 
-    def loadSettings(self):
-        service = Settings.load_group('service')
-        _type = service.get('type') or 'BGT'
-        _code = service.get('code') or ''
-        self.serviceCombo.setCurrentText(_type)
-        self.filterString.setText(_code)
+    def load(self):
+        services = self._services
+        selected = services.get(_SETTINGS.TYPE) or 'BGT'
+        self.serviceCombo.setCurrentText(selected)
+        self.serviceChanged(selected)
 
-    def saveSettings(self):
+    def save(self):
+        # Fetch UI controls
         _type = self.serviceCombo.currentText()
-        _code = self.filterString.text()
-        service = dict(
-            type = _type,
-            code = _code)
-        Settings.save_group('service', service)
+        _code = self.filterString.text() or None
+        # Update services settings
+        services = self._services
+        services[_SETTINGS.TYPE] = _type
+        service = services.get(_type) or {}
+        filters = service.get(_SETTINGS.FILTER.NAME) or {}
+        filters[_SETTINGS.FILTER.CODE] = _code
+        service[_SETTINGS.FILTER.NAME] = filters
+        services[_type] = service
+        print(services)
+        Settings.save_group(_SETTINGS.NAME, services)
         return _type, _code
