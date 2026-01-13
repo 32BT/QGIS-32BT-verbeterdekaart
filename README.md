@@ -80,4 +80,14 @@ Deze optie kopieert de huidige locatie en schaal als URL naar de clipboard in he
 Bij deze optie wordt de default browser geactiveerd met de verbeterdekaart URL voor de huidige QGIS locatie en schaal. In je browser kun je vervolgens een melding aanmaken volgens de stappen van de betreffende verbeterdekaart website.
 
 ## Werkmethodiek  
-<img width="549" height="254" alt="image" src="https://github.com/user-attachments/assets/3e35fa55-63dd-4914-a3c9-02340b40a6d3" />
+Voor bronhouders is het van belang om regelmatig te controleren of er binnengekomen meldingen zijn. Meldingen moeten binnen 5 werkdagen in onderzoek worden genomen, dus ten minste éénmaal per week is sterk aan te raden. Met de verbeterdekaart toolbar kun je deze klus snel en efficient uitvoeren:
+
+- Gebruik de "WFS" knop om een nieuwe laag aan te maken voor meldingen met de gewenste bronhoudercode.
+- Met de rechtermuisknop klik je vervolgens op de subcategorie "Nieuw". 
+- In het menu kies je dan de optie "Objecten selecteren".
+
+<img width="549" height="254" alt="image" src="https://github.com/user-attachments/assets/3e35fa55-63dd-4914-a3c9-02340b40a6d3" /><br/>
+
+Alle nieuw binnengekomen meldingen zijn nu geselecteerd. Met de **QGIS-32BT-Feature-Navigation-Toolbar** kun je vervolgens de selectie gemakkelijk één-voor-één langsgaan om de meldingen te beoordelen en te bepalen hoe ze verder verwerkt moeten worden.  
+
+<img width="832" height="286" alt="image" src="https://github.com/user-attachments/assets/6ca9b228-e0bb-4861-83e7-b3a693617c13" /><br/>
