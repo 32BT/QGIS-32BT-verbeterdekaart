@@ -25,8 +25,8 @@ class LABELS(dict):
         super().__init__(*args, **kwargs)
         super().update(self.loadLanguage() or {})
 
-    def __call__(self, k, joinChar=None):
-        return self.get(k, joinChar)
+    def __call__(self, k):
+        return self.get(k)
 
     def __getattr__(self, k):
         return self.get(k)
@@ -35,10 +35,7 @@ class LABELS(dict):
         return self.get(k)
 
     def get(self, k, joinChar=None):
-        v = super().get(k) or k or ""
-        if isinstance(v, list) and joinChar:
-            v = joinChar.join(v)
-        return v
+        return super().get(k) or k or ""
 
     @classmethod
     def loadLanguage(cls, lang=None):

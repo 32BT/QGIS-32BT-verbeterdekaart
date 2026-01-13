@@ -47,7 +47,7 @@ class Settings(QgsSettings):
     def __exit__(self, *args):
         self.endGroup()
         self.endGroup()
-        self.sync()
+        # self.sync()
 
     ########################################################################
     # save dictionary k,v pairs under groupname key

@@ -42,17 +42,17 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
     "SERVICEDIALOG_SERVICEINFO":
         "Selecteer het gewenste type terugmeldingen.",
 
-    "SERVICEDIALOG_OWNERINFO":
-        ["Voer optioneel een bronhoudercode in om",
-        "meldingen via de service te filteren."],
-
     "SERVICEDIALOG_SERVICELABEL":
         "Servicetype:",
 
-    "SERVICEDIALOG_OWNERLABEL":
+    "SERVICEDIALOG_FILTERINFO":
+        ["Voer optioneel een bronhoudercode in om",
+        "meldingen via de service te filteren."],
+
+    "SERVICEDIALOG_FILTERLABEL":
         "Bronhoudercode:"})
 
-_LABELS.SERVICEDIALOG_OWNERINFO = '\n'.join(_LABELS.SERVICEDIALOG_OWNERINFO)
+_LABELS.SERVICEDIALOG_FILTERINFO = '\n'.join(_LABELS.SERVICEDIALOG_FILTERINFO)
 
 ################################################################################
 ### .ui file
@@ -77,8 +77,8 @@ class Dialog(QDialog, _form()):
         self.setWindowTitle(_LABELS.SERVICEDIALOG_TITLE)
         self.serviceInfo.setText(_LABELS.SERVICEDIALOG_SERVICEINFO)
         self.serviceLabel.setText(_LABELS.SERVICEDIALOG_SERVICELABEL)
-        self.ownerInfo.setText(_LABELS.SERVICEDIALOG_OWNERINFO)
-        self.ownerLabel.setText(_LABELS.SERVICEDIALOG_OWNERLABEL)
+        self.filterInfo.setText(_LABELS.SERVICEDIALOG_FILTERINFO)
+        self.filterLabel.setText(_LABELS.SERVICEDIALOG_FILTERLABEL)
 
         self.serviceCombo.addItems(list(WFS._URLS))
         self.serviceCombo.currentTextChanged.connect(self.serviceChanged)

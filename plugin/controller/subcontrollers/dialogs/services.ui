@@ -65,7 +65,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="QLabel" name="ownerInfo">
+    <widget class="QLabel" name="filterInfo">
      <property name="text">
       <string>ownerInfo</string>
      </property>
@@ -74,7 +74,7 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QLabel" name="ownerLabel">
+      <widget class="QLabel" name="filterLabel">
        <property name="text">
         <string>Bronhoudercode:</string>
        </property>
