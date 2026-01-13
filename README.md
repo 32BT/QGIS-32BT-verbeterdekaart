@@ -16,7 +16,7 @@ De tweede knop gebruik je om een melding aan te maken via de webpagina van de be
 
 
 ## Knop 1: De "WFS" knop
-De WFS button gebruik je om een WFS laag aan te maken waarin terugmeldingen getoond zullen worden van de gekozen registratie. In het kort:  
+De WFS button is bedoeld om een WFS laag aan te maken waarin terugmeldingen getoond zullen worden van de gekozen registratie. In het kort:  
 - Open een QGIS project met de kaart van Nederland. 
 - Klik op de WFS button om een WFS laag toe te voegen,
 - Kies de gewenste service en geef eventueel een bronhoudercode op,
@@ -59,11 +59,20 @@ Het filter kan overigens, indien gewenst, naderhand nog in QGIS worden aangepast
   
 
 ## Knop 2: De "VDK" knop  
+De VDK knop is bedoeld om de verbeterdekaart webpagina te openen. Er zijn drie verschillende verbeterdekaart-webpagina's afhankelijk van welke registratie je wilt verbeteren.  
+- Voor BAG meldingen is er de BAGViewer: https://bagviewer.kadaster.nl
+- Voor BGT, BRT, en 3DB meldingen is er de verbeterdekaart webpagina: https://www.verbeterdekaart.nl
+- Voor AERO meldingen is er de verbeterdeluchtvaartkaart variant: https://www.verbeterdeluchtvaartkaart.nl
+ 
+Al deze pagina's tonen een kaart. Deze kaart zal door de VDK plugin zodanig worden aangeroepen dat de weergaveschaal en locatie gelijk zou moeten zijn met je huidige QGIS weergave. Je kunt de VDK knop gemakkelijk instellen op één van de drie doelpagina's. Door de knop kortstondig ingedrukt te houden zul je zien dat er een menu verschijnt met de 3 opties voor de landingspagina. De geselecteerde doelpagina is zichtbaar in vet lettertype met een vinkje ervoor. 
 
 **Opties submenu**  
 <img width="275" height="143" alt="image" src="https://github.com/user-attachments/assets/efbd9bb0-036d-4586-a97d-4ea960db6011" />
 
-## Alternatief: "verbeterdekaart" contextmenu
+>[!NOTE]
+>Er kunnen eventueel schalingsverschillen zijn tussen je QGIS omgeving en je default webbrowser, met name Linux op een chromebook kan verschillen vertonen vanwege de Wayland graphicsdriver backend. De plugin heeft een setting om dit te compenseren. Zie de opties onder het volgende hoofdstukje.
+
+## Knop 3: De rechter muisknop
 Een alternatieve manier om de viewerpagina te openen is de verbeterdekaart-contextmenu optie. Klik met de rechtermuisknop op de kaart en selecteer een optie uit het verbeterdekaart menu. Het verbeterdekaart menu toont een lijst met drie acties:  
 1. Voorkeuren...
 2. Kopieer locatie
