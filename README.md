@@ -25,7 +25,7 @@ De WFS button is bedoeld om een WFS laag aan te maken waarin terugmeldingen geto
 **De WFS laag**  
 De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak die enigszins vergelijkbaar is met de bekende weergaves van de gekozen service. De opmaak kan uiteraard naar wens worden gewijzigd. Het is ook mogelijk om je eigen styling mee te geven aan elke nieuw aangemaakte laag, zie verderop onder Customisation. 
 
-<img width="958" height="377" alt="image" src="https://github.com/user-attachments/assets/324a78aa-1f44-4972-b268-90299adf495d" />
+<img width="1014" height="485" alt="image" src="https://github.com/user-attachments/assets/7816f20b-a9b0-47ba-8ed9-c01c5046572d" /><br/>
 
 ## 
 **De WFS opties**  
@@ -99,4 +99,4 @@ Voor bronhouders is het van belang om regelmatig te controleren of er binnengeko
 
 Alle nieuw binnengekomen meldingen zijn nu geselecteerd. Met de **QGIS-32BT-Feature-Navigation-Toolbar** kun je vervolgens de selectie gemakkelijk één-voor-één langsgaan om de meldingen te beoordelen en te bepalen hoe ze verder verwerkt moeten worden.  
 
-<img width="832" height="286" alt="image" src="https://github.com/user-attachments/assets/6ca9b228-e0bb-4861-83e7-b3a693617c13" /><br/>
+<img width="849" height="270" alt="image" src="https://github.com/user-attachments/assets/7e8764e7-3124-4e10-8b84-0c00cd3d2153" /><br/>
