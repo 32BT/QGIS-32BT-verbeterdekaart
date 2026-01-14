@@ -23,7 +23,7 @@ De WFS button is bedoeld om een WFS laag aan te maken waarin terugmeldingen geto
 - Klik OK om de keuze te bevestigen en de laag aan te maken. 
 ##
 **De WFS laag**  
-De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak die enigszins vergelijkbaar is met de bekende weergaves van de gekozen service. De opmaak kan uiteraard naar wens worden gewijzigd. Het is ook mogelijk om je eigen styling mee te geven aan elke nieuw aangemaakte laag, zie verderop onder Customisation. 
+De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak die enigszins vergelijkbaar is met de bekende weergaves van de gekozen service. De opmaak kan uiteraard naar wens worden gewijzigd. Het is ook mogelijk om je eigen styling mee te geven aan elke nieuw aangemaakte laag, zie de styling voetnoot.[^1] 
 
 <img width="1014" height="485" alt="image" src="https://github.com/user-attachments/assets/7816f20b-a9b0-47ba-8ed9-c01c5046572d" /><br/>
 
@@ -100,3 +100,6 @@ Voor bronhouders is het van belang om regelmatig te controleren of er binnengeko
 Alle nieuw binnengekomen meldingen zijn nu geselecteerd. Met de **QGIS-32BT-Feature-Navigation-Toolbar** kun je vervolgens de selectie gemakkelijk één-voor-één langsgaan om de meldingen te beoordelen en te bepalen hoe ze verder verwerkt moeten worden.  
 
 <img width="849" height="270" alt="image" src="https://github.com/user-attachments/assets/7e8764e7-3124-4e10-8b84-0c00cd3d2153" /><br/>
+
+
+[^1]:De styling van de aangemaakte WFS laag wordt bepaald door een qml file. Als je de standaardstyling vanuit de plugin permanent wilt wijzigen, dan kun je de interne qml file vervangen door een eigen versie. Hiervoor moet je allereerst op zoek naar de plugin folder van QGIS. Hoe je die vindt, kun je in de QGIS handleiding lezen. Vervolgens ga je naar de verbeterdekaart-plugin folder. Hierin zoek je naar een mapje "controllers/subcontrollers/qml". De file "bgt.qml" moet je dan vervangen door een eigen versie. 
