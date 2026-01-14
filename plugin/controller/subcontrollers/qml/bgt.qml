@@ -7,7 +7,7 @@
       <category label="Doorgestuurd" symbol="2" render="true" value="Doorgestuurd" type="string" uuid="{4ef05567-9178-40bb-bdbe-0610bdfd5f34}"/>
       <category label="Ingepland" symbol="3" render="true" value="Goedgekeurd en ingepland" type="string" uuid="{a1e39508-78dc-404f-a546-d3c745aa93c0}"/>
       <category label="Afgerond" symbol="4" render="true" value="Afgerond met aanpassing" type="string" uuid="{f84cc08f-8a8b-4dc5-9e3d-f2d2beb8b69c}"/>
-      <category label="Afgewezen" symbol="5" render="true" value="Afgerond zonder aanpassing" type="string" uuid="{df082d3d-bf50-4bd7-9906-5af0e58ae8fb}"/>
+      <category label="Geschrapt" symbol="5" render="true" value="Afgerond zonder aanpassing" type="string" uuid="{df082d3d-bf50-4bd7-9906-5af0e58ae8fb}"/>
     </categories>
     <symbols>
       <symbol frame_rate="10" clip_to_extent="1" alpha="1" name="0" type="marker" is_animated="0" force_rhr="0">
