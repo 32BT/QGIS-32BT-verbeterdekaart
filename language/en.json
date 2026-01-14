@@ -1,23 +1,39 @@
 {
     "TOOLBAR_TITLE":
-    "verbeterdekaart Toolbar",
+        "verbeterdekaart Toolbar",
 
     "MENU_ITEM1":
-    "Settings...",
+        "Settings...",
 
     "MENU_ITEM2":
-    "Copy URL to clipboard",
+        "Copy URL to clipboard",
 
     "MENU_ITEM3":
-    "Open URL in browser",
+        "Open URL in browser",
 
     "SETTINGSDIALOG_TITLE":
-    "Settings",
+        "Settings",
 
     "SETTINGSDIALOG_LABEL1":
-    ["Enter a percentage to adjust the scale of",
-    "the verbeterdekaart representation."],
+        ["Enter a percentage to adjust the scale of",
+        "the verbeterdekaart representation."],
 
     "SETTINGSDIALOG_LABEL2":
-    "Adjust scale:"
+        "Adjust scale:",
+
+    "SERVICEDIALOG_TITLE":
+        "WFS Layer",
+
+    "SERVICEDIALOG_SERVICEINFO":
+        "Please select the desired WFS endpoint.",
+
+    "SERVICEDIALOG_SERVICELABEL":
+        "Servicetype:",
+
+    "SERVICEDIALOG_FILTERINFO":
+        ["Type an optional maintainer ID (bronhoudercode)",
+        "for serverside featurefiltering."],
+
+    "SERVICEDIALOG_FILTERLABEL":
+        "Filterstring:"
 }

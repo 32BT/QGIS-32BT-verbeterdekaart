@@ -1,23 +1,39 @@
 {
     "TOOLBAR_TITLE":
-    "Werkbalk verbeterdekaart",
+        "Werkbalk verbeterdekaart",
 
     "MENU_ITEM1":
-    "Voorkeuren...",
+        "Voorkeuren...",
 
     "MENU_ITEM2":
-    "Kopieer locatie",
+        "Kopieer locatie",
 
     "MENU_ITEM3":
-    "Open webpagina",
+        "Open webpagina",
 
     "SETTINGSDIALOG_TITLE":
-    "Voorkeuren",
+        "Voorkeuren",
 
     "SETTINGSDIALOG_LABEL1":
-    ["Voer een percentage in om de schaal van",
-    "verbeterdekaart aan te passen."],
+        ["Voer een percentage in om de schaal van",
+        "verbeterdekaart aan te passen."],
 
     "SETTINGSDIALOG_LABEL2":
-    "Schalingspercentage:"
+        "Schalingspercentage:",
+
+    "SERVICEDIALOG_TITLE":
+        "Terugmeldingen",
+
+    "SERVICEDIALOG_SERVICEINFO":
+        "Selecteer het gewenste type terugmeldingen.",
+
+    "SERVICEDIALOG_SERVICELABEL":
+        "Servicetype:",
+
+    "SERVICEDIALOG_FILTERINFO":
+        ["Voer optioneel een bronhoudercode in om",
+        "meldingen via de service te filteren."],
+
+    "SERVICEDIALOG_FILTERLABEL":
+        "Bronhoudercode:"
 }

@@ -27,7 +27,7 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
     "MENU_TITLE": "verbeterdekaart",
     "MENU_ITEM1": "Voorkeuren...",
     "MENU_ITEM2": "Kopieer locatie",
-    "MENU_ITEM3": "Open verbeterdekaart.nl"})
+    "MENU_ITEM3": "Open webpagina"})
 
 ################################################################################
 ### VDKController

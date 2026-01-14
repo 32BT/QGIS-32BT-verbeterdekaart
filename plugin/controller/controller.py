@@ -4,7 +4,8 @@ import sys
 _MODULE = sys.modules.get(__name__.split('.')[0])
 _IDENTITY = _MODULE.IDENTITY
 _LANGUAGE = _MODULE.LANGUAGE
-_LABELS = _LANGUAGE.LABELS()
+_LABELS = _LANGUAGE.LABELS({
+            "TOOLBAR_TITLE": "Werkbalk verbeterdekaart"})
 
 ################################################################################
 ### Toolbar
