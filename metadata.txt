@@ -9,8 +9,8 @@ version=2.0
 qgisMinimumVersion=3.0
 author=32BT
 email=32beat(at)gmail.com
-homepage=https://verbeterdekaart.nl
+homepage=https://github.com/32BT/QGIS-32BT-verbeterdekaart
 repository=https://github.com/32bt/QGIS-32BT-verbeterdekaart
 tracker=https://github.com/32bt/QGIS-32BT-verbeterdekaart/issues
-changelog=version 2.0
+changelog=Version 2.0
     Now available as toolbar, including an option to start a filtered WFS layer for several PDOK terugmeldservices.
