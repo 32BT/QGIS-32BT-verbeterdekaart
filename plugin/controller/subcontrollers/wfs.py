@@ -10,28 +10,34 @@ from .dialogs import ServicesDialog
 from . import pdok as PDOK
 
 ################################################################################
+### Label Expressions
+################################################################################
 '''
-TODO: should possibly make separate qml for wfs and ogc label, i.e.:
-    wfs_style.qml
-    wfs_label.qml
-    ogc_label.qml
-
-As usual, model and view are mixed unfortunately...
+Separate label-expressions.
+The label expression can be stated as a single expression applicable to WFS and
+OGC vars, but that just slows down labels unnecessarily.
 '''
 def _EXP_KEY(key): return f'"{key}"'
 date = _EXP_KEY("tijdstipRegistratie")
 name = _EXP_KEY("meldingsnummerVolledig")
 text = _EXP_KEY("omschrijving")
 info = _EXP_KEY("toelichting")
+
 _WFS_EXP = f"left({date}, 10)+': '+{name}+'\n'+"
 _WFS_EXP += f"trim({text})+coalesce('\nTOELICHTING: '+trim({info}), '')"
 
-################################################################################
+date = _EXP_KEY("tijdstip_registratie")
+name = _EXP_KEY("meldingsnummer_volledig")
 
+_OGC_EXP = f"format_date({date}, 'yyyy-MM-dd')+': '+{name}+'\n'+"
+_OGC_EXP += f"trim({text}) + coalesce('\nTOELICHTING: '+trim({info}), '')"
 
-_OGC_EXP = '''
-format_date("tijdstip_registratie", 'yyyy-MM-dd') +': '+ "meldingsnummer_volledig" +'\n'+ trim("omschrijving") + coalesce('\nTOELICHTING: '+trim("toelichting"), '')
-'''
+def _set_label_expression(layer, exp):
+    lab = layer.labeling()
+    pal = lab.settings()
+    pal.fieldName=exp
+    pal.isExpression=True
+    lab.setSettings(pal)
 
 ################################################################################
 ### WFSController
@@ -66,19 +72,15 @@ class Controller:
             if _type == False:
                 uri = self.get_uri_wfs(_name, _code)
                 src = 'WFS'
+                exp = _WFS_EXP
             else:
                 uri = self.get_uri_ogc(_name, _code)
                 src = 'oapif'
+                exp = _OGC_EXP
 
             layer = QgsVectorLayer(uri, _name+' Terugmeldingen', src)
             self.setStyle(layer, 'BGT')
-
-            lab = layer.labeling()
-            pal = lab.settings()
-            pal.fieldName=_OGC_EXP if _type else _WFS_EXP
-            pal.isExpression=True
-            lab.setSettings(pal)
-
+            _set_label_expression(layer, exp)
             QgsProject.instance().addMapLayer(layer)
 
     ########################################################################
@@ -103,26 +105,27 @@ class Controller:
     '''
     The OGC filter parameters are not standard filter parameters.
     They currently are fixed parameters in the url. They do not allow wildcards.
+    Wildcardfilters are applied in-app after download.
+    codeFilter will be cleared and replaced by postFilter,
+    if codeFilter contains one of *?_
     '''
     def get_uri_ogc(self, serviceName, codeFilter=''):
-        # Wildcards are filtered in-app after download
-        # codeFilter will be cleared and replaced by a postFilter,
-        # if codeFilter contains one of *?_
         postFilter = self.getPostFilter(codeFilter)
         if postFilter: codeFilter = None
 
-        url = PDOK.OGC.get_url(serviceName, codeFilter)
-        prm = dict(url=url,
-            srsname="EPSG:28992",
-            typename="bgtterugmeldingen",
+        prm = dict(
+            url=PDOK.OGC.ENDPOINT(serviceName),
+            typename=PDOK.OGC.ITEMTYPE(serviceName),
+            srsname=PDOK.OGC.DEFAULT.CRS.NAME,
             restrictToRequestBBOX="1",
             pagingEnabled="enabled",
             pageSize="500",
             maxNumFeatures="10000")
 
+        if codeFilter:
+            prm['url'] += f"?bronhoudercode={codeFilter}"
         if postFilter:
-            filter = "\"bronhoudercode\" LIKE '{}'".format(postFilter)
-            prm['filter'] = filter
+            prm['filter'] = f"\"bronhoudercode\" LIKE '{postFilter}'"
 
         return self.getURI(prm)
 

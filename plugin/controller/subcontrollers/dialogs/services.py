@@ -37,7 +37,7 @@ class Services(dict):
         service = self.get(_id or self.getSelectedServiceID())
         return Service(service or {})
     def setService(self, _id, service):
-        self[self.TYPE] = _id
+        self[self.NAME] = _id
         self[_id] = service
 
 
@@ -126,7 +126,7 @@ class Dialog(QDialog, _form()):
         self.serviceCombo.addItems(list(WFS.ENDPOINT.URL))
         self.serviceCombo.currentTextChanged.connect(self.serviceChanged)
 
-        self._services = Settings.load_group(Services.__name__) or {}
+        self._services = Settings.load_group(Services.__name__.lower()) or {}
         self._services = Services(self._services)
 
 
@@ -167,5 +167,5 @@ class Dialog(QDialog, _form()):
         service.setFilterString(filterStr=_code)
         services.setService(_name, service)
         print(services)
-        Settings.save_group(Services.__name__, services)
+        Settings.save_group(Services.__name__.lower(), services)
         return _name, _type, _code
