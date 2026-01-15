@@ -9,10 +9,25 @@ from qgis.core import *
 from .dialogs import ServicesDialog
 from . import pdok as PDOK
 
-
-_WFS_EXP = '''
-left("tijdstipRegistratie", 10) +': '+ "meldingsnummerVolledig" +'\n'+ trim("omschrijving") + coalesce('\nTOELICHTING: '+trim("toelichting"), '')
+################################################################################
 '''
+TODO: should possibly make separate qml for wfs and ogc label, i.e.:
+    wfs_style.qml
+    wfs_label.qml
+    ogc_label.qml
+
+As usual, model and view are mixed unfortunately...
+'''
+def _EXP_KEY(key): return f'"{key}"'
+date = _EXP_KEY("tijdstipRegistratie")
+name = _EXP_KEY("meldingsnummerVolledig")
+text = _EXP_KEY("omschrijving")
+info = _EXP_KEY("toelichting")
+_WFS_EXP = f"left({date}, 10)+': '+{name}+'\n'+"
+_WFS_EXP += f"trim({text})+coalesce('\nTOELICHTING: '+trim({info}), '')"
+
+################################################################################
+
 
 _OGC_EXP = '''
 format_date("tijdstip_registratie", 'yyyy-MM-dd') +': '+ "meldingsnummer_volledig" +'\n'+ trim("omschrijving") + coalesce('\nTOELICHTING: '+trim("toelichting"), '')
@@ -49,13 +64,21 @@ class Controller:
         if result is not None:
             _name, _type, _code = result
             if _type == False:
-                url = self.get_uri_wfs(_name, _code)
-                layer = QgsVectorLayer(url, _name+' Terugmeldingen', 'WFS')
+                uri = self.get_uri_wfs(_name, _code)
+                src = 'WFS'
             else:
                 uri = self.get_uri_ogc(_name, _code)
-                layer = QgsVectorLayer(uri, _name+' Terugmeldingen', 'oapif')
+                src = 'oapif'
 
+            layer = QgsVectorLayer(uri, _name+' Terugmeldingen', src)
             self.setStyle(layer, 'BGT')
+
+            lab = layer.labeling()
+            pal = lab.settings()
+            pal.fieldName=_OGC_EXP if _type else _WFS_EXP
+            pal.isExpression=True
+            lab.setSettings(pal)
+
             QgsProject.instance().addMapLayer(layer)
 
     ########################################################################
