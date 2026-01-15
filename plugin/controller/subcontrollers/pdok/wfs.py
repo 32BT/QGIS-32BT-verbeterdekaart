@@ -1,59 +1,62 @@
 
 
-
 ################################################################################
 ### TMS.WFS
 ################################################################################
 
 class WFS:
-    _URLS = {
-        "BAG": "https://service.pdok.nl/lv/bag/terugmeldingen/wfs/v1_0",
-        "BGT": "https://service.pdok.nl/lv/bgt/terugmeldingen/wfs/v1_0",
-        "BRT": "https://service.pdok.nl/brt/terugmeldingen/wfs/v1_0",
-        "3DB": "https://service.pdok.nl/kadaster/basisvoorziening-3d/terugmeldingen/wfs/v1_0",
-        "AERO": "https://service.pdok.nl/defensie/luchtvaartobstakels/terugmeldingen/wfs/v1_0" }
+    class ENDPOINT:
+        DOM = "https://service.pdok.nl"
+        URL = {
+            "BAG": DOM+"/lv/bag/terugmeldingen/wfs/v1_0",
+            "BGT": DOM+"/lv/bgt/terugmeldingen/wfs/v1_0",
+            "BRT": DOM+"/brt/terugmeldingen/wfs/v1_0",
+            "3DB": DOM+"/kadaster/basisvoorziening-3d/terugmeldingen/wfs/v1_0",
+            "AERO": DOM+"/defensie/luchtvaartobstakels/terugmeldingen/wfs/v1_0" }
 
-    _PRMS = dict(
-        service="WFS",
-        version="2.0.0",
-        request="getfeature",
-        typeNames="*terugmeldingen")
+        def __new__(cls, service_id):
+            return cls.URL.get(service_id)
 
-    ################################################################
+    class ITEMTYPE:
+        PREFIX = {
+            "3DB": "kad3dbasisvoorziening" }
 
-    _FLTR = ''.join((
+        def __new__(cls, service_id):
+            prefix = cls.PREFIX.get(service_id) or service_id.lower()
+            return prefix+"terugmeldingen"
+
+    class DEFAULT:
+        class CRS:
+            NAME = "EPSG:28992"
+            LINK = "http://www.opengis.net/def/crs/EPSG/0/28992"
+
+    ########################################################################
+
+    class FILTER:
+        TMP = ''.join((
         '<Filter>',
         #'<PropertyIsLike wildCard="*" singleChar="?" escapeChar="%">',
         '<PropertyIsLike wildCard="%" singleChar="_" escapeChar="\\">',
-        '<PropertyName>bronhoudercode</PropertyName>',
+        '<PropertyName>{}</PropertyName>',
         '<Literal>{}</Literal>',
         '</PropertyIsLike>',
         '</Filter>'))
 
-    @classmethod
-    def get_filter(cls, owner_id):
-        return cls._FLTR.format(owner_id)
-
-    ################################################################
-
-    _TYPENAMES = {
-        "3DB": "kad3dbasisvoorziening" }
-
-    @classmethod
-    def get_itemtype(cls, service_id):
-        itemtype = cls._TYPENAMES.get(service_id)
-        return (itemtype or service_id.lower()) +'terugmeldingen'
+        def __new__(cls, key, val):
+            return TMP.format(key, val)
 
     ########################################################################
 
     @classmethod
     def get_url(cls, service_id, owner_id=None):
-        url = cls._URLS.get(service_id)
-        prm = ["service=WFS"]
-        prm += ["version=2.0.0"]
-        prm += ["request=GetFeature"]
-        prm += ["typename="+cls.get_itemtype(service_id)]
+        url = cls.ENDPOINT(service_id)
+        prm = dict(
+            service="WFS",
+            version="2.0.0",
+            request="getfeature",
+            typename=cls.ITEMTYPE(service_id))
         if owner_id:
-            prm += ["filter="+cls.get_filter(owner_id)]
+            prm["filter"] = cls.FILTER("bronhoudercode", owner_id)
+        prm = [f"{k}={v}" for k,v in prm.items()]
         return url+'?'+'&'.join(prm)
 

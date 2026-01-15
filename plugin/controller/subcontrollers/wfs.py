@@ -9,6 +9,15 @@ from qgis.core import *
 from .dialogs import ServicesDialog
 from . import pdok as PDOK
 
+
+_WFS_EXP = '''
+left("tijdstipRegistratie", 10) +': '+ "meldingsnummerVolledig" +'\n'+ trim("omschrijving") + coalesce('\nTOELICHTING: '+trim("toelichting"), '')
+'''
+
+_OGC_EXP = '''
+format_date("tijdstip_registratie", 'yyyy-MM-dd') +': '+ "meldingsnummer_volledig" +'\n'+ trim("omschrijving") + coalesce('\nTOELICHTING: '+trim("toelichting"), '')
+'''
+
 ################################################################################
 ### WFSController
 ################################################################################
@@ -51,38 +60,42 @@ class Controller:
 
     ########################################################################
     def get_uri_wfs(self, serviceName, codeFilter=''):
-        url = PDOK.WFS.get_url(serviceName)
-        prm = dict(url=url,
-            srsname="EPSG:28992",
-            typename="bgtterugmeldingen",
+        prm = dict(version='auto',
+            url=PDOK.WFS.ENDPOINT(serviceName),
+            typename=PDOK.WFS.ITEMTYPE(serviceName),
+            srsname=PDOK.WFS.DEFAULT.CRS.NAME,
             restrictToRequestBBOX="1",
             pagingEnabled="enabled",
             pageSize="500",
             maxNumFeatures="10000")
 
         if codeFilter:
+            # Replace * and ? for * and _
             codeFilter = self.getPostFilter(codeFilter) or codeFilter
-            filter = "\"bronhoudercode\" LIKE '{}'".format(codeFilter)
-            prm['filter'] = filter
+            key, val = '"bronhoudercode"', "'{}'".format(codeFilter)
+            prm['filter'] = key + " LIKE " + val
 
         return self.getURI(prm)
 
-
+    '''
+    The OGC filter parameters are not standard filter parameters.
+    They currently are fixed parameters in the url. They do not allow wildcards.
+    '''
     def get_uri_ogc(self, serviceName, codeFilter=''):
+        # Wildcards are filtered in-app after download
+        # codeFilter will be cleared and replaced by a postFilter,
+        # if codeFilter contains one of *?_
         postFilter = self.getPostFilter(codeFilter)
         if postFilter: codeFilter = None
 
         url = PDOK.OGC.get_url(serviceName, codeFilter)
         prm = dict(url=url,
-            #crs="http://www.opengis.net/def/crs/EPSG/0/28992",
             srsname="EPSG:28992",
-            #preferCoordinatesForWfsT11="false",
             typename="bgtterugmeldingen",
             restrictToRequestBBOX="1",
             pagingEnabled="enabled",
             pageSize="500",
             maxNumFeatures="10000")
-        #prm['bbox-crs'] = "http://www.opengis.net/def/crs/EPSG/0/28992"
 
         if postFilter:
             filter = "\"bronhoudercode\" LIKE '{}'".format(postFilter)

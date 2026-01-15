@@ -123,7 +123,7 @@ class Dialog(QDialog, _form()):
         self.filterLabel.setText(_LABELS.SERVICEDIALOG_FILTERLABEL)
 
         self.serviceCombo.clear()
-        self.serviceCombo.addItems(list(WFS._URLS))
+        self.serviceCombo.addItems(list(WFS.ENDPOINT.URL))
         self.serviceCombo.currentTextChanged.connect(self.serviceChanged)
 
         self._services = Settings.load_group(Services.__name__) or {}
