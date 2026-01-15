@@ -38,13 +38,73 @@ class Controller:
         parent = self._iface.mainWindow()
         result = ServicesDialog(parent).askInput()
         if result is not None:
-            serviceType, codeFilter = result
-            url = PDOK.WFS.get_url(*result)
-            print(url)
-            layer = QgsVectorLayer(url, serviceType+' Terugmeldingen', 'WFS')
+            _name, _type, _code = result
+            if _type == False:
+                url = self.get_uri_wfs(_name, _code)
+                layer = QgsVectorLayer(url, _name+' Terugmeldingen', 'WFS')
+            else:
+                uri = self.get_uri_ogc(_name, _code)
+                layer = QgsVectorLayer(uri, _name+' Terugmeldingen', 'oapif')
+
             self.setStyle(layer, 'BGT')
             QgsProject.instance().addMapLayer(layer)
 
+    ########################################################################
+    def get_uri_wfs(self, serviceName, codeFilter=''):
+        url = PDOK.WFS.get_url(serviceName)
+        prm = dict(url=url,
+            srsname="EPSG:28992",
+            typename="bgtterugmeldingen",
+            restrictToRequestBBOX="1",
+            pagingEnabled="enabled",
+            pageSize="500",
+            maxNumFeatures="10000")
+
+        if codeFilter:
+            codeFilter = self.getPostFilter(codeFilter) or codeFilter
+            filter = "\"bronhoudercode\" LIKE '{}'".format(codeFilter)
+            prm['filter'] = filter
+
+        return self.getURI(prm)
+
+
+    def get_uri_ogc(self, serviceName, codeFilter=''):
+        postFilter = self.getPostFilter(codeFilter)
+        if postFilter: codeFilter = None
+
+        url = PDOK.OGC.get_url(serviceName, codeFilter)
+        prm = dict(url=url,
+            #crs="http://www.opengis.net/def/crs/EPSG/0/28992",
+            srsname="EPSG:28992",
+            #preferCoordinatesForWfsT11="false",
+            typename="bgtterugmeldingen",
+            restrictToRequestBBOX="1",
+            pagingEnabled="enabled",
+            pageSize="500",
+            maxNumFeatures="10000")
+        #prm['bbox-crs'] = "http://www.opengis.net/def/crs/EPSG/0/28992"
+
+        if postFilter:
+            filter = "\"bronhoudercode\" LIKE '{}'".format(postFilter)
+            prm['filter'] = filter
+
+        return self.getURI(prm)
+
+
+    def getPostFilter(self, filterStr):
+        if filterStr:
+            if set(filterStr)&set('*%?_'):
+                filterStr = filterStr.replace('*', '%')
+                filterStr = filterStr.replace('?', '_')
+                return filterStr
+
+    def getURI(self, prm):
+        uri = QgsDataSourceUri()
+        for k,v in prm.items():
+            uri.setParam(k, v)
+        return uri.uri()
+
+    ########################################################################
 
     def setStyle(self, layer, name='BGT'):
         path = os.path.split(__file__)[0]

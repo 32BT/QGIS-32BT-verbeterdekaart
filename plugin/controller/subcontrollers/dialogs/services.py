@@ -21,12 +21,54 @@ vdk/services/BGT/filter/code='K0001'
 
 from ..qgs.settings import Settings
 
-class _SETTINGS:
-    NAME = 'services'
-    TYPE = 'selectie'
-    class FILTER:
-        NAME = 'filter'
+
+class Services(dict):
+    NAME = 'selectie'
+    TYPE = 'type'
+    def getSelectedServiceID(self):
+        return self.get(self.NAME) or 'BGT'
+    def setSelectedServiceID(self, _name):
+        self[self.NAME] = _name
+    def getSelectedServiceType(self):
+        return self.get(self.TYPE) or 'OGC'
+    def setSelectedServiceType(self, _type):
+        self[self.TYPE] = _type
+    def getService(self, _id=None):
+        service = self.get(_id or self.getSelectedServiceID())
+        return Service(service or {})
+    def setService(self, _id, service):
+        self[self.TYPE] = _id
+        self[_id] = service
+
+
+class Service(dict):
+    class TYPES:
+        KEY = 'type'
+        OGC = 'OGC'
+        WFS = 'WFS'
+    class FILTERS:
+        KEY = 'filter'
         CODE = 'code'
+    TYPE = TYPES.KEY
+
+    def getType(self):
+        return self.get(self.TYPE) or self.TYPES.WFS
+    def setType(self, value):
+        if not isinstance(value, str):
+            value = (self.TYPES.WFS, self.TYPES.OGC)[bool(value)]
+        self[self.TYPE] = value
+    def getFilters(self):
+        return self.get(self.FILTERS.KEY) or {}
+    def setFilters(self, filters):
+        self[self.FILTERS.KEY] = filters
+
+    def getFilterString(self, _id='code'):
+        return self.getFilters().get(_id) or ''
+    def setFilterString(self, _id='code', filterStr=''):
+        filters = self.getFilters()
+        filters[_id] = filterStr
+        self.setFilters(filters)
+
 
 ################################################################################
 ### Labels
@@ -80,19 +122,22 @@ class Dialog(QDialog, _form()):
         self.filterInfo.setText(_LABELS.SERVICEDIALOG_FILTERINFO)
         self.filterLabel.setText(_LABELS.SERVICEDIALOG_FILTERLABEL)
 
+        self.serviceCombo.clear()
         self.serviceCombo.addItems(list(WFS._URLS))
         self.serviceCombo.currentTextChanged.connect(self.serviceChanged)
 
-        self._services = Settings.load_group(_SETTINGS.NAME) or {}
+        self._services = Settings.load_group(Services.__name__) or {}
+        self._services = Services(self._services)
 
 
     def serviceChanged(self, selected):
         # Get service settings for selected service
         services = self._services
-        service = services.get(selected) or {}
-        filters = service.get(_SETTINGS.FILTER.NAME) or {}
-        codestr = filters.get(_SETTINGS.FILTER.CODE) or ''
+        service = services.getService(selected)
+        ogctype = service.getType()==service.TYPES.OGC
+        codestr = service.getFilterString()
         # Stuff UI controls
+        self.serviceType.setChecked(ogctype)
         self.filterString.setText(codestr)
 
     ########################################################################
@@ -106,22 +151,21 @@ class Dialog(QDialog, _form()):
 
     def load(self):
         services = self._services
-        selected = services.get(_SETTINGS.TYPE) or 'BGT'
+        selected = services.getSelectedServiceID()
         self.serviceCombo.setCurrentText(selected)
         self.serviceChanged(selected)
 
     def save(self):
         # Fetch UI controls
-        _type = self.serviceCombo.currentText()
+        _name = self.serviceCombo.currentText()
+        _type = self.serviceType.isChecked()
         _code = self.filterString.text() or None
         # Update services settings
         services = self._services
-        services[_SETTINGS.TYPE] = _type
-        service = services.get(_type) or {}
-        filters = service.get(_SETTINGS.FILTER.NAME) or {}
-        filters[_SETTINGS.FILTER.CODE] = _code
-        service[_SETTINGS.FILTER.NAME] = filters
-        services[_type] = service
+        service = services.getService(_name)
+        service.setType(_type)
+        service.setFilterString(filterStr=_code)
+        services.setService(_name, service)
         print(services)
-        Settings.save_group(_SETTINGS.NAME, services)
-        return _type, _code
+        Settings.save_group(Services.__name__, services)
+        return _name, _type, _code

@@ -23,7 +23,8 @@ class WFS:
 
     _FLTR = ''.join((
         '<Filter>',
-        '<PropertyIsLike wildCard="*" singleChar="?" escapeChar="%">',
+        #'<PropertyIsLike wildCard="*" singleChar="?" escapeChar="%">',
+        '<PropertyIsLike wildCard="%" singleChar="_" escapeChar="\\">',
         '<PropertyName>bronhoudercode</PropertyName>',
         '<Literal>{}</Literal>',
         '</PropertyIsLike>',
