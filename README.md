@@ -38,7 +38,7 @@ Servicetype is een keuzemenu voor de gewenste registratie. Terugmeldingen zijn g
 
 <img width="311" height="250" alt="image" src="https://github.com/user-attachments/assets/85c5694f-6f1c-4f59-8e14-ed0c61107f82" /><br/>
 
-Sinds kort (Januari 2026) zijn er ook OGC-compatible endpoints beschikbaar. Indien je deze wilt gebruiken, kun je de checkbox "ogc" aanvinken. Dit heeft wel enige beperkingen, zie notitie bij Bronhoudercode.
+Sinds kort (Januari 2026) zijn er ook OGC-compatible endpoints beschikbaar. Indien je deze wilt gebruiken, kun je de checkbox "ogc" aanvinken. Dit heeft wel enige beperkingen, zie de [waarschuwing](#FILTER_WARNING) bij Bronhoudercode.
 
 **Bronhoudercode**  
 Bronhoudercode is een optionele filtercode. Bij het aanmaken van de laag kan eventueel een bronhoudercode-filter toegevoegd worden. Hiermee zorg je ervoor dat uitsluitend de meldingen voor een specifieke bronhouder worden opgevraagd. Dat scheelt in werklast voor de laag (en voor jezelf). 
@@ -60,7 +60,10 @@ Het filter kan overigens, indien gewenst, naderhand nog in QGIS worden aangepast
 
 <img width="908" height="443" alt="image" src="https://github.com/user-attachments/assets/97988260-16a5-415d-aca9-af3c00dec630" /><br/>
 
-  
+<a name="FILTER_WARNING"></a>
+>[!WARNING]
+>**WAARSCHUWING**: De OGC-compatible endpoints staan op dit moment (januari 2026) nog geen ogc-filters toe. Als alternatief voor server-side filtering, zijn door PDOK "gesloten" parameters in de url bedacht. Dit betekent dat er voor OGC-endpoints **geen** QGIS expression aangemaakt wordt. De plugin past in plaats daarvan de url aan voor service-side filtering. Wildcard-filters worden door PDOK niet ondersteund. Deze worden door de plugin wel gewoon als QGIS expression beschikbaar gemaakt, maar deze worden door QGIS alleen client-side toegepast, dus op je eigen computer nadat eerst **alle** terugmeldingen zijn opgehaald.  
+
 
 ## Knop 2: De "VDK" knop  
 De VDK knop is bedoeld om de verbeterdekaart webpagina te openen. Er zijn drie verschillende verbeterdekaart-webpagina's afhankelijk van welke registratie je wilt verbeteren.  
