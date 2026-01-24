@@ -1,13 +1,11 @@
 
 '''
-Need overal designstrategy for new OGC API endpoints
+The Kadaster OGC API endpoints only support rudimentary filtering using
+closed url params (meaning: no wildcards). The endpoints do not support
+ogc filters currently, nor datetime forwarding.
 
-The Kadaster OGC API endpoints support filtering, but
-QGIS only forwards datetime to the server.
+QGIS forwards only datetime to the server for ogc endpoints.
 
-We would like to implement QGIS expression filter in WFS, since
-that plays well with the layerproperties dialog, but
-that probably does not work with the OGC API.
 '''
 
 ################################################################################
@@ -39,4 +37,19 @@ class OGC:
         class CRS:
             NAME = "EPSG:28992"
             LINK = "http://www.opengis.net/def/crs/EPSG/0/28992"
+
+    ########################################################################
+
+    class FILTER:
+        KEYS = (
+            "bronhoudercode",
+            "bronhoudernaam",
+            "meldingsnummer_volledig",
+            "objecttype",
+            "status")
+
+        def __new__(cls, key, val):
+            return f"{key}={val}"
+
+
 

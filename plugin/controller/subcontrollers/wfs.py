@@ -14,8 +14,8 @@ from . import pdok as PDOK
 ################################################################################
 '''
 Separate label-expressions.
-The label expression can be stated as a single expression applicable to WFS and
-OGC vars, but that just slows down labels unnecessarily.
+The label expression can be stated as a single expression applicable to both
+WFS and OGC vars, but that just slows down labels unnecessarily.
 '''
 def _EXP_KEY(key): return f'"{key}"'
 date = _EXP_KEY("tijdstipRegistratie")
@@ -70,11 +70,11 @@ class Controller:
         if result is not None:
             _name, _type, _code = result
             if _type == False:
-                uri = self.get_uri_wfs(_name, _code)
+                uri = self.get_wfs_uri(_name, _code)
                 src = 'WFS'
                 exp = _WFS_EXP
             else:
-                uri = self.get_uri_ogc(_name, _code)
+                uri = self.get_ogc_uri(_name, _code)
                 src = 'oapif'
                 exp = _OGC_EXP
 
@@ -84,7 +84,9 @@ class Controller:
             QgsProject.instance().addMapLayer(layer)
 
     ########################################################################
-    def get_uri_wfs(self, serviceName, codeFilter=''):
+    ### WFS URI
+    ########################################################################
+    def get_wfs_uri(self, serviceName, codeFilter=''):
         prm = dict(version='auto',
             url=PDOK.WFS.ENDPOINT(serviceName),
             typename=PDOK.WFS.ITEMTYPE(serviceName),
@@ -102,14 +104,17 @@ class Controller:
 
         return self.getURI(prm)
 
+    ########################################################################
+    ### OGC URI
+    ########################################################################
     '''
     The OGC filter parameters are not standard filter parameters.
     They currently are fixed parameters in the url. They do not allow wildcards.
     Wildcardfilters are applied in-app after download.
-    codeFilter will be cleared and replaced by postFilter,
-    if codeFilter contains one of *?_
+    If the codeFilter contains a wildcard, the codeFilter will be cleared and
+    replaced by postFilter.
     '''
-    def get_uri_ogc(self, serviceName, codeFilter=''):
+    def get_ogc_uri(self, serviceName, codeFilter=''):
         postFilter = self.getPostFilter(codeFilter)
         if postFilter: codeFilter = None
 

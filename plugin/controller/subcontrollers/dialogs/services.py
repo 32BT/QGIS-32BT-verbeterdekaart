@@ -24,15 +24,10 @@ from ..qgs.settings import Settings
 
 class Services(dict):
     NAME = 'selectie'
-    TYPE = 'type'
     def getSelectedServiceID(self):
         return self.get(self.NAME) or 'BGT'
     def setSelectedServiceID(self, _name):
         self[self.NAME] = _name
-    def getSelectedServiceType(self):
-        return self.get(self.TYPE) or 'OGC'
-    def setSelectedServiceType(self, _type):
-        self[self.TYPE] = _type
     def getService(self, _id=None):
         service = self.get(_id or self.getSelectedServiceID())
         return Service(service or {})
