@@ -31,30 +31,34 @@ De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak
 **De WFS opties**  
 Als je op de button klikt, zal er een dialoogboxje verschijnen met twee opties: servicetype en bronhoudercode. 
 
-<img width="299" height="251" alt="image" src="https://github.com/user-attachments/assets/44a702a2-b79f-40dc-9dc7-1864888dbeb7" /><br/>
+<img width="304" height="248" alt="image" src="https://github.com/user-attachments/assets/5fd68406-b79e-4328-94de-ab133419f09a" /><br/>
 
 **Servicetype**  
 Servicetype is een keuzemenu voor de gewenste registratie. Terugmeldingen zijn gekoppeld aan één van de bekende registraties, en voor elk type registratie is er een aparte WFS service endpoint beschikbaar. Afhankelijk van welk type terugmeldingen je wilt zien, moet je dus allereerst de gewenste service kiezen:
 
-<img width="309" height="254" alt="image" src="https://github.com/user-attachments/assets/eb8f3343-2815-4e96-a7fe-5c3077b9777b" /><br/>
+<img width="311" height="250" alt="image" src="https://github.com/user-attachments/assets/85c5694f-6f1c-4f59-8e14-ed0c61107f82" /><br/>
+
+Sinds kort (Januari 2026) zijn er ook OGC-compatible endpoints beschikbaar. Indien je deze wilt gebruiken, kun je de checkbox "ogc" aanvinken. Dit heeft wel enige beperkingen, zie notitie bij Bronhoudercode.
 
 **Bronhoudercode**  
 Bronhoudercode is een optionele filtercode. Bij het aanmaken van de laag kan eventueel een bronhoudercode-filter toegevoegd worden. Hiermee zorg je ervoor dat uitsluitend de meldingen voor een specifieke bronhouder worden opgevraagd. Dat scheelt in werklast voor de laag (en voor jezelf). 
 
-<img width="306" height="265" alt="image" src="https://github.com/user-attachments/assets/b10db9de-292a-4540-92aa-5315ed97df14" /><br/>
+<img width="305" height="250" alt="image" src="https://github.com/user-attachments/assets/d9d7904b-2722-42d0-bd93-8c2d618e5652" /><br/>
 
 >[!CAUTION]
 >BELANGRIJK: De filtercode wordt per servicetype bepaald. Als je van servicetype wisselt, dan wisselt de code mee.  
 
-Het filter gebruikt de PropertyIsLike methode met de volgende kenmerken:  
-```<PropertyIsLike wildCard="*" singleChar="?" escapeChar="%">```  
+Voor de normale WFS service endpoints, wordt het filter toegevoegd als QGIS expression. De plugin ondersteunt hierbij ook wildcard-karakters:  
+- "%" of "*" betekent "één of meer willekeurige karakters"  
+- "_" of "?" betekent "precies één willekeurig karakter"
+
 Hiermee kun je bijvoorbeeld ook een WFS-laag maken met alleen de terugmeldingen voor alle provinciale bronhouders:  
 
-<img width="303" height="255" alt="image" src="https://github.com/user-attachments/assets/8693c1c0-95d8-424b-b6da-6c14f3083dd1" /><br/>
+<img width="305" height="250" alt="image" src="https://github.com/user-attachments/assets/d03fe23a-28ea-4c15-b7f9-e89b6b9c64d8" /><br/>
 
 Het filter kan overigens, indien gewenst, naderhand nog in QGIS worden aangepast via de laageigenschappen:
 
-<img width="848" height="525" alt="image" src="https://github.com/user-attachments/assets/b1307165-a50c-47ce-92d9-7144e22585c8" /><br/>
+<img width="908" height="443" alt="image" src="https://github.com/user-attachments/assets/97988260-16a5-415d-aca9-af3c00dec630" /><br/>
 
   
 
