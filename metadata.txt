@@ -7,14 +7,14 @@ about=The verbeterdekaart.nl website allows users to submit corrections for digi
     Verbeter de kaart is een  QGIS plugin waarmee verschillende types terugmeldingen eenvoudig aangemaakt en ingezien kunnen worden. Met de plugin kun je snel een WFS laag aanmaken voor één van de gekende terugmeldservices (BAG, BGT, BRT, 3DB, en AERO). Ook kun je direct de bijbehorende verbeterdekaart-webpagina openen. De plugin ondersteunt de BAGViewer, verbeterdekaart.nl, en verbeterdeluchtvaartkaart.nl. Gebruik de knoppen in de werkbalk, of klik met de rechtermuisknop op je QGIS kaart en kies de gewenste optie uit het verbeterdekaart submenu.
 version=2.1
 qgisMinimumVersion=3.0
-qgisMaximumVersion=5.0
 author=32BT
 email=32beat(at)gmail.com
 homepage=https://github.com/32BT/QGIS-32BT-verbeterdekaart
 repository=https://github.com/32bt/QGIS-32BT-verbeterdekaart
 tracker=https://github.com/32bt/QGIS-32BT-verbeterdekaart/issues
 changelog=Version 2.1
-    Added option for new OGC API endpoints
+    - Added option for new OGC API endpoints
+    - WFS filter now implemented as qgsexpression
 
     Version 2.0
     Now available as toolbar, including an option to start a filtered WFS layer for several PDOK terugmeldservices.
