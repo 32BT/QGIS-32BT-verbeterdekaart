@@ -30,7 +30,7 @@ from .subcontrollers import WFSController
 class Controller:
 
     def __init__(self, iface, toolBar):
-        self._Wfs = WFSController(iface, toolBar)
+        self._wfs = WFSController(iface, toolBar)
         self._vdk = VDKController(iface, toolBar)
 
 ################################################################################
