@@ -23,14 +23,20 @@ name = _EXP_KEY("meldingsnummerVolledig")
 text = _EXP_KEY("omschrijving")
 info = _EXP_KEY("toelichting")
 
-_WFS_EXP = f"left({date}, 10)+': '+{name}+'\n'+"
-_WFS_EXP += f"trim({text})+coalesce('\nTOELICHTING: '+trim({info}), '')"
+_WFS_EXP = f"left({date}, 10)"
+_WFS_EXP += f"+': '+{name}+'\\n'"
+_WFS_EXP += f"+trim({text})"
+_WFS_EXP += f"+coalesce('\\nTOELICHTING: '+trim({info}), '')"
+
+
 
 date = _EXP_KEY("tijdstip_registratie")
 name = _EXP_KEY("meldingsnummer_volledig")
 
-_OGC_EXP = f"format_date({date}, 'yyyy-MM-dd')+': '+{name}+'\n'+"
-_OGC_EXP += f"trim({text}) + coalesce('\nTOELICHTING: '+trim({info}), '')"
+_OGC_EXP = f"format_date({date}, 'yyyy-MM-dd')"
+_OGC_EXP += f"+': '+{name}+'\\n'"
+_OGC_EXP += f"+trim({text})"
+_OGC_EXP += f"+coalesce('\\nTOELICHTING: '+trim({info}), '')"
 
 def _set_label_expression(layer, exp):
     lab = layer.labeling()
