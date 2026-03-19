@@ -6,6 +6,7 @@ from qgis.PyQt.QtGui import *
 from qgis.PyQt.QtWidgets import *
 from qgis.core import *
 
+from .icons import loadIcon
 from .dialogs import ServicesDialog
 from . import pdok as PDOK
 
@@ -53,21 +54,15 @@ class Controller:
 
     def __init__(self, iface, toolBar):
         self._iface = iface
+        self._action = self.initAction()
+        toolBar.addAction(self._action)
 
+    def initAction(self):
         action = QAction("Start WFS laag...")
-        action.setIcon(self._loadIcon())
-        action.setObjectName('vdk:startLayer')
+        action.setIcon(loadIcon("wfs"))
+        action.setObjectName("vdk:startLayer")
         action.triggered.connect(self.startLayer)
-        toolBar.addAction(action)
-
-        self._action = action
-
-
-    def _loadIcon(self, name="wfs"):
-        path = os.path.split(__file__)[0]
-        path = os.path.join(path, 'icons')
-        path = os.path.join(path, name+'.svg')
-        return QIcon(path)
+        return action
 
 
     def startLayer(self):
