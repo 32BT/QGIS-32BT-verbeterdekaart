@@ -14,34 +14,8 @@ from . import pdok as PDOK
 ### Label Expressions
 ################################################################################
 '''
-Separate label-expressions.
-The label expression can be stated as a single expression applicable to both
-WFS and OGC vars, but that just slows down labels unnecessarily.
+TODO: needs restructure, since we already have layer...
 '''
-'''
-def _EXP_KEY(key): return f'"{key}"'
-date = _EXP_KEY("tijdstipRegistratie")
-name = _EXP_KEY("meldingsnummerVolledig")
-text = _EXP_KEY("omschrijving")
-info = _EXP_KEY("toelichting")
-
-_WFS_EXP = f"left({date}, 10)"
-_WFS_EXP += f"+': '+{name}+'\\n'"
-_WFS_EXP += f"+trim({text})"
-_WFS_EXP += f"+coalesce('\\nTOELICHTING: '+trim({info}), '')"
-
-
-
-date = _EXP_KEY("tijdstip_registratie")
-name = _EXP_KEY("meldingsnummer_volledig")
-
-_OGC_EXP = f"format_date({date}, 'yyyy-MM-dd')"
-_OGC_EXP += f"+': '+{name}+'\\n'"
-_OGC_EXP += f"+trim({text})"
-_OGC_EXP += f"+coalesce('\\nTOELICHTING: '+trim({info}), '')"
-
-'''
-
 
 class LabelExpression:
     def __init__(self, layer):
@@ -189,6 +163,7 @@ class Controller:
     ########################################################################
 
     def setStyle(self, layer, uid='BGT'):
+        # brt.qml includes status=Geparkeerd
         name = ('bgt.qml', 'brt.qml')[uid in ('BRT', 'AERO')]
         path = os.path.split(__file__)[0]
         path = os.path.join(path, 'qml')

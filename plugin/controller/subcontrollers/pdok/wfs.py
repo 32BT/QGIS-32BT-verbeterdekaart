@@ -31,11 +31,11 @@ class WFS:
             LINK = "http://www.opengis.net/def/crs/EPSG/0/28992"
 
     ########################################################################
-
+    '''
+    '''
     class FILTER:
         TMP = ''.join((
         '<Filter>',
-        #'<PropertyIsLike wildCard="*" singleChar="?" escapeChar="%">',
         '<PropertyIsLike wildCard="%" singleChar="_" escapeChar="\\">',
         '<PropertyName>{}</PropertyName>',
         '<Literal>{}</Literal>',
@@ -46,7 +46,10 @@ class WFS:
             return TMP.format(key, val)
 
     ########################################################################
-
+    '''
+    Example:
+        url = TMS.WFS.get_url('BGT', 'L0001')
+    '''
     @classmethod
     def get_url(cls, service_id, owner_id=None):
         url = cls.ENDPOINT(service_id)
