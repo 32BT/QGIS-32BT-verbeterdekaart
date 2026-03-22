@@ -18,6 +18,7 @@ Separate label-expressions.
 The label expression can be stated as a single expression applicable to both
 WFS and OGC vars, but that just slows down labels unnecessarily.
 '''
+'''
 def _EXP_KEY(key): return f'"{key}"'
 date = _EXP_KEY("tijdstipRegistratie")
 name = _EXP_KEY("meldingsnummerVolledig")
@@ -38,6 +39,41 @@ _OGC_EXP = f"format_date({date}, 'yyyy-MM-dd')"
 _OGC_EXP += f"+': '+{name}+'\\n'"
 _OGC_EXP += f"+trim({text})"
 _OGC_EXP += f"+coalesce('\\nTOELICHTING: '+trim({info}), '')"
+
+'''
+
+
+class LabelExpression:
+    def __init__(self, layer):
+        self._layer = layer
+        self._fldNames = [f.name() for f in layer.fields()]
+        self._keyNames = [name.lower().replace('_','') for name in self._fldNames]
+
+    def getKey(self, key):
+        try:
+            i = self._keyNames.index(key.lower())
+            key = self._fldNames[i]
+        except ValueError: pass
+        return f'"{key}"'
+
+    def get(self, type='wfs'):
+        date = self.getKey("tijdstipRegistratie")
+        name = self.getKey("meldingsnummerVolledig")
+        text = self.getKey("omschrijving")
+        info = self.getKey("toelichting")
+
+        exp = []
+        if date:
+            if type=='ogc':
+                exp.append(f"format_date({date}, 'yyyy-MM-dd')")
+            else:
+                exp.append(f"left({date}, 10)")
+            exp.append("': '")
+        if name: exp.append(f"{name}+'\\n'")
+        if text: exp.append(f"trim({text})")
+        if info: exp.append(f"coalesce('\\nTOELICHTING: '+trim({info}), '')")
+        return "+".join(exp)
+
 
 def _set_label_expression(layer, exp):
     lab = layer.labeling()
@@ -73,14 +109,15 @@ class Controller:
             if _type == False:
                 uri = self.get_wfs_uri(_name, _code)
                 src = 'WFS'
-                exp = _WFS_EXP
+                exp = 'wfs'
             else:
                 uri = self.get_ogc_uri(_name, _code)
                 src = 'oapif'
-                exp = _OGC_EXP
+                exp = 'ogc'
 
             layer = QgsVectorLayer(uri, _name+' Terugmeldingen', src)
-            self.setStyle(layer, 'BGT')
+            self.setStyle(layer, _name)
+            exp = LabelExpression(layer).get(exp)
             _set_label_expression(layer, exp)
             QgsProject.instance().addMapLayer(layer)
 
@@ -151,10 +188,11 @@ class Controller:
 
     ########################################################################
 
-    def setStyle(self, layer, name='BGT'):
+    def setStyle(self, layer, uid='BGT'):
+        name = ('bgt.qml', 'brt.qml')[uid in ('BRT', 'AERO')]
         path = os.path.split(__file__)[0]
         path = os.path.join(path, 'qml')
-        path = os.path.join(path, name.lower()+'.qml')
+        path = os.path.join(path, name)
         if os.path.exists(path):
             layer.loadNamedStyle(path,
                 flags=Qgis.LoadStyleFlag.IgnoreMissingStyleErrors)

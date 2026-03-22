@@ -8,10 +8,10 @@ class WFS:
     class ENDPOINT:
         DOM = "https://service.pdok.nl"
         URL = {
-            "BAG": DOM+"/lv/bag/terugmeldingen/wfs/v1_0",
-            "BGT": DOM+"/lv/bgt/terugmeldingen/wfs/v1_0",
-            "BRT": DOM+"/brt/terugmeldingen/wfs/v1_0",
-            "3DB": DOM+"/kadaster/basisvoorziening-3d/terugmeldingen/wfs/v1_0",
+            "BAG": DOM+"/kadaster/bag-terugmeldingen/wfs/v1_0",
+            "BGT": DOM+"/kadaster/bgt-terugmeldingen/wfs/v1_0",
+            "BRT": DOM+"/kadaster/brt-terugmeldingen/wfs/v1_0",
+            "3DB": DOM+"/kadaster/3d-basisvoorziening-terugmeldingen/wfs/v1_0",
             "AERO": DOM+"/defensie/luchtvaartobstakels/terugmeldingen/wfs/v1_0" }
 
         def __new__(cls, service_id):
