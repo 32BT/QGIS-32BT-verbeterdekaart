@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>243</width>
-    <height>122</height>
+    <width>333</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,18 +15,103 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="mainLabel">
+    <widget class="QLabel" name="targetInfo">
      <property name="text">
-      <string>mainLabel</string>
+      <string>Kies de verbeterdekaart doelmodus. </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="targetLayout">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="targetLabel">
+       <property name="text">
+        <string>Doelmodus:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="targetMenu">
+       <item>
+        <property name="text">
+         <string>BAG</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>BGT</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>AERO</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="targetNote">
+     <property name="text">
+      <string>n.b.: Deze optie is ook beschikbaar als je de werkbalk knop kortstondig ingedrukt houdt.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="scaleInfo">
+     <property name="text">
+      <string>Geef eventueel een schalingspercentage op.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="scaleLayout">
+     <property name="leftMargin">
+      <number>9</number>
+     </property>
      <item>
       <widget class="QLabel" name="scaleLabel">
        <property name="text">
-        <string>scaleLabel:</string>
+        <string>Schalingspercentage:</string>
        </property>
       </widget>
      </item>
@@ -68,12 +153,22 @@
     </layout>
    </item>
    <item>
+    <widget class="QLabel" name="scaleNote">
+     <property name="text">
+      <string>De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::MinimumExpanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -90,6 +185,9 @@
      </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+     <property name="centerButtons">
+      <bool>true</bool>
      </property>
     </widget>
    </item>

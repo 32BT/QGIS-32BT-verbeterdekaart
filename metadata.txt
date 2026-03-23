@@ -17,9 +17,10 @@ qgisMaximumVersion=5.0
 
 version=2.2
 changelog=Version 2.2
+    - QGIS 4 compatibility
     - Corrected labelexpression
     - Minor refactoring
-    - QGIS 4 compatibility
+    - New settingsdialog
     - New WFS endpoints (2026-03-22)
 
     Version 2.1

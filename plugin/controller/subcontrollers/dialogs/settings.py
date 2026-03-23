@@ -27,14 +27,23 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
     "SETTINGSDIALOG_TITLE":
         "Voorkeuren",
 
-    "SETTINGSDIALOG_MAINLABEL":
-        ["Voer een percentage in om de schaal van",
-        "verbeterdekaart aan te passen."],
+    "SETTINGSDIALOG_TARGETINFO":
+        "Kies de verbeterdekaart doelmodus.",
+
+    "SETTINGSDIALOG_TARGETNOTE":
+        "n.b.: Deze optie is ook beschikbaar als je de werkbalk knop kortstondig ingedrukt houdt.",
+
+    "SETTINGSDIALOG_TARGETLABEL":
+        "Doelmodus:",
+
+    "SETTINGSDIALOG_SCALEINFO":
+        "Geef eventueel een weergaveschaling op.",
+
+    "SETTINGSDIALOG_SCALENOTE":
+        "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.",
 
     "SETTINGSDIALOG_SCALELABEL":
         "Schalingspercentage:"})
-
-_LABELS.SETTINGSDIALOG_MAINLABEL = '\n'.join(_LABELS.SETTINGSDIALOG_MAINLABEL)
 
 ################################################################################
 ### Dialog
@@ -47,7 +56,11 @@ class Dialog(QDialog, _form()):
         self.setupUi(self)
         # Ensure translated labels
         self.setWindowTitle(_LABELS.SETTINGSDIALOG_TITLE)
-        self.mainLabel.setText(_LABELS.SETTINGSDIALOG_MAINLABEL)
+        self.targetInfo.setText(_LABELS.SETTINGSDIALOG_TARGETINFO)
+        self.targetNote.setText(_LABELS.SETTINGSDIALOG_TARGETNOTE)
+        self.targetLabel.setText(_LABELS.SETTINGSDIALOG_TARGETLABEL)
+        self.scaleInfo.setText(_LABELS.SETTINGSDIALOG_SCALEINFO)
+        self.scaleNote.setText(_LABELS.SETTINGSDIALOG_SCALENOTE)
         self.scaleLabel.setText(_LABELS.SETTINGSDIALOG_SCALELABEL)
 
     ########################################################################
@@ -55,14 +68,21 @@ class Dialog(QDialog, _form()):
     ########################################################################
 
     def askInput(self, settings):
-        scaleValue = settings.get('schalingspercentage')
-        self.setScale(scaleValue)
+        self.setTarget(settings.get('doel'))
+        self.setScale(settings.get('schalingspercentage'))
         if self.exec():
-            scaleValue = self.getScale()
-            settings['schalingspercentage'] = scaleValue
+            settings['doel'] = self.getTarget()
+            settings['schalingspercentage'] = self.getScale()
             return settings
 
     ########################################################################
+
+    def getTarget(self):
+        return self.targetMenu.currentText()
+
+    def setTarget(self, value):
+        self.targetMenu.setCurrentText(value)
+
 
     def getScale(self):
         return self.scaleValue.value()

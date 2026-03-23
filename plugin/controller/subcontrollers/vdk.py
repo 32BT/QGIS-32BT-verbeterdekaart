@@ -90,12 +90,15 @@ class Controller:
         menu.addAction('BGT')
         menu.addAction('AERO')
         menu.triggered.connect(self.setOption)
+        menu.aboutToShow.connect(self.targetMenuAboutToShow)
         return menu
 
     def setOption(self, action):
         self._targetPage = action.text()
         self._settings[self.SETTINGS.TARGET] = self._targetPage
         self._saveSettings(self._settings)
+
+    def targetMenuAboutToShow(self):
         self.updateOptionsMenu()
 
     def updateOptionsMenu(self):
@@ -169,6 +172,7 @@ class Controller:
         result = SettingsDialog(parent).askInput(settings)
         if result:
             self._saveSettings(result)
+            self._targetPage = result.get(self.SETTINGS.TARGET)
             self._scaleValue = result.get(self.SETTINGS.SCALE) or 100
 
     # Action 2: Copy location
