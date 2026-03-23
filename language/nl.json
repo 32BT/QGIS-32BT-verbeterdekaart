@@ -14,11 +14,22 @@
     "SETTINGSDIALOG_TITLE":
         "Voorkeuren",
 
-    "SETTINGSDIALOG_LABEL1":
-        ["Voer een percentage in om de schaal van",
-        "verbeterdekaart aan te passen."],
+    "SETTINGSDIALOG_TARGETINFO":
+        "Kies de verbeterdekaart doelmodus.",
 
-    "SETTINGSDIALOG_LABEL2":
+    "SETTINGSDIALOG_TARGETNOTE":
+        "n.b.: Deze optie is ook beschikbaar als je de werkbalk knop kortstondig ingedrukt houdt.",
+
+    "SETTINGSDIALOG_TARGETLABEL":
+        "Doelmodus:",
+
+    "SETTINGSDIALOG_SCALEINFO":
+        "Geef eventueel een weergaveschaling op.",
+
+    "SETTINGSDIALOG_SCALENOTE":
+        "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.",
+
+    "SETTINGSDIALOG_SCALELABEL":
         "Schalingspercentage:",
 
     "SERVICEDIALOG_TITLE":

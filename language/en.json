@@ -21,6 +21,30 @@
     "SETTINGSDIALOG_LABEL2":
         "Adjust scale:",
 
+
+    "SETTINGSDIALOG_TITLE":
+        "Settings",
+
+    "SETTINGSDIALOG_TARGETINFO":
+        "Select the targetwebservice.",
+
+    "SETTINGSDIALOG_TARGETNOTE":
+        "n.b.: This option is also available by temporarily holding down the toolbar button.",
+
+    "SETTINGSDIALOG_TARGETLABEL":
+        "Targetmode:",
+
+    "SETTINGSDIALOG_SCALEINFO":
+        "Enter an optional representationscale.",
+
+    "SETTINGSDIALOG_SCALENOTE":
+        "The maprepresentation of each website will be called with the same scale as the current document. The size of the websitemap may still be different due to system- and browsersettings. The scalesetting allows you to adjust the requested representation.",
+
+    "SETTINGSDIALOG_SCALELABEL":
+        "Adjust scale:",
+
+
+
     "SERVICEDIALOG_TITLE":
         "WFS Layer",
 
