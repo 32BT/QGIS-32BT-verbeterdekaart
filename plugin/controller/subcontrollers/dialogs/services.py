@@ -52,6 +52,7 @@ class Service(dict):
         if not isinstance(value, str):
             value = (self.TYPES.WFS, self.TYPES.OGC)[bool(value)]
         self[self.TYPE] = value
+        return value
     def getFilters(self):
         return self.get(self.FILTERS.KEY) or {}
     def setFilters(self, filters):
@@ -161,6 +162,6 @@ class Dialog(QDialog, _form()):
         service.setType(_type)
         service.setFilterString(filterStr=_code)
         services.setService(_name, service)
-        print(services)
         Settings.save_group(Services.__name__.lower(), services)
+        _type = service.getType()
         return _name, _type, _code

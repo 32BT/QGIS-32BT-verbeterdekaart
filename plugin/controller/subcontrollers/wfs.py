@@ -6,12 +6,22 @@ from qgis.PyQt.QtGui import *
 from qgis.PyQt.QtWidgets import *
 from qgis.core import *
 
+# need icon for action
 from .icons import loadIcon
+
+# action triggers dialog to select service
 from .dialogs import ServicesDialog
+
+# need corresponding layer source
 from . import pdok as PDOK
 
+# plus layer-styling
+from .qml import loadStyle
+
+# plus label-expression
+
 ################################################################################
-### Label Expressions
+### Label Expression
 ################################################################################
 '''
 TODO: needs restructure, since we already have layer...
@@ -30,7 +40,7 @@ class LabelExpression:
         except ValueError: pass
         return f'"{key}"'
 
-    def get(self, type='wfs'):
+    def get(self, serviceType='wfs'):
         date = self.getKey("tijdstipRegistratie")
         name = self.getKey("meldingsnummerVolledig")
         text = self.getKey("omschrijving")
@@ -38,7 +48,7 @@ class LabelExpression:
 
         exp = []
         if date:
-            if type=='ogc':
+            if serviceType.lower()=='ogc':
                 exp.append(f"format_date({date}, 'yyyy-MM-dd')")
             else:
                 exp.append(f"left({date}, 10)")
@@ -48,11 +58,13 @@ class LabelExpression:
         if info: exp.append(f"coalesce('\\nTOELICHTING: '+trim({info}), '')")
         return "+".join(exp)
 
-
-def _set_label_expression(layer, exp):
+'''
+If style is loaded prior to this call, then layer.labeling() is not None...
+'''
+def loadExpression(layer, serviceType):
     lab = layer.labeling()
     pal = lab.settings()
-    pal.fieldName=exp
+    pal.fieldName=LabelExpression(layer).get(serviceType)
     pal.isExpression=True
     lab.setSettings(pal)
 
@@ -79,20 +91,17 @@ class Controller:
         parent = self._iface.mainWindow()
         result = ServicesDialog(parent).askInput()
         if result is not None:
-            _name, _type, _code = result
-            if _type == False:
-                uri = self.get_wfs_uri(_name, _code)
-                src = 'WFS'
-                exp = 'wfs'
-            else:
-                uri = self.get_ogc_uri(_name, _code)
+            _serviceName, _serviceType, _filterCode = result
+            if _serviceType == 'OGC':
+                uri = self.get_ogc_uri(_serviceName, _filterCode)
                 src = 'oapif'
-                exp = 'ogc'
+            else:
+                uri = self.get_wfs_uri(_serviceName, _filterCode)
+                src = 'WFS'
 
-            layer = QgsVectorLayer(uri, _name+' Terugmeldingen', src)
-            self.setStyle(layer, _name)
-            exp = LabelExpression(layer).get(exp)
-            _set_label_expression(layer, exp)
+            layer = QgsVectorLayer(uri, _serviceName+' Terugmeldingen', src)
+            loadStyle(layer, _serviceName)
+            loadExpression(layer, _serviceType)
             QgsProject.instance().addMapLayer(layer)
 
     ########################################################################
@@ -161,7 +170,7 @@ class Controller:
         return uri.uri()
 
     ########################################################################
-
+    '''
     def setStyle(self, layer, uid='BGT'):
         # brt.qml includes status=Geparkeerd
         name = ('bgt.qml', 'brt.qml')[uid in ('BRT', 'AERO')]
@@ -174,4 +183,4 @@ class Controller:
         else:
             symbol = layer.renderer().symbol()
             symbol.setColor(QColor.fromRgb(255,255,0))
-
+    '''
