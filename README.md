@@ -96,7 +96,8 @@ Het verbeterdekaart menu toont een lijst met drie acties:
 ### 1. Voorkeuren...    
 Met deze optie kun je voorkeuren opgeven voor de plugin. Er zal een dialoogbox verschijnen met twee opties.  
 
-<img width="359" height="365" alt="image" src="https://github.com/user-attachments/assets/0a1270e4-da39-4638-8e54-744596622f1b" /><br />  
+<img width="358" height="367" alt="image" src="https://github.com/user-attachments/assets/4d70a922-b5c5-4ca9-a548-60646f1e9738" />
+<br />  
 
 Optie 1: ***landingspagina***  
 Als je de "VDK" knop aanklikt, dan zal er een verbeterdekaart-webpagina geopend worden in je browser. Er zijn drie websites voor het maken van meldingen. De bagviewer voor BAG meldingen, de algemene verbeterdekaart-site voor BGT, BRT, en 3D meldingen, en de verbeterdeluchtvaartkaart voor AERO meldingen. Met dit keuzemenu kun je de gewenste langingspagina instellen afhankelijk van je werkmodus. De keuze kan ook via de "VDK" knop gewijzigd worden door deze kortstondig ingedrukt te houden.  
