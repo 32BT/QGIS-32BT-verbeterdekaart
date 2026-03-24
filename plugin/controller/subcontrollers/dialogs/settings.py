@@ -28,13 +28,13 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
         "Voorkeuren",
 
     "SETTINGSDIALOG_TARGETINFO":
-        "Kies de verbeterdekaart doelmodus.",
+        "Kies de verbeterdekaart landingspagina.",
 
     "SETTINGSDIALOG_TARGETNOTE":
         "n.b.: Deze optie is ook beschikbaar als je de werkbalk knop kortstondig ingedrukt houdt.",
 
     "SETTINGSDIALOG_TARGETLABEL":
-        "Doelmodus:",
+        "Landingspagina:",
 
     "SETTINGSDIALOG_SCALEINFO":
         "Geef eventueel een weergaveschaling op.",
