@@ -1,5 +1,11 @@
 # verbeterdekaart
-QGIS-32BT-verbeterdekaart is een QGIS plugin voor ondersteuning in het beheer van terugmeldingen. Hiermee kun je gemakkelijk WFS-lagen aanmaken voor de verschillende terugmeldservices, en je kunt de bijbehorende terugmeldviewers eenvoudig oproepen.
+QGIS-32BT-verbeterdekaart is een QGIS plugin voor ondersteuning in het beheer van terugmeldingen. Hiermee kun je gemakkelijk WFS-lagen aanmaken voor de verschillende terugmeldservices, en je kunt de bijbehorende terugmeldviewers eenvoudig oproepen.  
+
+1. [Installatie](#installatie)
+2. [Gebruik](#gebruik)
+3. [De "WFS" knop](#knop-1-de-wfs-knop)
+4. [De "VDK" knop](#knop-2-de-vdk-knop)
+5. [De rechter muis knop](#knop-3-de-rechter-muisknop)
 
 ## Installatie
 Middels de pluginbeheer omgeving kan de plugin geïnstalleerd worden volgens de gebruikelijke methode. De plugin kan eventueel ook van zipfile geïnstalleerd worden. De zipfile is beschikbaar via de Code-button die te vinden is op de github pagina. Zie:  
@@ -22,13 +28,13 @@ De WFS button is bedoeld om een WFS laag aan te maken waarin terugmeldingen geto
 - Kies de gewenste service en geef eventueel een bronhoudercode op,
 - Klik OK om de keuze te bevestigen en de laag aan te maken. 
 ##
-**De WFS laag**  
+### De WFS laag  
 De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak die enigszins vergelijkbaar is met de bekende weergaves van de gekozen service. De opmaak kan uiteraard naar wens worden gewijzigd. Het is ook mogelijk om je eigen styling mee te geven aan elke nieuw aangemaakte laag, zie de styling voetnoot.[^1] 
 
 <img width="1014" height="485" alt="image" src="https://github.com/user-attachments/assets/7816f20b-a9b0-47ba-8ed9-c01c5046572d" /><br/>
 
 ## 
-**De WFS opties**  
+### De WFS opties  
 Als je op de button klikt, zal er een dialoogboxje verschijnen met twee opties: servicetype en bronhoudercode. 
 
 <img width="304" height="248" alt="image" src="https://github.com/user-attachments/assets/5fd68406-b79e-4328-94de-ab133419f09a" /><br/>
@@ -41,18 +47,16 @@ Servicetype is een keuzemenu voor de gewenste registratie. Terugmeldingen zijn g
 Sinds kort (Januari 2026) zijn er ook OGC-compatible endpoints beschikbaar. Indien je deze wilt gebruiken, kun je de checkbox "ogc" aanvinken. Dit heeft wel enige beperkingen, zie de [waarschuwing](#FILTER_WARNING) bij Bronhoudercode.
 
 **Bronhoudercode**  
-Bronhoudercode is een optionele filtercode. Bij het aanmaken van de laag kan eventueel een bronhoudercode-filter toegevoegd worden. Hiermee zorg je ervoor dat uitsluitend de meldingen voor een specifieke bronhouder worden opgevraagd. Dat scheelt in werklast voor de laag (en voor jezelf). 
+Bronhoudercode is een optionele filtercode. Bij het aanmaken van de laag kan eventueel een bronhoudercode-filter toegevoegd worden. Hiermee zorg je ervoor dat uitsluitend de meldingen voor een specifieke bronhouder worden opgevraagd. Dat scheelt in werklast voor de laag (en voor jezelf).  
+>[!NOTE]
+>LET OP: De filtercode wordt per servicetype bepaald. Als je van servicetype wisselt, dan wisselt de code mee.  
 
 <img width="305" height="250" alt="image" src="https://github.com/user-attachments/assets/d9d7904b-2722-42d0-bd93-8c2d618e5652" /><br/>
 
->[!CAUTION]
->BELANGRIJK: De filtercode wordt per servicetype bepaald. Als je van servicetype wisselt, dan wisselt de code mee.  
 
-Voor de normale WFS service endpoints, wordt het filter toegevoegd als QGIS expression. De plugin ondersteunt hierbij ook wildcard-karakters:  
+Voor de normale WFS service endpoints, wordt het filter toegevoegd als QGIS expression. De plugin ondersteunt ook wildcard-karakters. Hiermee kun je bijvoorbeeld een WFS-laag maken met alleen de terugmeldingen voor alle provinciale bronhouders. 
 - "%" of "*" betekent "één of meer willekeurige karakters"  
 - "_" of "?" betekent "precies één willekeurig karakter"
-
-Hiermee kun je bijvoorbeeld ook een WFS-laag maken met alleen de terugmeldingen voor alle provinciale bronhouders:  
 
 <img width="305" height="250" alt="image" src="https://github.com/user-attachments/assets/d03fe23a-28ea-4c15-b7f9-e89b6b9c64d8" /><br/>
 
@@ -79,20 +83,31 @@ Al deze pagina's tonen een kaart. Deze kaart zal door de VDK plugin zodanig word
 >[!NOTE]
 >Er kunnen eventueel schalingsverschillen zijn tussen je QGIS omgeving en je default webbrowser, met name Linux op een chromebook kan verschillen vertonen vanwege de Wayland graphicsdriver backend. De plugin heeft een setting om dit te compenseren. Zie de opties onder het volgende hoofdstukje.
 
-## Knop 3: De rechter muisknop
-Een alternatieve manier om de viewerpagina te openen is de verbeterdekaart-contextmenu optie. Klik met de rechtermuisknop op de kaart en selecteer een optie uit het verbeterdekaart menu. Het verbeterdekaart menu toont een lijst met drie acties:  
-1. Voorkeuren...
-2. Kopieer locatie
-3. Open webpagina
+## Knop 3: De rechter muisknop  
+Een alternatieve manier om de viewerpagina te openen is de verbeterdekaart-contextmenu optie. Klik met de rechtermuisknop op de kaart en selecteer een optie uit het verbeterdekaart menu.  
 
-**Voorkeuren...**  
-Met deze optie kun je voorkeuren opgeven voor de plugin. Er is één optie: **schalingspercentage**.  
-Bij het openen van de verbeterdekaart website zal de plugin de huidige locatie en schaal van QGIS overnemen. Het kan echter zijn dat de verbeterdekaart website dan alsnog een afwijkende weergave geeft van de betreffende locatie. Om dit te synchroniseren, kun je een schalingspercentage opgeven. Waardes hoger dan 100% zullen de verbeterdekaart representatie vergroten.
+<img width="381" height="116" alt="image" src="https://github.com/user-attachments/assets/3715a742-e9ed-4202-a384-59956acd6435" /><br/>  
 
-**Kopieer locatie**  
+Het verbeterdekaart menu toont een lijst met drie acties:  
+1. [Voorkeuren...](#1-voorkeuren)
+2. [Kopieer locatie](#2-kopieer-locatie)
+3. [Open webpagina](#3-open-webpagina)
+
+### 1. Voorkeuren...    
+Met deze optie kun je voorkeuren opgeven voor de plugin. Er zal een dialoogbox verschijnen met twee opties.  
+
+<img width="359" height="365" alt="image" src="https://github.com/user-attachments/assets/0a1270e4-da39-4638-8e54-744596622f1b" /><br />  
+
+Optie 1: ***landingspagina***  
+Als je de "VDK" knop aanklikt, dan zal er een verbeterdekaart-webpagina geopend worden in je browser. Er zijn drie websites voor het maken van meldingen. De bagviewer voor BAG meldingen, de algemene verbeterdekaart-site voor BGT, BRT, en 3D meldingen, en de verbeterdeluchtvaartkaart voor AERO meldingen. Met dit keuzemenu kun je de gewenste langingspagina instellen afhankelijk van je werkmodus. De keuze kan ook via de "VDK" knop gewijzigd worden door deze kortstondig ingedrukt te houden.  
+
+Optie 2: ***schalingspercentage***.  
+Bij het openen van de verbeterdekaart website zal de plugin de huidige locatie en schaal van QGIS overnemen. Het kan echter zijn dat de verbeterdekaart website dan alsnog een afwijkende weergave geeft van de betreffende locatie. Om dit te synchroniseren, kun je een schalingspercentage opgeven. Waardes hoger dan 100% zullen de verbeterdekaart weergave vergroten.
+
+### 2. Kopieer locatie  
 Deze optie kopieert de huidige locatie en schaal als URL naar de clipboard in het format voor de gekozen registratie. Dit kun je gebruiken om een locatie te versturen naar een andere gebruiker.
 
-**Open webpagina**  
+### 3. Open webpagina  
 Bij deze optie wordt de default browser geactiveerd met de verbeterdekaart URL voor de huidige QGIS locatie en schaal. In je browser kun je vervolgens een melding aanmaken volgens de stappen van de betreffende verbeterdekaart website.
 
 ## Werkmethodiek  
