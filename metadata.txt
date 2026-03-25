@@ -25,8 +25,8 @@ changelog=Version 2.2
 
     Version 2.1
     - Added option for new OGC API endpoints
-    - WFS filter now implemented as qgsexpression
+    - WFS filter now implemented as qgis-expression
 
     Version 2.0
     - Now available as toolbar
-    - includes an new option to start a filtered WFS layer for several of the PDOK terugmeldservices.
+    - includes a new option to start a filtered WFS layer for several of the PDOK terugmeldservices.
