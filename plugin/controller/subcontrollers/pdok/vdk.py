@@ -9,7 +9,7 @@ import math
 class VDK:
     class URL:
         BAG = "https://bagviewer.kadaster.nl/?theme=Luchtfoto%27s&"
-        BGT = "https://verbeterdekaart.nl/#?"
+        BGT = "https://www.verbeterdekaart.nl/#?"
         AERO = "https://www.verbeterdeluchtvaartkaart.nl/#/kaart?"
 
     class CRS:

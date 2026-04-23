@@ -12,7 +12,7 @@ class WFS:
             "BGT": DOM+"/kadaster/bgt-terugmeldingen/wfs/v1_0",
             "BRT": DOM+"/kadaster/brt-terugmeldingen/wfs/v1_0",
             "3DB": DOM+"/kadaster/3d-basisvoorziening-terugmeldingen/wfs/v1_0",
-            "AERO": DOM+"/defensie/luchtvaartobstakels/terugmeldingen/wfs/v1_0" }
+            "AERO": DOM+"/defensie/luchtvaartobstakels-terugmeldingen/wfs/v1_0" }
 
         def __new__(cls, service_id):
             return cls.URL.get(service_id)
