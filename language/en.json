@@ -2,14 +2,10 @@
     "TOOLBAR_TITLE":
         "verbeterdekaart Toolbar",
 
-    "MENU_ITEM1":
-        "Settings...",
-
-    "MENU_ITEM2":
-        "Copy URL to clipboard",
-
-    "MENU_ITEM3":
-        "Open URL in browser",
+    "CANVASMENU": {
+        "TITLE": "verbeterdekaart",
+        "ITEM1": "Settings..."
+    },
 
     "SETTINGSDIALOG_TITLE":
         "Settings",

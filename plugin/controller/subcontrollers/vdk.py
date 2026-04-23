@@ -17,6 +17,7 @@ from .qgs.mapcanvas import MapCanvas
 from . import pdok as PDOK
 
 from .icons import loadIcon
+from .menu import MenuButton
 
 ################################################################################
 ### Contextmenu
@@ -27,16 +28,20 @@ import sys
 _MODULE = sys.modules.get(__name__.split('.')[0])
 
 _LABELS = _MODULE.LANGUAGE.LABELS({
-    "MENU_TITLE": "verbeterdekaart",
-    "MENU_ITEM1": "Voorkeuren...",
-    "MENU_ITEM2": "Kopieer locatie",
-    "MENU_ITEM3": "Open webpagina"})
+    "CANVASMENU": {
+        "TITLE": "verbeterdekaart",
+        "ITEM1": "Voorkeuren..."
+    }
+})
 
 ################################################################################
 ### VDKController
 ################################################################################
 
 class Controller:
+    '''
+    Hoofdmenu items behoeven geen vertaling.
+    '''
     ITEM_LABEL1 = "BAG Viewer (BAG)"
     ITEM_LABEL2 = "Verbeter de Kaart (BGT/BRT/3DB)"
     ITEM_LABEL3 = "Verbeter de Luchtvaartkaart (AERO)"
@@ -64,44 +69,59 @@ class Controller:
         return Settings.load_group(self.SETTINGS.GROUP)
     def _saveSettings(self, settings):
         Settings.save_group(self.SETTINGS.GROUP, settings)
+
     ########################################################################
 
     def __init__(self, iface, toolBar):
         self._iface = iface
 
+        self._menuButton = MenuButton(toolBar, loadIcon("vdk"))
+        menu = self._menuButton.getMenu()
+        menu = self.addTargetPageItems(menu)
+        menu.triggered.connect(self.startBrowser)
+
         self._canvasMenu = self.initCanvasMenu()
         self._mapCanvas = MapCanvas(self._iface.mapCanvas())
         self._mapCanvas.connectMenuHandler(self.prepareCanvasMenu)
-
-        self._buttonMenu = self.initButtonMenu()
-        toolButton = QToolButton()
-        toolButton.setText("Doelpagina")
-        toolButton.setIcon(loadIcon("vdk"))
-        toolButton.setMenu(self._buttonMenu)
-        toolButton.setPopupMode(QToolButton.ToolButtonPopupMode.InstantPopup)
-        toolBar.addWidget(toolButton)
+        self._mapCanvas.connectExtentHandler(self.updateActions)
 
         self._settings = settings = self._loadSettings()
         self._scaleValue = int(settings.get(self.SETTINGS.SCALE) or 100)
         self._targetPage = settings.get(self.SETTINGS.TARGET) or 'BGT'
 
     def __del__(self):
+        self._mapCanvas.disconnectExtentHandler(self.updateActions)
         self._mapCanvas.disconnectMenuHandler(self.prepareContextMenu)
         self._mapCanvas = None
 
     ########################################################################
+
+    def updateActions(self):
+        enable = self.isDomainVisible()
+        self._menuButton.setEnabled(enable)
+
+    def isDomainVisible(self):
+        crs = QgsCoordinateReferenceSystem('EPSG:28992')
+        mapR = self._mapCanvas.visibleExtent(crs)
+        dstR = QgsRectangle(0, 300000, 300000, 630000)
+        return mapR.intersects(dstR)
+
+    ########################################################################
     ### Options
     ########################################################################
-
+    '''
     def initButtonMenu(self):
         menu = QMenu("TargetService")
         menu = self.addTargetPageItems(menu)
         menu.triggered.connect(self.startBrowser)
-        #menu.aboutToShow.connect(self.buttonMenuAboutToShow)
+        menu.aboutToShow.connect(self.buttonMenuAboutToShow)
         return menu
 
     def buttonMenuAboutToShow(self):
         self.updateButtonMenu()
+
+    def buttonMenuAboutToHide(self):
+        self._toolButton.setDown(False)
 
     def updateButtonMenu(self):
         icon0 = QIcon()
@@ -117,27 +137,16 @@ class Controller:
         self._targetPage = action._targetPage
         self._settings[self.SETTINGS.TARGET] = self._targetPage
         self._saveSettings(self._settings)
-
+    '''
     ########################################################################
     ### Submenu
     ########################################################################
 
     def initCanvasMenu(self):
-        menu = QMenu(_LABELS.MENU_TITLE)
-        action = menu.addAction(_LABELS.MENU_ITEM1)
+        menu = QMenu(_LABELS.CANVASMENU.TITLE)
+        action = menu.addAction(_LABELS.CANVASMENU.ITEM1)
         action.triggered.connect(self.adjustSettings)
         menu.addSeparator()
-        '''
-        action = menu.addAction(_LABELS.MENU_ITEM2)
-        action.triggered.connect(self.saveToClipboard)
-        action.setIcon(QgsApplication.getThemeIcon("mActionEditPaste.svg"))
-        action.setObjectName('vdk:copyURL')
-
-        action = menu.addAction(_LABELS.MENU_ITEM3)
-        action.triggered.connect(self.startBrowser)
-        action.setIcon(self._loadIcon())
-        action.setObjectName('vdk:openURL')
-        '''
         menu = self.addTargetPageItems(menu)
         menu.triggered.connect(self.startBrowser)
         return menu
@@ -155,10 +164,11 @@ class Controller:
     Following will add our "verbeterdekaart" menu with 3 submenus.
     '''
     def prepareCanvasMenu(self, menu, event):
-        if len(menu.actions()) == 1:
-            menu.addSeparator()
-        # Add submenu to context menu
-        action = menu.addMenu(self._canvasMenu)
+        if self.isDomainVisible():
+            if len(menu.actions()) == 1:
+                menu.addSeparator()
+            # Add submenu to context menu
+            action = menu.addMenu(self._canvasMenu)
 
     ########################################################################
     ### Contextmenu actions

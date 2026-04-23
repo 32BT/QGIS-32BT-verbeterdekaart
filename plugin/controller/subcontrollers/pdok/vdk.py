@@ -15,7 +15,6 @@ class VDK:
     class CRS:
         BGT = 'EPSG:28992'
 
-
     @classmethod
     def get_service_crs(cls, service='BGT'):
         return cls._get_crs(service)

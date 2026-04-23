@@ -26,6 +26,14 @@ class MapCanvas:
 
     ########################################################################
 
+    def connectExtentHandler(self, proc):
+        self._mapCanvas.extentsChanged.connect(proc)
+
+    def disconnectExtentHandler(self, proc):
+        self._mapCanvas.extentsChanged.disconnect(proc)
+
+    ########################################################################
+
     # Viewpoint for mapCanvas
     def getViewPoint(self):
         p = self._mapCanvas.center()
@@ -54,6 +62,14 @@ class MapCanvas:
                 self.getCrs(), crs, QgsProject.instance())
             mapPoint = T.transform(mapPoint)
         return mapPoint
+
+    def visibleExtent(self, crs=None):
+        R = self._mapCanvas.mapSettings().visibleExtent()
+        if crs and crs != self.getCrs():
+            T = QgsCoordinateTransform(
+                self.getCrs(), crs, QgsProject.instance())
+            R = T.transform(R)
+        return R
 
     def getCrs(self):
         return self._mapCanvas.mapSettings().destinationCrs()
