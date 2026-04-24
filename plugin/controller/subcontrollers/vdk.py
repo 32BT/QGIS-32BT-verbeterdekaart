@@ -21,15 +21,15 @@ from .menu import MenuButton
 from .menu import TargetMenu
 
 
-################################################################################
+###############################################################################
 ### VDKController
-################################################################################
+###############################################################################
 
 class Controller:
 
-    ########################################################################
+    #######################################################################
     ### Voorkeuren
-    ########################################################################
+    #######################################################################
     class SETTINGS:
         GROUP = 'voorkeuren'
         SCALE = 'schalingspercentage'
@@ -41,7 +41,7 @@ class Controller:
     def _saveSettings(self, settings):
         Settings.save_group(self.SETTINGS.GROUP, settings)
 
-    ########################################################################
+    #######################################################################
 
     def __init__(self, iface, toolBar):
         self._iface = iface
@@ -72,7 +72,7 @@ class Controller:
         self._mapCanvas.disconnectMenuHandler(self.prepareContextMenu)
         self._mapCanvas = None
 
-    ########################################################################
+    #######################################################################
     '''
     Verbeterdekaart heeft alleen betekenis binnen Nederland.
     Als het werkblad niet overlapt met Nederland, dan wordt
@@ -91,9 +91,9 @@ class Controller:
         enable = self.isDomainVisible()
         self._menuButton.setEnabled(enable)
 
-    ########################################################################
+    #######################################################################
     ### Contextmenu preparation
-    ########################################################################
+    #######################################################################
     '''
     Right-clicking the mapCanvas will present a contextmenu.
     The mapcanvas will emit a contextMenuAboutToShow-signal first.
@@ -108,13 +108,20 @@ class Controller:
             # Add our menu to context menu
             action = contextMenu.addMenu(self._canvasMenu)
 
-    ########################################################################
+    #######################################################################
     ### Menu actions
-    ########################################################################
+    #######################################################################
     '''
-    If a menuaction from our menu is triggered, it will be either:
-    one of the verbeterdekaart targets, or the settings option.
-    If it is a delayed action, it will be a modeswitch
+    Actions will either be: instant actions or delayed actions.
+    A delayed action results from a delayed popup when in focusmode.
+    Actions will then either be: one of the verbeterdekaart targets, or
+    the settings option.
+    A delayed action in the targets category, is a focusmodeswitch.
+
+                |  BAG/BGT/AERO  |  Settings
+        -------------------------------------------------
+        instant |  open webpage  |  open settingsdialog
+        delayed |  switch focus  |  open settingsdialog
     '''
 
     def delayedActionTriggered(self, action=None):
@@ -131,6 +138,7 @@ class Controller:
         else:
             self.adjustSettings()
 
+    #######################################################################
 
     def adjustSettings(self):
         parent = self._iface.mainWindow()
@@ -142,7 +150,7 @@ class Controller:
             self._scaleValue = settings.get(self.SETTINGS.SCALE) or 100
             self._menuButton.setFocusMode(self._targetPage)
 
-    ########################################################################
+    #######################################################################
 
     def setFocusMode(self, target):
         settings = self._settings
@@ -156,9 +164,9 @@ class Controller:
         QDesktopServices.openUrl(QUrl(url))
         #webbrowser.open(url)
 
-    ########################################################################
+    #######################################################################
     ### verbeterdekaart URL
-    ########################################################################
+    #######################################################################
     '''
     '''
     def _getURL(self, service='BGT', point=None, scale=None):
@@ -175,4 +183,4 @@ class Controller:
 
         return PDOK.VDK.get_service_url(service, point, scale)
 
-################################################################################
+###############################################################################

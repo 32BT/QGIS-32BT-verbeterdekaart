@@ -30,13 +30,13 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
 
         "TARGET": {
             "NOTE":
-                "Kies de verbeterdekaart landingspagina modus.",
+                "Kies een doelmodus voor de werkbalk knop.",
 
             "INFO":
-                "In Ad hoc modus toont de werkbalkknop altijd eerst een keuzemenu.\nBij BAG, BGT, of AERO gaat de werkbalkknop direct naar de gekozen landingspagina. (Je kunt alsnog wisselen door de werkbalkknop\nkortstondig ingedrukt te houden.)",
+                "Ad hoc modus toont altijd een keuzemenu voor de landingspagina.\nFocus modus opent direct de voorgeselecteerde pagina. (Je kunt de voorselectie wisselen door de knop even ingedrukt te houden.)",
 
             "LABEL":
-                "Landingspagina:",
+                "Doelmodus:",
         },
 
         "SCALE": {

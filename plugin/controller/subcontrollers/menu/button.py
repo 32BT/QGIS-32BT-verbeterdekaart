@@ -11,7 +11,7 @@ from qgis.PyQt.QtWidgets import *
 NOTE:
 QToolButton does not unraise properly after showing the menu in instant mode.
 In delayed mode, it works fine. The problem is in showMenu which probably
-catches mouse events away from the original control.
+catches away mouse events from the original control.
 '''
 
 class MenuButton(QToolButton):
@@ -26,7 +26,7 @@ class MenuButton(QToolButton):
         super().__init__()
 
         '''
-        In INSTANT mode, the action will be ignored.
+        In INSTANT mode, the button action will be ignored.
         '''
         self._action = QAction(icon, "Open Webpagina")
         self._action.setObjectName("vdk:menuButtonAction")

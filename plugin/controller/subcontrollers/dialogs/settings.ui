@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>422</width>
-    <height>341</height>
+    <width>448</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,158 +15,168 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="targetNote">
-     <property name="text">
-      <string>Kies een doelmodus voor de werkbalkknop.</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Werkbalk knop</string>
      </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="targetNote">
+        <property name="text">
+         <string>Kies een doelmodus voor de werkbalk knop.</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="targetLabelLayout">
+        <property name="leftMargin">
+         <number>9</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="targetLabel">
+          <property name="text">
+           <string>Doelmodus:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="targetMenu">
+          <item>
+           <property name="text">
+            <string>Ad hoc</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>BAG</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>BGT</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>AERO</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="targetInfo">
+        <property name="text">
+         <string>Ad hoc modus toont altijd een keuzemenu voor de landingspagina.
+Focus modus opent direct de voorgeselecteerde pagina. (Je kunt de voorselectie wisselen door de knop even ingedrukt te houden.)</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="targetLabelLayout">
-     <property name="leftMargin">
-      <number>9</number>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Website weergave</string>
      </property>
-     <item>
-      <widget class="QLabel" name="targetLabel">
-       <property name="text">
-        <string>Doelmodus:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="targetMenu">
-       <item>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="scaleNote">
         <property name="text">
-         <string>Ad hoc</string>
+         <string>Geef eventueel een schalingspercentage op.</string>
         </property>
-       </item>
-       <item>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="scaleLayout">
+        <property name="leftMargin">
+         <number>9</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="scaleLabel">
+          <property name="text">
+           <string>Schalingspercentage:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="scaleValue">
+          <property name="suffix">
+           <string>%</string>
+          </property>
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>500</number>
+          </property>
+          <property name="singleStep">
+           <number>10</number>
+          </property>
+          <property name="stepType">
+           <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+          </property>
+          <property name="value">
+           <number>100</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="scaleInfo">
         <property name="text">
-         <string>BAG</string>
+         <string>De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Deze waarde vergroot of verkleint de opgeroepen weergave.</string>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>BGT</string>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>AERO</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="targetInfo">
-     <property name="text">
-      <string>In Ad hoc modus toont de werkbalkknop altijd eerst een keuzemenu.
-Bij BAG, BGT, of AERO gaat de werkbalkknop direct naar de gekozen landingspagina. (Je kunt alsnog wisselen door de werkbalkknop
-kortstondig ingedrukt te houden.)</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="scaleNote">
-     <property name="text">
-      <string>Geef eventueel een schalingspercentage op.</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <layout class="QHBoxLayout" name="scaleLayout">
-     <property name="leftMargin">
-      <number>9</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="scaleLabel">
-       <property name="text">
-        <string>Schalingspercentage:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QSpinBox" name="scaleValue">
-       <property name="suffix">
-        <string>%</string>
-       </property>
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>500</number>
-       </property>
-       <property name="singleStep">
-        <number>10</number>
-       </property>
-       <property name="stepType">
-        <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-       </property>
-       <property name="value">
-        <number>100</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="scaleInfo">
-     <property name="text">
-      <string>De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Deze waarde vergroot of verkleint de opgeroepen weergave.</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
