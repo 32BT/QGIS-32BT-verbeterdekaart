@@ -18,43 +18,14 @@ from . import pdok as PDOK
 
 from .icons import loadIcon
 from .menu import MenuButton
+from .menu import TargetMenu
 
-################################################################################
-### Contextmenu
-################################################################################
-'''
-'''
-import sys
-_MODULE = sys.modules.get(__name__.split('.')[0])
-
-_LABELS = _MODULE.LANGUAGE.LABELS({
-    "CANVASMENU": {
-        "TITLE": "verbeterdekaart",
-        "ITEM1": "Voorkeuren..."
-    }
-})
 
 ################################################################################
 ### VDKController
 ################################################################################
 
 class Controller:
-    '''
-    Hoofdmenu items behoeven geen vertaling.
-    '''
-    ITEM_LABEL1 = "BAG Viewer (BAG)"
-    ITEM_LABEL2 = "Verbeter de Kaart (BGT/BRT/3DB)"
-    ITEM_LABEL3 = "Verbeter de Luchtvaartkaart (AERO)"
-
-    @classmethod
-    def addTargetPageItems(cls, menu):
-        action = menu.addAction(cls.ITEM_LABEL1)
-        action._targetPage = 'BAG'
-        action = menu.addAction(cls.ITEM_LABEL2)
-        action._targetPage = 'BGT'
-        action = menu.addAction(cls.ITEM_LABEL3)
-        action._targetPage = 'AERO'
-        return menu
 
     ########################################################################
     ### Voorkeuren
@@ -75,12 +46,13 @@ class Controller:
     def __init__(self, iface, toolBar):
         self._iface = iface
 
-        self._menuButton = MenuButton(toolBar, loadIcon("vdk"))
-        menu = self._menuButton.getMenu()
-        menu = self.addTargetPageItems(menu)
-        menu.triggered.connect(self.startBrowser)
+        self._menu = TargetMenu()
+        self._menu.setObjectName("vdk:targetMenu")
+        self._menu.triggered.connect(self.menuTriggered)
 
-        self._canvasMenu = self.initCanvasMenu()
+        self._menuButton = MenuButton(toolBar, loadIcon("vdk"))
+        self._menuButton.setMenu(self._menu)
+
         self._mapCanvas = MapCanvas(self._iface.mapCanvas())
         self._mapCanvas.connectMenuHandler(self.prepareCanvasMenu)
         self._mapCanvas.connectExtentHandler(self.updateActions)
@@ -95,7 +67,11 @@ class Controller:
         self._mapCanvas = None
 
     ########################################################################
-
+    '''
+    Verbeterdekaart heeft alleen betekenis binnen Nederland.
+    Als het werkblad niet overlapt met Nederland, dan worden
+    de knoppen grijs, en is het canvasmenu niet beschikbaar.
+    '''
     def updateActions(self):
         enable = self.isDomainVisible()
         self._menuButton.setEnabled(enable)
@@ -105,51 +81,6 @@ class Controller:
         mapR = self._mapCanvas.visibleExtent(crs)
         dstR = QgsRectangle(0, 300000, 300000, 630000)
         return mapR.intersects(dstR)
-
-    ########################################################################
-    ### Options
-    ########################################################################
-    '''
-    def initButtonMenu(self):
-        menu = QMenu("TargetService")
-        menu = self.addTargetPageItems(menu)
-        menu.triggered.connect(self.startBrowser)
-        menu.aboutToShow.connect(self.buttonMenuAboutToShow)
-        return menu
-
-    def buttonMenuAboutToShow(self):
-        self.updateButtonMenu()
-
-    def buttonMenuAboutToHide(self):
-        self._toolButton.setDown(False)
-
-    def updateButtonMenu(self):
-        icon0 = QIcon()
-        icon1 = self._loadIcon('chk')
-        for action in self._buttonMenu.actions():
-            if action._targetPage != self._targetPage:
-                action.setIcon(icon0)
-            else:
-                action.setIcon(icon1)
-                self._buttonMenu.setDefaultAction(action)
-
-    def setOption(self, action):
-        self._targetPage = action._targetPage
-        self._settings[self.SETTINGS.TARGET] = self._targetPage
-        self._saveSettings(self._settings)
-    '''
-    ########################################################################
-    ### Submenu
-    ########################################################################
-
-    def initCanvasMenu(self):
-        menu = QMenu(_LABELS.CANVASMENU.TITLE)
-        action = menu.addAction(_LABELS.CANVASMENU.ITEM1)
-        action.triggered.connect(self.adjustSettings)
-        menu.addSeparator()
-        menu = self.addTargetPageItems(menu)
-        menu.triggered.connect(self.startBrowser)
-        return menu
 
     ########################################################################
     ### Contextmenu preparation
@@ -168,25 +99,24 @@ class Controller:
             if len(menu.actions()) == 1:
                 menu.addSeparator()
             # Add submenu to context menu
-            action = menu.addMenu(self._canvasMenu)
+            action = menu.addMenu(self._menu)
 
     ########################################################################
-    ### Contextmenu actions
+    ### Menu actions
     ########################################################################
     '''
-    If the user actually selects one of the menuitems, the corresponding
-    action will be triggered.
-        Action 1 will start a dialog to set preferences, specifically
-            a compensation for verbeterdekaart scaling.
-        Action 2 will copy the current maplocation & scale in
-            verbeterdekaart-compatible format to the clipboard.
-        Action 3 will open the current maplocation & scale in
-            the default webbrowser.
-
-    action slot definition:
-        actionSlot([isChecked])
+    If a menuaction is triggered, it will be either a verbeterdekaart target,
+    or the settings options.
     '''
-    # Action 1: adjust preferences
+    def menuTriggered(self, action=None):
+        target = getattr(action, '_targetPage', None)
+        if target in PDOK.VDK.TARGET.LIST:
+            url = self._getURL(target)
+            QDesktopServices.openUrl(QUrl(url))
+            #webbrowser.open(url)
+        else:
+            self.adjustSettings()
+
     def adjustSettings(self):
         parent = self._iface.mainWindow()
         settings = self._loadSettings()
@@ -195,19 +125,6 @@ class Controller:
             self._saveSettings(result)
             self._targetPage = result.get(self.SETTINGS.TARGET)
             self._scaleValue = result.get(self.SETTINGS.SCALE) or 100
-
-    # Action 2: Copy location
-    def saveToClipboard(self):
-        url = self._getURL(self._targetPage)
-        clipBoard = QgsApplication.clipboard()
-        clipBoard.setText(url)
-
-    # Action 3: Open verbeterdekaart in default webbrowser
-    def startBrowser(self, action=None):
-        if hasattr(action, '_targetPage'):
-            url = self._getURL(action._targetPage)
-            QDesktopServices.openUrl(QUrl(url))
-            #webbrowser.open(url)
 
     ########################################################################
     ### verbeterdekaart URL

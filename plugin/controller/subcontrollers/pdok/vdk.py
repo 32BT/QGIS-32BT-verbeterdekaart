@@ -7,13 +7,15 @@ import math
 ################################################################################
 
 class VDK:
-    class URL:
-        BAG = "https://bagviewer.kadaster.nl/?theme=Luchtfoto%27s&"
-        BGT = "https://www.verbeterdekaart.nl/#?"
-        AERO = "https://www.verbeterdeluchtvaartkaart.nl/#/kaart?"
+    class TARGET:
+        URL = dict(
+            BAG = "https://bagviewer.kadaster.nl/?theme=Luchtfoto%27s&",
+            BGT = "https://www.verbeterdekaart.nl/#?",
+            AERO = "https://www.verbeterdeluchtvaartkaart.nl/#/kaart?")
+        LIST = tuple(URL)
 
-    class CRS:
-        BGT = 'EPSG:28992'
+        class CRS:
+            BGT = 'EPSG:28992'
 
     @classmethod
     def get_service_crs(cls, service='BGT'):
@@ -27,11 +29,11 @@ class VDK:
 
     @classmethod
     def _get_crs(cls, service='BGT'):
-        return getattr(cls.CRS, service, cls.CRS.BGT)
+        return getattr(cls.TARGET.CRS, service, cls.TARGET.CRS.BGT)
 
     @classmethod
     def _get_url(cls, service='BGT'):
-        return getattr(cls.URL, service, cls.URL.BGT)
+        return cls.TARGET.URL.get(service) or cls.TARGET.URL.get('BGT')
 
     @staticmethod
     def _get_prm(location=None, scale=None):
