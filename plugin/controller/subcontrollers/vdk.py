@@ -50,13 +50,14 @@ class Controller:
         self._buttonMenu.setObjectName("vdk:buttonMenu")
         self._buttonMenu.triggered.connect(self.menuTriggered)
         self._menuButton = MenuButton(toolBar, loadIcon("vdk"), self._buttonMenu)
+        self._menuButton.triggered.connect(self.menuTriggered)
 
         self._canvasMenu = TargetMenu()
         self._canvasMenu.setObjectName("vdk:canvasMenu")
         self._canvasMenu.triggered.connect(self.menuTriggered)
 
         self._mapCanvas = MapCanvas(self._iface.mapCanvas())
-        self._mapCanvas.connectMenuHandler(self.attachMenu)
+        self._mapCanvas.connectMenuHandler(self.contextMenuAboutToShow)
         self._mapCanvas.connectExtentHandler(self.updateButtons)
 
         self._settings = settings = self._loadSettings()
@@ -73,8 +74,8 @@ class Controller:
     ########################################################################
     '''
     Verbeterdekaart heeft alleen betekenis binnen Nederland.
-    Als het werkblad niet overlapt met Nederland, dan worden
-    de knoppen grijs, en is het canvasmenu niet beschikbaar.
+    Als het werkblad niet overlapt met Nederland, dan wordt
+    de knop grijs, en is het canvasmenu niet beschikbaar.
     '''
     def isDomainVisible(self):
         crs = QgsCoordinateReferenceSystem('EPSG:28992')
@@ -82,9 +83,8 @@ class Controller:
         dstR = QgsRectangle(0, 300000, 300000, 630000)
         return mapR.intersects(dstR)
 
-
     '''
-
+    Button updates are triggered by mapCanvas extentsChanged signal.
     '''
     def updateButtons(self):
         enable = self.isDomainVisible()
@@ -98,9 +98,9 @@ class Controller:
     The mapcanvas will emit a contextMenuAboutToShow-signal first.
     This allows us to attach our menu to the contextmenu.
 
-    The incoming menu starts out empty each time the signal is triggered.
+    This must be done each time the signal is triggered.
     '''
-    def attachMenu(self, contextMenu, event):
+    def contextMenuAboutToShow(self, contextMenu, event):
         if self.isDomainVisible():
             if len(contextMenu.actions()) == 1:
                 contextMenu.addSeparator()

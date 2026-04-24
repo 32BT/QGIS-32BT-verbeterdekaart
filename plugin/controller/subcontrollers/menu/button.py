@@ -15,6 +15,8 @@ catches mouse events away from the original control.
 '''
 
 class MenuButton(QToolButton):
+    triggered = pyqtSignal(object)
+
     class POPUP:
         INSTANT = QToolButton.ToolButtonPopupMode.InstantPopup
         DELAYED = QToolButton.ToolButtonPopupMode.DelayedPopup
@@ -48,7 +50,7 @@ class MenuButton(QToolButton):
     ########################################################################
 
     def setFocusMode(self, mode="Ad hoc"):
-        self._focusMode = mode
+        self._action._targetPage = mode
         self.menu().prepare(mode)
         if mode in ('BAG', 'BGT', 'AERO'):
             self.setPopupMode(self.POPUP.DELAYED)
@@ -57,3 +59,6 @@ class MenuButton(QToolButton):
 
     def startBrowser(self, action=None):
         print('startBrowser')
+        self.triggered.emit(self._action)
+
+
