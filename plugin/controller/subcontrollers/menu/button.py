@@ -8,18 +8,16 @@ from qgis.PyQt.QtWidgets import *
 ### MenuButton
 ################################################################################
 '''
-NOTE: QToolButton with menu does not unraise properly after showing the menu.
-We therefore build an alternative button
+NOTE: A normal QToolButton does not unraise properly after showing the menu.
+We therefore implement alternative logic.
 '''
 
 class MenuButton:
 
     def __init__(self, toolBar, icon=QIcon(), menu=None):
 
-        self._action = QAction()
+        self._action = QAction(icon, "Open Webpagina")
         self._action.setObjectName("vdk:menuButtonAction")
-        self._action.setIcon(icon)
-        self._action.setText("Open Webpagina")
         self._action.triggered.connect(self.showMenu)
 
         self._button = QToolButton()

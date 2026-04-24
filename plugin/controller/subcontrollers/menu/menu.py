@@ -11,7 +11,7 @@ class MENU:
         BAG = "BAG Viewer (BAG)"
         BGT = "Verbeter de Kaart (BGT/BRT/3DB)"
         AERO = "Verbeter de Luchtvaartkaart (AERO)"
-        OPTIONS = "Voorkeuren..."
+        SETTINGS = "Voorkeuren..."
 
 class TARGET:
     class PAGE:
@@ -30,4 +30,4 @@ class TargetMenu(QMenu):
         action = self.addAction(MENU.ITEM.AERO)
         action._targetPage = TARGET.PAGE.AERO
         self.addSeparator()
-        action = self.addAction(MENU.ITEM.OPTIONS)
+        action = self.addAction(MENU.ITEM.SETTINGS)

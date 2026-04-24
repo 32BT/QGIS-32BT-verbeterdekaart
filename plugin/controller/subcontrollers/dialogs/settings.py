@@ -24,27 +24,35 @@ import sys
 _MODULE = sys.modules.get(__name__.split('.')[0])
 
 _LABELS = _MODULE.LANGUAGE.LABELS({
-    "SETTINGSDIALOG_TITLE":
-        "Voorkeuren",
+    "SETTINGSDIALOG": {
+        "TITLE":
+            "Voorkeuren",
 
-    "SETTINGSDIALOG_TARGETINFO":
-        "Kies de verbeterdekaart landingspagina.",
+        "TARGET": {
+            "NOTE":
+                "Kies de verbeterdekaart landingspagina modus.",
 
-    "SETTINGSDIALOG_TARGETNOTE":
-        "n.b.: Deze optie is ook beschikbaar als je de werkbalk knop kortstondig ingedrukt houdt.",
+            "INFO":
+                "Ad-hoc modus toont altijd een keuzemenu.\nFocus modus gaat direct naar de gekozen landingspagina.\n(Je kunt alsnog wisselen door de werkbalkknop kortstondig \ningedrukt te houden.)",
 
-    "SETTINGSDIALOG_TARGETLABEL":
-        "Landingspagina:",
+            "LABEL":
+                "Landingspagina:",
+        },
 
-    "SETTINGSDIALOG_SCALEINFO":
-        "Geef eventueel een weergaveschaling op.",
+        "SCALE": {
+            "NOTE":
+                "Geef eventueel een weergaveschaling op.",
 
-    "SETTINGSDIALOG_SCALENOTE":
-        "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.",
+            "INFO":
+                "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.",
 
-    "SETTINGSDIALOG_SCALELABEL":
-        "Schalingspercentage:"})
+            "LABEL":
+                "Schalingspercentage:"
+        }
+    }
+})
 
+_LABELS = _LABELS.SETTINGSDIALOG
 ################################################################################
 ### Dialog
 ################################################################################
@@ -55,13 +63,15 @@ class Dialog(QDialog, _form()):
         super().__init__(parent)
         self.setupUi(self)
         # Ensure translated labels
-        self.setWindowTitle(_LABELS.SETTINGSDIALOG_TITLE)
-        self.targetInfo.setText(_LABELS.SETTINGSDIALOG_TARGETINFO)
-        self.targetNote.setText(_LABELS.SETTINGSDIALOG_TARGETNOTE)
-        self.targetLabel.setText(_LABELS.SETTINGSDIALOG_TARGETLABEL)
-        self.scaleInfo.setText(_LABELS.SETTINGSDIALOG_SCALEINFO)
-        self.scaleNote.setText(_LABELS.SETTINGSDIALOG_SCALENOTE)
-        self.scaleLabel.setText(_LABELS.SETTINGSDIALOG_SCALELABEL)
+        self.setWindowTitle(_LABELS.TITLE)
+        self.targetNote.setText(_LABELS.TARGET.NOTE)
+        self.targetLabel.setText(_LABELS.TARGET.LABEL)
+        self.targetInfo.setText(_LABELS.TARGET.INFO)
+        self.scaleNote.setText(_LABELS.SCALE.NOTE)
+        self.scaleLabel.setText(_LABELS.SCALE.LABEL)
+        self.scaleInfo.setText(_LABELS.SCALE.INFO)
+
+        self.targetMenu.insertSeparator(1)
 
     ########################################################################
     ### Entrypoint

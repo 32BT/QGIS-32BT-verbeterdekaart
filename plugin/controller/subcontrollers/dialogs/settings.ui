@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>333</width>
-    <height>300</height>
+    <width>363</width>
+    <height>341</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="targetInfo">
+    <widget class="QLabel" name="targetNote">
      <property name="text">
       <string>Kies de verbeterdekaart doelmodus. </string>
      </property>
@@ -28,7 +28,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="targetLayout">
+    <layout class="QHBoxLayout" name="targetLabelLayout">
      <property name="leftMargin">
       <number>9</number>
      </property>
@@ -41,6 +41,11 @@
      </item>
      <item>
       <widget class="QComboBox" name="targetMenu">
+       <item>
+        <property name="text">
+         <string>Ad hoc</string>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>BAG</string>
@@ -74,9 +79,12 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="targetNote">
+    <widget class="QLabel" name="targetInfo">
      <property name="text">
-      <string>n.b.: Deze optie is ook beschikbaar als je de werkbalk knop kortstondig ingedrukt houdt.</string>
+      <string>Ad-hoc modus toont altijd een keuzemenu. 
+Focus modus gaat direct naar de gekozen landingspagina. 
+(Je kunt alsnog wisselen door de werkbalkknop kortstondig 
+ingedrukt te houden.)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -94,7 +102,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="scaleInfo">
+    <widget class="QLabel" name="scaleNote">
      <property name="text">
       <string>Geef eventueel een schalingspercentage op.</string>
      </property>
@@ -153,7 +161,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="scaleNote">
+    <widget class="QLabel" name="scaleInfo">
      <property name="text">
       <string>De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.</string>
      </property>

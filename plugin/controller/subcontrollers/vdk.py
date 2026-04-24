@@ -54,12 +54,12 @@ class Controller:
         self._menuButton.setMenu(self._menu)
 
         self._mapCanvas = MapCanvas(self._iface.mapCanvas())
-        self._mapCanvas.connectMenuHandler(self.prepareCanvasMenu)
-        self._mapCanvas.connectExtentHandler(self.updateActions)
+        self._mapCanvas.connectMenuHandler(self.prepareMenu)
+        self._mapCanvas.connectExtentHandler(self.updateButtons)
 
         self._settings = settings = self._loadSettings()
+        self._targetPage = settings.get(self.SETTINGS.TARGET) or 'Ad hoc'
         self._scaleValue = int(settings.get(self.SETTINGS.SCALE) or 100)
-        self._targetPage = settings.get(self.SETTINGS.TARGET) or 'BGT'
 
     def __del__(self):
         self._mapCanvas.disconnectExtentHandler(self.updateActions)
@@ -72,41 +72,39 @@ class Controller:
     Als het werkblad niet overlapt met Nederland, dan worden
     de knoppen grijs, en is het canvasmenu niet beschikbaar.
     '''
-    def updateActions(self):
-        enable = self.isDomainVisible()
-        self._menuButton.setEnabled(enable)
-
     def isDomainVisible(self):
         crs = QgsCoordinateReferenceSystem('EPSG:28992')
         mapR = self._mapCanvas.visibleExtent(crs)
         dstR = QgsRectangle(0, 300000, 300000, 630000)
         return mapR.intersects(dstR)
 
+    def updateButtons(self):
+        enable = self.isDomainVisible()
+        self._menuButton.setEnabled(enable)
+
     ########################################################################
     ### Contextmenu preparation
     ########################################################################
     '''
-    The process is started by right-clicking the mapCanvas. This will present
-    a contextmenu. Just before the contextmenu will be shown, a signal will be
-    emitted: contextMenuAboutToShow. This signal allows us to append the menu
-    with our submenu.
+    Right-clicking the mapCanvas will present a contextmenu.
+    The mapcanvas will emit a contextMenuAboutToShow-signal with this menu.
+    This allows us to append our menu to the contextmenu.
 
     The incoming menu starts out empty each time the signal is triggered.
-    Following will add our "verbeterdekaart" menu with 3 submenus.
     '''
-    def prepareCanvasMenu(self, menu, event):
+    def prepareMenu(self, contextMenu, event):
         if self.isDomainVisible():
-            if len(menu.actions()) == 1:
-                menu.addSeparator()
-            # Add submenu to context menu
+            if len(contextMenu.actions()) == 1:
+                contextMenu.addSeparator()
+            # Add our menu to context menu
             action = menu.addMenu(self._menu)
 
     ########################################################################
     ### Menu actions
     ########################################################################
     '''
-    If a menuaction is triggered, it will be either a verbeterdekaart target,
-    or the settings options.
+    If a menuaction from our menu is triggered, it will be either:
+    one of the verbeterdekaart targets, or the settings option.
     '''
     def menuTriggered(self, action=None):
         target = getattr(action, '_targetPage', None)
@@ -119,19 +117,19 @@ class Controller:
 
     def adjustSettings(self):
         parent = self._iface.mainWindow()
-        settings = self._loadSettings()
-        result = SettingsDialog(parent).askInput(settings)
-        if result:
-            self._saveSettings(result)
-            self._targetPage = result.get(self.SETTINGS.TARGET)
-            self._scaleValue = result.get(self.SETTINGS.SCALE) or 100
+        settings = self._settings
+        settings = SettingsDialog(parent).askInput(settings)
+        if settings:
+            self._saveSettings(settings)
+            self._targetPage = settings.get(self.SETTINGS.TARGET)
+            self._scaleValue = settings.get(self.SETTINGS.SCALE) or 100
 
     ########################################################################
     ### verbeterdekaart URL
     ########################################################################
     '''
     '''
-    def _getURL(self, service='BAG', point=None, scale=None):
+    def _getURL(self, service='BGT', point=None, scale=None):
         # Fetch default values if necessary
         if point is None: point = self._mapCanvas.getCenter()
         if scale is None: scale = self._mapCanvas.getScale()
