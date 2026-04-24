@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>363</width>
+    <width>422</width>
     <height>341</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="targetNote">
      <property name="text">
-      <string>Kies de verbeterdekaart doelmodus. </string>
+      <string>Kies een doelmodus voor de werkbalkknop.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -81,10 +81,9 @@
    <item>
     <widget class="QLabel" name="targetInfo">
      <property name="text">
-      <string>Ad-hoc modus toont altijd een keuzemenu. 
-Focus modus gaat direct naar de gekozen landingspagina. 
-(Je kunt alsnog wisselen door de werkbalkknop kortstondig 
-ingedrukt te houden.)</string>
+      <string>In Ad hoc modus toont de werkbalkknop altijd eerst een keuzemenu.
+Bij BAG, BGT, of AERO gaat de werkbalkknop direct naar de gekozen landingspagina. (Je kunt alsnog wisselen door de werkbalkknop
+kortstondig ingedrukt te houden.)</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -163,7 +162,7 @@ ingedrukt te houden.)</string>
    <item>
     <widget class="QLabel" name="scaleInfo">
      <property name="text">
-      <string>De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.</string>
+      <string>De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Deze waarde vergroot of verkleint de opgeroepen weergave.</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>

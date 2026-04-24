@@ -33,7 +33,7 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
                 "Kies de verbeterdekaart landingspagina modus.",
 
             "INFO":
-                "Ad-hoc modus toont altijd een keuzemenu.\nFocus modus gaat direct naar de gekozen landingspagina.\n(Je kunt alsnog wisselen door de werkbalkknop kortstondig \ningedrukt te houden.)",
+                "In Ad hoc modus toont de werkbalkknop altijd eerst een keuzemenu.\nBij BAG, BGT, of AERO gaat de werkbalkknop direct naar de gekozen landingspagina. (Je kunt alsnog wisselen door de werkbalkknop\nkortstondig ingedrukt te houden.)",
 
             "LABEL":
                 "Landingspagina:",
@@ -44,7 +44,7 @@ _LABELS = _MODULE.LANGUAGE.LABELS({
                 "Geef eventueel een weergaveschaling op.",
 
             "INFO":
-                "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.",
+                "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Deze waarde vergroot of verkleint de opgeroepen weergave.",
 
             "LABEL":
                 "Schalingspercentage:"

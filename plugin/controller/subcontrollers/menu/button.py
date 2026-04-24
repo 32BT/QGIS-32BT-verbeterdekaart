@@ -15,9 +15,10 @@ catches mouse events away from the original control.
 '''
 
 class MenuButton(QToolButton):
-    triggered = pyqtSignal(object)
+    instantActionTriggered = pyqtSignal(object)
+    delayedActionTriggered = pyqtSignal(object)
 
-    class POPUP:
+    class POPUPMODE:
         INSTANT = QToolButton.ToolButtonPopupMode.InstantPopup
         DELAYED = QToolButton.ToolButtonPopupMode.DelayedPopup
 
@@ -29,14 +30,15 @@ class MenuButton(QToolButton):
         '''
         self._action = QAction(icon, "Open Webpagina")
         self._action.setObjectName("vdk:menuButtonAction")
-        self._action.triggered.connect(self.startBrowser)
+        self._action.triggered.connect(self.menuButtonTriggered)
 
         self.setObjectName("vdk:menuButton")
-        self.setPopupMode(self.POPUP.INSTANT)
+        self.setPopupMode(self.POPUPMODE.INSTANT)
         self.setDefaultAction(self._action)
         toolBar.addWidget(self)
 
         self.setMenu(menu)
+        menu.triggered.connect(self.menuActionTriggered)
 
     ########################################################################
     '''
@@ -53,12 +55,15 @@ class MenuButton(QToolButton):
         self._action._targetPage = mode
         self.menu().prepare(mode)
         if mode in ('BAG', 'BGT', 'AERO'):
-            self.setPopupMode(self.POPUP.DELAYED)
+            self.setPopupMode(self.POPUPMODE.DELAYED)
         else:
-            self.setPopupMode(self.POPUP.INSTANT)
+            self.setPopupMode(self.POPUPMODE.INSTANT)
 
-    def startBrowser(self, action=None):
-        print('startBrowser')
-        self.triggered.emit(self._action)
+    def menuButtonTriggered(self, action=None):
+        self.instantActionTriggered.emit(self._action)
 
-
+    def menuActionTriggered(self, action=None):
+        if self.popupMode() == self.POPUPMODE.INSTANT:
+            self.instantActionTriggered.emit(action)
+        else:
+            self.delayedActionTriggered.emit(action)

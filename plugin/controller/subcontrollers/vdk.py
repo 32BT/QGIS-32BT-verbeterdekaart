@@ -48,13 +48,13 @@ class Controller:
 
         self._buttonMenu = TargetMenu()
         self._buttonMenu.setObjectName("vdk:buttonMenu")
-        self._buttonMenu.triggered.connect(self.menuTriggered)
         self._menuButton = MenuButton(toolBar, loadIcon("vdk"), self._buttonMenu)
-        self._menuButton.triggered.connect(self.menuTriggered)
+        self._menuButton.instantActionTriggered.connect(self.instantActionTriggered)
+        self._menuButton.delayedActionTriggered.connect(self.delayedActionTriggered)
 
         self._canvasMenu = TargetMenu()
         self._canvasMenu.setObjectName("vdk:canvasMenu")
-        self._canvasMenu.triggered.connect(self.menuTriggered)
+        self._canvasMenu.triggered.connect(self.instantActionTriggered)
 
         self._mapCanvas = MapCanvas(self._iface.mapCanvas())
         self._mapCanvas.connectMenuHandler(self.contextMenuAboutToShow)
@@ -65,6 +65,7 @@ class Controller:
         self._scaleValue = int(settings.get(self.SETTINGS.SCALE) or 100)
 
         self._menuButton.setFocusMode(self._targetPage)
+
 
     def __del__(self):
         self._mapCanvas.disconnectExtentHandler(self.updateActions)
@@ -113,15 +114,23 @@ class Controller:
     '''
     If a menuaction from our menu is triggered, it will be either:
     one of the verbeterdekaart targets, or the settings option.
+    If it is a delayed action, it will be a modeswitch
     '''
-    def menuTriggered(self, action=None):
+
+    def delayedActionTriggered(self, action=None):
         target = getattr(action, '_targetPage', None)
         if target in PDOK.VDK.TARGET.LIST:
-            url = self._getURL(target)
-            QDesktopServices.openUrl(QUrl(url))
-            #webbrowser.open(url)
+            self.setFocusMode(target)
         else:
             self.adjustSettings()
+
+    def instantActionTriggered(self, action=None):
+        target = getattr(action, '_targetPage', None)
+        if target in PDOK.VDK.TARGET.LIST:
+            self.startBrowser(target)
+        else:
+            self.adjustSettings()
+
 
     def adjustSettings(self):
         parent = self._iface.mainWindow()
@@ -131,8 +140,21 @@ class Controller:
             self._saveSettings(settings)
             self._targetPage = settings.get(self.SETTINGS.TARGET)
             self._scaleValue = settings.get(self.SETTINGS.SCALE) or 100
-
             self._menuButton.setFocusMode(self._targetPage)
+
+    ########################################################################
+
+    def setFocusMode(self, target):
+        settings = self._settings
+        if settings.get(self.SETTINGS.TARGET) != target:
+            settings[self.SETTINGS.TARGET] = target
+            self._saveSettings(settings)
+        self._menuButton.setFocusMode(target)
+
+    def startBrowser(self, target):
+        url = self._getURL(target)
+        QDesktopServices.openUrl(QUrl(url))
+        #webbrowser.open(url)
 
     ########################################################################
     ### verbeterdekaart URL
