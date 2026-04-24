@@ -68,8 +68,8 @@ class Controller:
 
 
     def __del__(self):
-        self._mapCanvas.disconnectExtentHandler(self.updateActions)
-        self._mapCanvas.disconnectMenuHandler(self.prepareContextMenu)
+        self._mapCanvas.disconnectExtentHandler(self.updateButtons)
+        self._mapCanvas.disconnectMenuHandler(self.contextMenuAboutToShow)
         self._mapCanvas = None
 
     #######################################################################
@@ -112,10 +112,10 @@ class Controller:
     ### Menu actions
     #######################################################################
     '''
-    Actions will either be: instant actions or delayed actions.
+    Actions will either be:
+        instant actions OR delayed actions, and
+        a verbeterdekaart target OR the settings option.
     A delayed action results from a delayed popup when in focusmode.
-    Actions will then either be: one of the verbeterdekaart targets, or
-    the settings option.
     A delayed action in the targets category, is a focusmodeswitch.
 
                 |  BAG/BGT/AERO  |  Settings
