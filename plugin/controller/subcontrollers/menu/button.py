@@ -8,49 +8,52 @@ from qgis.PyQt.QtWidgets import *
 ### MenuButton
 ################################################################################
 '''
-NOTE: A normal QToolButton does not unraise properly after showing the menu.
-We therefore implement alternative logic.
+NOTE:
+QToolButton does not unraise properly after showing the menu in instant mode.
+In delayed mode, it works fine. The problem is in showMenu which probably
+catches mouse events away from the original control.
 '''
 
-class MenuButton:
+class MenuButton(QToolButton):
+    class POPUP:
+        INSTANT = QToolButton.ToolButtonPopupMode.InstantPopup
+        DELAYED = QToolButton.ToolButtonPopupMode.DelayedPopup
 
     def __init__(self, toolBar, icon=QIcon(), menu=None):
+        super().__init__()
 
+        '''
+        In INSTANT mode, the action will be ignored.
+        '''
         self._action = QAction(icon, "Open Webpagina")
         self._action.setObjectName("vdk:menuButtonAction")
-        self._action.triggered.connect(self.showMenu)
+        self._action.triggered.connect(self.startBrowser)
 
-        self._button = QToolButton()
-        self._button.setObjectName("vdk:menuButton")
-        self._button.setDefaultAction(self._action)
-        toolBar.addWidget(self._button)
+        self.setObjectName("vdk:menuButton")
+        self.setPopupMode(self.POPUP.INSTANT)
+        self.setDefaultAction(self._action)
+        toolBar.addWidget(self)
 
-        self._menu = None
         self.setMenu(menu)
 
     ########################################################################
-
-    def getMenu(self):
-        return self._menu
-
+    '''
     def setMenu(self, menu):
-        if self._menu != menu:
-            if self._menu: self._menu.aboutToHide.disconnect(self.menuDidFinish)
-            self._menu = menu
-            if self._menu: self._menu.aboutToHide.connect(self.menuDidFinish)
-
+        _menu = self.menu()
+        if _menu: _menu.aboutToShow.disconnect(self._aboutToShowMenu)
+        _menu = menu
+        if _menu: _menu.aboutToShow.connect(self._aboutToShowMenu)
+        super().setMenu(menu)
+    '''
     ########################################################################
 
-    def setEnabled(self, enable=True):
-        self._button.setEnabled(enable)
+    def setFocusMode(self, mode="Ad hoc"):
+        self._focusMode = mode
+        self.menu().prepare(mode)
+        if mode in ('BAG', 'BGT', 'AERO'):
+            self.setPopupMode(self.POPUP.DELAYED)
+        else:
+            self.setPopupMode(self.POPUP.INSTANT)
 
-    def showMenu(self, action):
-        button = self._button
-        button.setDown(True)
-        x, y = 0, button.frameSize().height()
-        self._menu.popup(button.mapToGlobal(QPoint(x,y)))
-        return True
-
-    def menuDidFinish(self):
-        self._button.setDown(False)
-
+    def startBrowser(self, action=None):
+        print('startBrowser')

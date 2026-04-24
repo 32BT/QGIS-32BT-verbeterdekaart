@@ -31,3 +31,11 @@ class TargetMenu(QMenu):
         action._targetPage = TARGET.PAGE.AERO
         self.addSeparator()
         action = self.addAction(MENU.ITEM.SETTINGS)
+        action._targetPage = "Settings"
+
+    def prepare(self, focusMode="Ad hoc"):
+        self.setDefaultAction(None)
+        for a in self.actions():
+            if getattr(a, '_targetPage', None) == focusMode:
+                self.setDefaultAction(a)
+        return self

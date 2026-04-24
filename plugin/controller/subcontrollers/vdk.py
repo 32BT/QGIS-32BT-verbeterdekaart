@@ -46,20 +46,24 @@ class Controller:
     def __init__(self, iface, toolBar):
         self._iface = iface
 
-        self._menu = TargetMenu()
-        self._menu.setObjectName("vdk:targetMenu")
-        self._menu.triggered.connect(self.menuTriggered)
+        self._buttonMenu = TargetMenu()
+        self._buttonMenu.setObjectName("vdk:buttonMenu")
+        self._buttonMenu.triggered.connect(self.menuTriggered)
+        self._menuButton = MenuButton(toolBar, loadIcon("vdk"), self._buttonMenu)
 
-        self._menuButton = MenuButton(toolBar, loadIcon("vdk"))
-        self._menuButton.setMenu(self._menu)
+        self._canvasMenu = TargetMenu()
+        self._canvasMenu.setObjectName("vdk:canvasMenu")
+        self._canvasMenu.triggered.connect(self.menuTriggered)
 
         self._mapCanvas = MapCanvas(self._iface.mapCanvas())
-        self._mapCanvas.connectMenuHandler(self.prepareMenu)
+        self._mapCanvas.connectMenuHandler(self.attachMenu)
         self._mapCanvas.connectExtentHandler(self.updateButtons)
 
         self._settings = settings = self._loadSettings()
         self._targetPage = settings.get(self.SETTINGS.TARGET) or 'Ad hoc'
         self._scaleValue = int(settings.get(self.SETTINGS.SCALE) or 100)
+
+        self._menuButton.setFocusMode(self._targetPage)
 
     def __del__(self):
         self._mapCanvas.disconnectExtentHandler(self.updateActions)
@@ -78,6 +82,10 @@ class Controller:
         dstR = QgsRectangle(0, 300000, 300000, 630000)
         return mapR.intersects(dstR)
 
+
+    '''
+
+    '''
     def updateButtons(self):
         enable = self.isDomainVisible()
         self._menuButton.setEnabled(enable)
@@ -87,17 +95,17 @@ class Controller:
     ########################################################################
     '''
     Right-clicking the mapCanvas will present a contextmenu.
-    The mapcanvas will emit a contextMenuAboutToShow-signal with this menu.
-    This allows us to append our menu to the contextmenu.
+    The mapcanvas will emit a contextMenuAboutToShow-signal first.
+    This allows us to attach our menu to the contextmenu.
 
     The incoming menu starts out empty each time the signal is triggered.
     '''
-    def prepareMenu(self, contextMenu, event):
+    def attachMenu(self, contextMenu, event):
         if self.isDomainVisible():
             if len(contextMenu.actions()) == 1:
                 contextMenu.addSeparator()
             # Add our menu to context menu
-            action = menu.addMenu(self._menu)
+            action = contextMenu.addMenu(self._canvasMenu)
 
     ########################################################################
     ### Menu actions
@@ -123,6 +131,8 @@ class Controller:
             self._saveSettings(settings)
             self._targetPage = settings.get(self.SETTINGS.TARGET)
             self._scaleValue = settings.get(self.SETTINGS.SCALE) or 100
+
+            self._menuButton.setFocusMode(self._targetPage)
 
     ########################################################################
     ### verbeterdekaart URL
