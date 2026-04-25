@@ -23,16 +23,31 @@ from ..qgs.settings import Settings
 
 
 class Services(dict):
-    NAME = 'selectie'
+    class SELECTION:
+        KEY = 'selectie'
+    class STYLING:
+        KEY = 'stijl'
+        class OPTION:
+            STANDARD = 'standaard'
+            SHORT = 'kort'
+            CUSTOM = 'aangepast'
+            LIST = (STANDARD, SHORT, CUSTOM)
+
     def getSelectedServiceID(self):
-        return self.get(self.NAME) or 'BGT'
+        return self.get(self.SELECTION.KEY) or 'BGT'
     def setSelectedServiceID(self, _name):
-        self[self.NAME] = _name
+        self[self.SELECTION.KEY] = _name
+
+    def getStyling(self):
+        return self.get(self.STYLING.KEY) or self.STYLING.OPTION.STANDARD
+    def setStyling(self, value):
+        self[self.STYLING.KEY] = value
+
     def getService(self, _id=None):
         service = self.get(_id or self.getSelectedServiceID())
         return Service(service or {})
     def setService(self, _id, service):
-        self[self.NAME] = _id
+        self[self.SELECTION.KEY] = _id
         self[_id] = service
 
 
@@ -53,6 +68,7 @@ class Service(dict):
             value = (self.TYPES.WFS, self.TYPES.OGC)[bool(value)]
         self[self.TYPE] = value
         return value
+
     def getFilters(self):
         return self.get(self.FILTERS.KEY) or {}
     def setFilters(self, filters):
@@ -64,6 +80,7 @@ class Service(dict):
         filters = self.getFilters()
         filters[_id] = filterStr
         self.setFilters(filters)
+
 
 
 ################################################################################
@@ -122,6 +139,12 @@ class Dialog(QDialog, _form()):
         self.serviceCombo.addItems(list(WFS.ENDPOINT.URL))
         self.serviceCombo.currentTextChanged.connect(self.serviceChanged)
 
+        self.stylingOption = {
+            Services.STYLING.OPTION.STANDARD: self.stylingOption1,
+            Services.STYLING.OPTION.SHORT:    self.stylingOption2,
+            Services.STYLING.OPTION.CUSTOM:   self.stylingOption3
+        }
+
         self._services = Settings.load_group(Services.__name__.lower()) or {}
         self._services = Services(self._services)
 
@@ -132,9 +155,11 @@ class Dialog(QDialog, _form()):
         service = services.getService(selected)
         ogctype = service.getType()==service.TYPES.OGC
         codestr = service.getFilterString()
+        styling = services.getStyling()
         # Stuff UI controls
         self.serviceType.setChecked(ogctype)
         self.filterString.setText(codestr)
+        self.stylingOption.get(styling).setChecked(True)
 
     ########################################################################
     ### Entrypoint
@@ -156,12 +181,18 @@ class Dialog(QDialog, _form()):
         _name = self.serviceCombo.currentText()
         _type = self.serviceType.isChecked()
         _code = self.filterString.text() or None
+        _mode = self.getStylingOption()
         # Update services settings
         services = self._services
         service = services.getService(_name)
         service.setType(_type)
         service.setFilterString(filterStr=_code)
+        services.setStyling(_mode)
         services.setService(_name, service)
         Settings.save_group(Services.__name__.lower(), services)
         _type = service.getType()
-        return _name, _type, _code
+        return _name, _type, _code, _mode
+
+    def getStylingOption(self):
+        for k, v in self.stylingOption.items():
+            if v.isChecked(): return k

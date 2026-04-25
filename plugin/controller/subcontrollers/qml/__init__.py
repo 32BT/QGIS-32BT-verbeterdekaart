@@ -5,9 +5,10 @@ import os
 from qgis.core import Qgis
 from qgis.PyQt.QtGui import QColor
 
-def loadStyle(layer, uid='BGT'):
+def loadStyle(layer, uid='BGT', style='standaard'):
     # brt.qml includes status=Geparkeerd
-    name = ('bgt.qml', 'brt.qml')[uid in ('BRT', 'AERO')]
+
+    name = style+'.qml'
     path = os.path.split(__file__)[0]
     path = os.path.join(path, name)
     if os.path.exists(path):

@@ -79,6 +79,7 @@ class Controller:
         self._action = self.initAction()
         toolBar.addAction(self._action)
 
+
     def initAction(self):
         action = QAction("Start WFS laag...")
         action.setIcon(loadIcon("wfs"))
@@ -91,7 +92,7 @@ class Controller:
         parent = self._iface.mainWindow()
         result = ServicesDialog(parent).askInput()
         if result is not None:
-            _serviceName, _serviceType, _filterCode = result
+            _serviceName, _serviceType, _filterCode, _stylingMode = result
             if _serviceType == 'OGC':
                 uri = self.get_ogc_uri(_serviceName, _filterCode)
                 src = 'oapif'
@@ -100,13 +101,14 @@ class Controller:
                 src = 'WFS'
 
             layer = QgsVectorLayer(uri, _serviceName+' Terugmeldingen', src)
-            loadStyle(layer, _serviceName)
+            loadStyle(layer, _serviceName, _stylingMode)
             loadExpression(layer, _serviceType)
             QgsProject.instance().addMapLayer(layer)
 
     ########################################################################
     ### WFS URI
     ########################################################################
+
     def get_wfs_uri(self, serviceName, codeFilter=''):
         prm = dict(version='auto',
             url=PDOK.WFS.ENDPOINT(serviceName),
@@ -136,6 +138,7 @@ class Controller:
     replaced by postFilter.
     '''
     def get_ogc_uri(self, serviceName, codeFilter=''):
+        # check whether filter should be applied clientside
         postFilter = self.getPostFilter(codeFilter)
         if postFilter: codeFilter = None
 
@@ -170,17 +173,3 @@ class Controller:
         return uri.uri()
 
     ########################################################################
-    '''
-    def setStyle(self, layer, uid='BGT'):
-        # brt.qml includes status=Geparkeerd
-        name = ('bgt.qml', 'brt.qml')[uid in ('BRT', 'AERO')]
-        path = os.path.split(__file__)[0]
-        path = os.path.join(path, 'qml')
-        path = os.path.join(path, name)
-        if os.path.exists(path):
-            layer.loadNamedStyle(path,
-                flags=Qgis.LoadStyleFlag.IgnoreMissingStyleErrors)
-        else:
-            symbol = layer.renderer().symbol()
-            symbol.setColor(QColor.fromRgb(255,255,0))
-    '''
