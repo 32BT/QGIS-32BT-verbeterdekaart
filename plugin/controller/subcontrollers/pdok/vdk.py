@@ -9,8 +9,8 @@ import math
 class VDK:
     class TARGET:
         URL = dict(
-            BAG = "https://bagviewer.kadaster.nl/?theme=Luchtfoto%27s&",
-            BGT = "https://www.verbeterdekaart.nl/#?",
+            BAG  = "https://bagviewer.kadaster.nl/?theme=Luchtfoto%27s&",
+            BGT  = "https://www.verbeterdekaart.nl/#?",
             AERO = "https://www.verbeterdeluchtvaartkaart.nl/#/kaart?")
         LIST = tuple(URL)
 

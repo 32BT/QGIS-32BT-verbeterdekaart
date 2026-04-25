@@ -78,11 +78,11 @@ class Dialog(QDialog, _form()):
     ########################################################################
 
     def askInput(self, settings):
-        self.setTarget(settings.get('doel'))
-        self.setScale(settings.get('schalingspercentage'))
+        self.setTarget(settings.get_targetMode())
+        self.setScale(settings.get_scaleValue())
         if self.exec():
-            settings['doel'] = self.getTarget()
-            settings['schalingspercentage'] = self.getScale()
+            settings.set_targetMode(self.getTarget())
+            settings.set_scaleValue(self.getScale())
             return settings
 
     ########################################################################

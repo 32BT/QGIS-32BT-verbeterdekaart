@@ -22,26 +22,43 @@ from .menu import TargetMenu
 
 
 ###############################################################################
+### Voorkeuren
+###############################################################################
+class SETTINGS(dict):
+    GROUP = 'voorkeuren'
+    SCALE = 'schalingspercentage'
+
+    class TARGET:
+        class MODE:
+            KEY = 'modus'
+            ADHOC = 'Ad hoc'
+        class PAGE:
+            KEY = 'doel'
+            BAG = 'BAG'
+            BGT = 'BGT'
+            AERO = 'AERO'
+            LIST = (BAG, BGT, AERO)
+
+    def get_targetMode(self):
+        return self.get(self.TARGET.MODE.KEY) or self.TARGET.MODE.ADHOC
+    def get_targetPage(self):
+        return self.get(self.TARGET.PAGE.KEY) or self.TARGET.PAGE.BGT
+    def get_scaleValue(self):
+        return int(self.get(SETTINGS.SCALE) or 100)
+
+    def set_targetMode(self, value):
+        self[self.TARGET.MODE.KEY] = value
+        if value in self.TARGET.PAGE.LIST:
+            self[self.TARGET.PAGE.KEY] = value
+
+    def set_scaleValue(self, value):
+        self[SETTINGS.SCALE] = int(value)
+
+###############################################################################
 ### VDKController
 ###############################################################################
 
 class Controller:
-
-    #######################################################################
-    ### Voorkeuren
-    #######################################################################
-    class SETTINGS:
-        GROUP = 'voorkeuren'
-        SCALE = 'schalingspercentage'
-        SOURCE = 'bron'
-        TARGET = 'doel'
-
-    def _loadSettings(self):
-        return Settings.load_group(self.SETTINGS.GROUP)
-    def _saveSettings(self, settings):
-        Settings.save_group(self.SETTINGS.GROUP, settings)
-
-    #######################################################################
 
     def __init__(self, iface, toolBar):
         self._iface = iface
@@ -60,11 +77,7 @@ class Controller:
         self._mapCanvas.connectMenuHandler(self.contextMenuAboutToShow)
         self._mapCanvas.connectExtentHandler(self.updateButtons)
 
-        self._settings = settings = self._loadSettings()
-        self._targetPage = settings.get(self.SETTINGS.TARGET) or 'Ad hoc'
-        self._scaleValue = int(settings.get(self.SETTINGS.SCALE) or 100)
-
-        self._menuButton.setFocusMode(self._targetPage)
+        self.loadSettings()
 
 
     def __del__(self):
@@ -74,9 +87,9 @@ class Controller:
 
     #######################################################################
     '''
-    Verbeterdekaart heeft alleen betekenis binnen Nederland.
-    Als het werkblad niet overlapt met Nederland, dan wordt
-    de knop grijs, en is het canvasmenu niet beschikbaar.
+    Verbeterdekaart is only meaningful within countrybounds.
+    If the visible extent does not overlap the country extent, then the tool-
+    button will be disabled, and the canvasmenu will not be attached.
     '''
     def isDomainVisible(self):
         crs = QgsCoordinateReferenceSystem('EPSG:28992')
@@ -127,7 +140,7 @@ class Controller:
     def delayedActionTriggered(self, action=None):
         target = getattr(action, '_targetPage', None)
         if target in PDOK.VDK.TARGET.LIST:
-            self.setFocusMode(target)
+            self.setTargetPage(target)
         else:
             self.adjustSettings()
 
@@ -139,6 +152,14 @@ class Controller:
             self.adjustSettings()
 
     #######################################################################
+    ### Settings
+    #######################################################################
+
+    def _loadSettings(self):
+        return Settings.load_group(SETTINGS.GROUP)
+
+    def _saveSettings(self, settings):
+        Settings.save_group(SETTINGS.GROUP, settings)
 
     def adjustSettings(self):
         parent = self._iface.mainWindow()
@@ -146,21 +167,31 @@ class Controller:
         settings = SettingsDialog(parent).askInput(settings)
         if settings:
             self._saveSettings(settings)
-            self._targetPage = settings.get(self.SETTINGS.TARGET)
-            self._scaleValue = settings.get(self.SETTINGS.SCALE) or 100
-            self._menuButton.setFocusMode(self._targetPage)
+            self.loadSettings()
+
+    def loadSettings(self):
+        settings = self._loadSettings()
+        settings = SETTINGS(settings or {})
+        self._settings = settings
+        self._scaleValue = settings.get_scaleValue()
+        self._targetPage = settings.get_targetPage()
+        self._targetMode = settings.get_targetMode()
+        self._menuButton.setFocusMode(self._targetMode)
 
     #######################################################################
 
-    def setFocusMode(self, target):
+    def setTargetPage(self, targetPage):
         settings = self._settings
-        if settings.get(self.SETTINGS.TARGET) != target:
-            settings[self.SETTINGS.TARGET] = target
+        if self._targetMode != targetPage:
+            self._targetMode = targetPage
+            self._targetPage = targetPage
+            settings[SETTINGS.TARGET.MODE.KEY] = targetPage
+            settings[SETTINGS.TARGET.PAGE.KEY] = targetPage
             self._saveSettings(settings)
-        self._menuButton.setFocusMode(target)
+        self._menuButton.setFocusMode(targetPage)
 
-    def startBrowser(self, target):
-        url = self._getURL(target)
+    def startBrowser(self, targetPage):
+        url = self._getURL(targetPage)
         QDesktopServices.openUrl(QUrl(url))
         #webbrowser.open(url)
 
