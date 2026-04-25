@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="100" width="100">
-    <g fill="#a9cbff" stroke="black" stroke-width="6">
-        <circle cx="50" cy="50" r="40"/>
+<svg xmlns="http://www.w3.org/2000/svg" height="128" width="128">
+    <g fill="#a9cbff" stroke="#000" stroke-width="6">
+        <circle cx="64" cy="64" r="50"/>
     </g>
-    <g transform="translate(67, 97) scale(10, -10)">
-        <g fill="#fff" stroke="#000" stroke-width=".5" stroke-linejoin="round">
-            <path d="M 0 0 L -3 4 L -1 4 L -1 7 L +1 7 L +1 4 L +3 4 Z"/>
+    <g transform="translate(84, 124) scale(1, -1)">
+        <g fill="#fff" stroke="#000" stroke-width="6" stroke-linejoin="round">
+            <path d="M 0 0 L -40 52 L -12 52 L -12 90 L +12 90 L +12 52 L +40 52 Z"/>
         </g>
     </g>
 </svg>

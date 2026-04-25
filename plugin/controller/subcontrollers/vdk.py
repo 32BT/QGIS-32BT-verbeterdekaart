@@ -1,14 +1,10 @@
 
 
-import math, webbrowser
+import webbrowser
 
-import os
-
-from qgis.gui import *
 from qgis.core import *
-from qgis.PyQt.QtCore import *
-from qgis.PyQt.QtWidgets import *
-from qgis.PyQt.QtGui import *
+from qgis.PyQt.QtCore import QUrl
+from qgis.PyQt.QtGui import QDesktopServices
 
 from .dialogs import SettingsDialog
 from .qgs.settings import Settings
@@ -24,6 +20,7 @@ from .menu import TargetMenu
 ###############################################################################
 ### Voorkeuren
 ###############################################################################
+
 class SETTINGS(dict):
     GROUP = 'voorkeuren'
     SCALE = 'schalingspercentage'
@@ -127,7 +124,7 @@ class Controller:
     '''
     Actions will either be:
         instant actions OR delayed actions, and
-        a verbeterdekaart target OR the settings option.
+        a targetpage OR the settings option.
     A delayed action results from a delayed popup when in focusmode.
     A delayed action in the targets category, is a focusmodeswitch.
 
@@ -150,6 +147,46 @@ class Controller:
             self.startBrowser(target)
         else:
             self.adjustSettings()
+
+    #######################################################################
+    ### Action response
+    #######################################################################
+
+    def setTargetPage(self, targetPage):
+        settings = self._settings
+        if self._targetMode != targetPage:
+            self._targetMode = targetPage
+            self._targetPage = targetPage
+            settings[SETTINGS.TARGET.MODE.KEY] = targetPage
+            settings[SETTINGS.TARGET.PAGE.KEY] = targetPage
+            self._saveSettings(settings)
+        self._menuButton.setFocusMode(targetPage)
+
+    def startBrowser(self, targetPage):
+        url = self._getURL(targetPage)
+        try:
+            QDesktopServices.openUrl(QUrl(url))
+        except Exception:
+            webbrowser.open(url)
+
+    #######################################################################
+    ### verbeterdekaart URL
+    #######################################################################
+    '''
+    '''
+    def _getURL(self, service='BGT', point=None, scale=None):
+        # Fetch default values if necessary
+        if point is None: point = self._mapCanvas.getCenter()
+        if scale is None: scale = self._mapCanvas.getScale()
+
+        # Compensate for CRS if necessary
+        target_crs = PDOK.VDK.get_service_crs(service)
+        target_crs = QgsCoordinateReferenceSystem(target_crs)
+        point = self._mapCanvas.convertMapPoint(point, target_crs)
+        # Compensate scalefactor for webbrowser-scale differences
+        scale = scale * 100. / self._scaleValue
+
+        return PDOK.VDK.get_service_url(service, point, scale)
 
     #######################################################################
     ### Settings
@@ -177,41 +214,5 @@ class Controller:
         self._targetPage = settings.get_targetPage()
         self._targetMode = settings.get_targetMode()
         self._menuButton.setFocusMode(self._targetMode)
-
-    #######################################################################
-
-    def setTargetPage(self, targetPage):
-        settings = self._settings
-        if self._targetMode != targetPage:
-            self._targetMode = targetPage
-            self._targetPage = targetPage
-            settings[SETTINGS.TARGET.MODE.KEY] = targetPage
-            settings[SETTINGS.TARGET.PAGE.KEY] = targetPage
-            self._saveSettings(settings)
-        self._menuButton.setFocusMode(targetPage)
-
-    def startBrowser(self, targetPage):
-        url = self._getURL(targetPage)
-        QDesktopServices.openUrl(QUrl(url))
-        #webbrowser.open(url)
-
-    #######################################################################
-    ### verbeterdekaart URL
-    #######################################################################
-    '''
-    '''
-    def _getURL(self, service='BGT', point=None, scale=None):
-        # Fetch default values if necessary
-        if point is None: point = self._mapCanvas.getCenter()
-        if scale is None: scale = self._mapCanvas.getScale()
-
-        # Compensate for CRS if necessary
-        target_crs = PDOK.VDK.get_service_crs(service)
-        target_crs = QgsCoordinateReferenceSystem(target_crs)
-        point = self._mapCanvas.convertMapPoint(point, target_crs)
-        # Compensate scalefactor for webbrowser-scale differences
-        scale = scale * 100. / self._scaleValue
-
-        return PDOK.VDK.get_service_url(service, point, scale)
 
 ###############################################################################
