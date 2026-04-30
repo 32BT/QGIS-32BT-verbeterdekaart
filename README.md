@@ -26,7 +26,8 @@ De WFS button is bedoeld om een WFS laag aan te maken waarin terugmeldingen geto
 - Open een QGIS project met de kaart van Nederland. 
 - Klik op de WFS button om een WFS laag toe te voegen,
 - Kies de gewenste service en geef eventueel een bronhoudercode op,
-- Klik OK om de keuze te bevestigen en de laag aan te maken. 
+- Klik OK om de keuze te bevestigen en de laag aan te maken.
+
 ##
 ### De WFS laag  
 De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak die enigszins vergelijkbaar is met de bekende weergaves van de gekozen service. De opmaak kan uiteraard naar wens worden gewijzigd. Het is ook mogelijk om je eigen styling mee te geven aan elke nieuw aangemaakte laag, zie de styling voetnoot.[^1] 
@@ -67,7 +68,7 @@ Het filter kan overigens, indien gewenst, naderhand nog in QGIS worden aangepast
 >[!WARNING]
 >**WAARSCHUWING**: De OGC-compatible endpoints staan op dit moment (januari 2026) nog geen ogc-filters toe. Als alternatief voor server-side filtering, zijn door PDOK "gesloten" parameters in de url bedacht. Dit betekent dat er voor OGC-endpoints **geen** QGIS expression aangemaakt wordt. De plugin past in plaats daarvan de url aan voor service-side filtering. Wildcard-filters worden door PDOK niet ondersteund. Deze worden door de plugin wel gewoon als QGIS expression beschikbaar gemaakt, maar deze worden door QGIS alleen client-side toegepast, dus op je eigen computer nadat eerst **alle** terugmeldingen zijn opgehaald.  
 
-**Styling**
+**Styling**  
 De WFS laag wordt aangemaakt met een toepasselijke styling van symbolen en labels. De symbolen zijn gegroepeerd naar de status van de terugmelding. De groepen zijn terug te vinden in de legenda van de laag. De statusindicaties zijn beschikbaar in 3 smaakjes. De "Standaard"-styling optie is voor de bekende namen zoals gebruikt op de websites en andere externe uitingen. "Kort" is voor de weergave van de interne statusCode, en "Aangepast" is een beheerdersweergave om eventueel te synchroniseren met andere plugins.  
 
 
@@ -127,4 +128,4 @@ Alle nieuw binnengekomen meldingen zijn nu geselecteerd. Met de **QGIS-32BT-Feat
 <img width="849" height="270" alt="image" src="https://github.com/user-attachments/assets/7e8764e7-3124-4e10-8b84-0c00cd3d2153" /><br/>
 
 
-[^1]:De styling van de aangemaakte WFS laag wordt bepaald door een qml file. Als je de standaardstyling vanuit de plugin permanent wilt wijzigen, dan kun je de interne qml file vervangen door een eigen versie. Hiervoor moet je allereerst op zoek naar de plugin folder van QGIS. Hoe je die vindt, kun je in de QGIS handleiding lezen. Vervolgens ga je naar de verbeterdekaart-plugin folder. Hierin zoek je naar een mapje "controllers/subcontrollers/qml". De file "bgt.qml" moet je dan vervangen door een eigen versie. 
+[^1]: De styling van de aangemaakte WFS laag wordt bepaald door een qml file. Als je de standaardstyling vanuit de plugin permanent wilt wijzigen, dan kun je de interne qml files vervangen door een eigen versie. Hiervoor moet je allereerst op zoek naar de plugin folder van QGIS. Hoe je die vindt, kun je in de QGIS handleiding lezen. Vervolgens ga je naar de verbeterdekaart-plugin folder. Hierin zoek je naar een mapje "controllers/subcontrollers/qml". Vervang vervolgens de gewenste styling-optie door je eigen file.
