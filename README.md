@@ -35,14 +35,14 @@ De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak
 
 ## 
 ### De WFS opties  
-Als je op de button klikt, zal er een dialoogboxje verschijnen met twee opties: servicetype en bronhoudercode. 
+Als je op de button klikt, zal er een dialoogboxje verschijnen met aantal opties, onderverdeelt in WFS Endpoint en Styling. 
 
-<img width="304" height="248" alt="image" src="https://github.com/user-attachments/assets/5fd68406-b79e-4328-94de-ab133419f09a" /><br/>
+<img width="328" height="406" alt="vdk23_styling_nl" src="https://github.com/user-attachments/assets/3916c652-8ecd-4795-898c-03fc11dcd7aa" /><br/>
 
 **Servicetype**  
 Servicetype is een keuzemenu voor de gewenste registratie. Terugmeldingen zijn gekoppeld aan één van de bekende registraties, en voor elk type registratie is er een aparte WFS service endpoint beschikbaar. Afhankelijk van welk type terugmeldingen je wilt zien, moet je dus allereerst de gewenste service kiezen:
 
-<img width="311" height="250" alt="image" src="https://github.com/user-attachments/assets/85c5694f-6f1c-4f59-8e14-ed0c61107f82" /><br/>
+<img width="344" height="409" alt="vdk23_wfs_servicetypes" src="https://github.com/user-attachments/assets/a7c1c031-7bd5-43d3-91fa-d4b8057c18c0" /><br/>
 
 Sinds kort (Januari 2026) zijn er ook OGC-compatible endpoints beschikbaar. Indien je deze wilt gebruiken, kun je de checkbox "ogc" aanvinken. Dit heeft wel enige beperkingen, zie de [waarschuwing](#FILTER_WARNING) bij Bronhoudercode.
 
@@ -51,14 +51,13 @@ Bronhoudercode is een optionele filtercode. Bij het aanmaken van de laag kan eve
 >[!NOTE]
 >LET OP: De filtercode wordt per servicetype bepaald. Als je van servicetype wisselt, dan wisselt de code mee.  
 
-<img width="305" height="250" alt="image" src="https://github.com/user-attachments/assets/d9d7904b-2722-42d0-bd93-8c2d618e5652" /><br/>
-
+<img width="347" height="413" alt="vdk23_wfs_bhc" src="https://github.com/user-attachments/assets/42785988-52d1-44bd-84d8-63dddd809375" /><br/>
 
 Voor de normale WFS service endpoints, wordt het filter toegevoegd als QGIS expression. De plugin ondersteunt ook wildcard-karakters. Hiermee kun je bijvoorbeeld een WFS-laag maken met alleen de terugmeldingen voor alle provinciale bronhouders. 
 - "%" of "*" betekent "één of meer willekeurige karakters"  
 - "_" of "?" betekent "precies één willekeurig karakter"
 
-<img width="305" height="250" alt="image" src="https://github.com/user-attachments/assets/d03fe23a-28ea-4c15-b7f9-e89b6b9c64d8" /><br/>
+<img width="352" height="420" alt="vdk23_wfs_bhc2" src="https://github.com/user-attachments/assets/d5876602-8636-40d9-a169-612f0d42f573" /><br/>
 
 Het filter kan overigens, indien gewenst, naderhand nog in QGIS worden aangepast via de laageigenschappen:
 
@@ -67,6 +66,9 @@ Het filter kan overigens, indien gewenst, naderhand nog in QGIS worden aangepast
 <a name="FILTER_WARNING"></a>
 >[!WARNING]
 >**WAARSCHUWING**: De OGC-compatible endpoints staan op dit moment (januari 2026) nog geen ogc-filters toe. Als alternatief voor server-side filtering, zijn door PDOK "gesloten" parameters in de url bedacht. Dit betekent dat er voor OGC-endpoints **geen** QGIS expression aangemaakt wordt. De plugin past in plaats daarvan de url aan voor service-side filtering. Wildcard-filters worden door PDOK niet ondersteund. Deze worden door de plugin wel gewoon als QGIS expression beschikbaar gemaakt, maar deze worden door QGIS alleen client-side toegepast, dus op je eigen computer nadat eerst **alle** terugmeldingen zijn opgehaald.  
+
+**Styling**
+De WFS laag wordt aangemaakt met een toepasselijke styling van symbolen en labels. De symbolen zijn gegroepeerd naar de status van de terugmelding. De groepen zijn terug te vinden in de legenda van de laag. De statusindicaties zijn beschikbaar in 3 smaakjes. De "Standaard"-styling optie is voor de bekende namen zoals gebruikt op de websites en andere externe uitingen. "Kort" is voor de weergave van de interne statusCode, en "Aangepast" is een beheerdersweergave om eventueel te synchroniseren met andere plugins.  
 
 
 ## Knop 2: De "VDK" knop  
