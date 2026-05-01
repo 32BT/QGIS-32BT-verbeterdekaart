@@ -76,11 +76,15 @@ De WFS laag wordt aangemaakt met een toepasselijke styling van symbolen en label
 De VDK knop is bedoeld om de verbeterdekaart webpagina te openen. Er zijn drie verschillende verbeterdekaart-webpagina's afhankelijk van welke registratie je wilt verbeteren.  
 - Voor BAG meldingen is er de BAGViewer: https://bagviewer.kadaster.nl
 - Voor BGT, BRT, en 3DB meldingen is er de verbeterdekaart webpagina: https://www.verbeterdekaart.nl
-- Voor AERO meldingen is er de verbeterdeluchtvaartkaart variant: https://www.verbeterdeluchtvaartkaart.nl
- 
-Al deze pagina's tonen een kaart. Deze kaart zal door de VDK plugin zodanig worden aangeroepen dat de weergaveschaal en locatie gelijk zou moeten zijn met je huidige QGIS weergave. Je kunt de VDK knop gemakkelijk instellen op één van de drie doelpagina's. Door de knop kortstondig ingedrukt te houden zul je zien dat er een menu verschijnt met de 3 opties voor de landingspagina. De geselecteerde doelpagina is zichtbaar in vet lettertype met een vinkje ervoor. 
+- Voor AERO meldingen is er de verbeterdeluchtvaartkaart variant: https://www.verbeterdeluchtvaartkaart.nl  
 
-**Opties submenu**  
+<img width="310" height="152" alt="vdk23_menu" src="https://github.com/user-attachments/assets/08a9f40a-f5ac-4faf-af95-64e809769041" /><br/>
+
+**Ad hoc modus vs Focus modus**  
+De knop kan op twee manieren gebruikt worden. Allereerst in de Ad hoc modus, waarbij je altijd een keuzemenu krijgt om de gewenste registratie te kiezen voordat de betreffende webpagina wordt geopend in je browser. Daarnaast is er de focus modus, waarbij de knop direct de voorgeselecteerde verbeterdekaart webpagina zal openen in je browser. Deze laatste modus is handig als je strikt binnen één registratie werkt.
+
+Al deze pagina's tonen een kaart. Deze kaart zal door de VDK plugin zodanig worden aangeroepen dat de weergaveschaal en locatie gelijk zou moeten zijn met je huidige QGIS weergave. 
+
 <img width="275" height="143" alt="image" src="https://github.com/user-attachments/assets/efbd9bb0-036d-4586-a97d-4ea960db6011" />
 
 >[!NOTE]
