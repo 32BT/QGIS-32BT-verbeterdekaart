@@ -81,14 +81,7 @@ De VDK knop is bedoeld om de verbeterdekaart webpagina te openen. Er zijn drie v
 <img width="310" height="152" alt="vdk23_menu" src="https://github.com/user-attachments/assets/08a9f40a-f5ac-4faf-af95-64e809769041" /><br/>
 
 **Ad hoc modus vs Focus modus**  
-De knop kan op twee manieren gebruikt worden. Allereerst in de Ad hoc modus, waarbij je altijd een keuzemenu krijgt om de gewenste registratie te kiezen voordat de betreffende webpagina wordt geopend in je browser. Daarnaast is er de focus modus, waarbij de knop direct de voorgeselecteerde verbeterdekaart webpagina zal openen in je browser. Deze laatste modus is handig als je strikt binnen één registratie werkt.
-
-Al deze pagina's tonen een kaart. Deze kaart zal door de VDK plugin zodanig worden aangeroepen dat de weergaveschaal en locatie gelijk zou moeten zijn met je huidige QGIS weergave. 
-
-<img width="275" height="143" alt="image" src="https://github.com/user-attachments/assets/efbd9bb0-036d-4586-a97d-4ea960db6011" />
-
->[!NOTE]
->Er kunnen eventueel schalingsverschillen zijn tussen je QGIS omgeving en je default webbrowser, met name Linux op een chromebook kan verschillen vertonen vanwege de Wayland graphicsdriver backend. De plugin heeft een setting om dit te compenseren. Zie de opties onder het volgende hoofdstukje.
+De knop kan op twee manieren gebruikt worden. Allereerst in de Ad hoc modus, waarbij je altijd een keuzemenu krijgt om de gewenste registratie te kiezen voordat de betreffende webpagina wordt geopend in je browser. Daarnaast is er de focus modus, waarbij de knop direct de voorgeselecteerde webpagina zal openen in je browser. Deze laatste modus is handig als je strikt binnen één registratie werkt. Bij de voorkeuren kun je instellen in welke modus je wilt werken. 
 
 ## Knop 3: De rechter muisknop  
 Een alternatieve manier om de viewerpagina te openen is de verbeterdekaart-contextmenu optie. Klik met de rechtermuisknop op de kaart en selecteer een optie uit het verbeterdekaart menu.  
@@ -106,8 +99,13 @@ Met deze optie kun je voorkeuren opgeven voor de plugin. Er zal een dialoogbox v
 <img width="358" height="367" alt="image" src="https://github.com/user-attachments/assets/4d70a922-b5c5-4ca9-a548-60646f1e9738" />
 <br />  
 
-Optie 1: ***landingspagina***  
-Als je de "VDK" knop aanklikt, dan zal er een verbeterdekaart-webpagina geopend worden in je browser. Er zijn drie websites voor het maken van meldingen. De bagviewer voor BAG meldingen, de algemene verbeterdekaart-site voor BGT, BRT, en 3D meldingen, en de verbeterdeluchtvaartkaart voor AERO meldingen. Met dit keuzemenu kun je de gewenste langingspagina instellen afhankelijk van je werkmodus. De keuze kan ook via de "VDK" knop gewijzigd worden door deze kortstondig ingedrukt te houden.  
+Optie 1: ***Werkbalk knop***  
+Met de "VDK" knop kun je een verbeterdekaart webpagina openen in je browser. Er zijn drie websites voor het maken van meldingen:  
+- https://bagviewer.kadaster.nl voor BAG meldingen,
+- https://www.verbeterdekaart.nl voor BGT, BRT, en 3D meldingen,
+- https://www.verbeterdeluchtvaartkaart.nl voor AERO meldingen.
+
+Middels het keuzemenu kun je de gewenste langingspagina kiezen. Hoe je die keuze maakt is afhankelijk van je werkmodus. Je kunt in **Ad hoc modus** werken. In dat geval krijg je het keuzemenu altijd eerst te zien als je op de werkbalk knop drukt. Je kunt ook in **Focus modus** werken. Dan kies je hier alvast een registratie als voorselectie, en zal de werkbalk knop direct de betreffende landingspagina openen. Door de knop kortstondig ingedrukt te houden, kun je alsnog makkelijk wisselen tussen langingspagina's.  
 
 Optie 2: ***schalingspercentage***.  
 Bij het openen van de verbeterdekaart website zal de plugin de huidige locatie en schaal van QGIS overnemen. Het kan echter zijn dat de verbeterdekaart website dan alsnog een afwijkende weergave geeft van de betreffende locatie. Om dit te synchroniseren, kun je een schalingspercentage opgeven. Waardes hoger dan 100% zullen de verbeterdekaart weergave vergroten.
