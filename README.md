@@ -6,6 +6,8 @@ QGIS-32BT-verbeterdekaart is een QGIS plugin voor ondersteuning in het beheer va
 3. [Knop 1: De "WFS" knop](#knop-1-de-wfs-knop)
 4. [Knop 2: De "VDK" knop](#knop-2-de-vdk-knop)
 5. [Knop 3: De rechter muis knop](#knop-3-de-rechter-muisknop)
+6. [Voorkeuren](#voorkeuren)
+7. [Werkmethodiek](#werkmethodiek)
 
 ## Installatie
 Middels de pluginbeheer omgeving kan de plugin geïnstalleerd worden volgens de gebruikelijke methode. De plugin kan eventueel ook van zipfile geïnstalleerd worden. De zipfile is beschikbaar via de Code-button die te vinden is op de github pagina.  
