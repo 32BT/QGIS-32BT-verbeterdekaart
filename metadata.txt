@@ -13,12 +13,13 @@ repository=https://github.com/32bt/QGIS-32BT-verbeterdekaart
 tracker=https://github.com/32bt/QGIS-32BT-verbeterdekaart/issues
 
 qgisMinimumVersion=3.0
-qgisMaximumVersion=5.0
+qgisMaximumVersion=4.99
 
 version=2.3
 changelog=Version 2.3
     - New focusmode switch
     - New styling options
+    - Updated links
 
     Version 2.2
     - QGIS 4 compatibility
