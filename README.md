@@ -30,13 +30,13 @@ De WFS button is bedoeld om een WFS laag aan te maken waarin terugmeldingen geto
 
 ##
 ### De WFS laag  
-De laag zal bovenaan de legenda worden toegevoegd, en heeft een standaard opmaak die enigszins vergelijkbaar is met de bekende weergaves van de gekozen service. De opmaak kan uiteraard naar wens worden gewijzigd. Het is ook mogelijk om je eigen styling mee te geven aan elke nieuw aangemaakte laag, zie de styling voetnoot.[^1] 
+De laag zal aan de legenda worden toegevoegd, en heeft een standaard opmaak die enigszins vergelijkbaar is met de bekende weergaves van de gekozen service. De opmaak kan naar wens worden gewijzigd. Het is ook mogelijk om je eigen styling mee te geven aan elke nieuw aangemaakte laag, zie de styling voetnoot.[^1] 
 
 <img width="1014" height="485" alt="image" src="https://github.com/user-attachments/assets/7816f20b-a9b0-47ba-8ed9-c01c5046572d" /><br/>
 
 ## 
 ### De WFS opties  
-Als je op de button klikt, zal er een dialoogboxje verschijnen met aantal opties, onderverdeelt in WFS Endpoint en Styling. 
+Als je op de button klikt, dan zal er een dialoogboxje verschijnen met een aantal opties, onderverdeelt in WFS Endpoint en Styling. 
 
 <img width="328" height="406" alt="vdk23_styling_nl" src="https://github.com/user-attachments/assets/3916c652-8ecd-4795-898c-03fc11dcd7aa" /><br/>
 
@@ -84,17 +84,12 @@ De VDK knop is bedoeld om de verbeterdekaart webpagina te openen. Er zijn drie v
 De knop kan op twee manieren gebruikt worden. Allereerst in de Ad hoc modus, waarbij je altijd een keuzemenu krijgt om de gewenste registratie te kiezen voordat de betreffende webpagina wordt geopend in je browser. Daarnaast is er de focus modus, waarbij de knop direct de voorgeselecteerde webpagina zal openen in je browser. Deze laatste modus is handig als je strikt binnen één registratie werkt. Bij de voorkeuren kun je instellen in welke modus je wilt werken. 
 
 ## Knop 3: De rechter muisknop  
-Een alternatieve manier om de viewerpagina te openen is de verbeterdekaart-contextmenu optie. Klik met de rechtermuisknop op de kaart en selecteer een optie uit het verbeterdekaart menu.  
+Een alternatieve manier om de viewerpagina te openen is de verbeterdekaart-contextmenu optie. Klik met de rechtermuisknop op de kaart en selecteer een optie uit het verbeterdekaart menu. Dit menu is altijd in ad hoc modus, en kan dus ook gebruikt worden als je eenmalig een andere registratie wilt kiezen. De voorkeur focus modus van de werkbalk knop blijft ongewijzigd.  
 
-<img width="381" height="116" alt="image" src="https://github.com/user-attachments/assets/3715a742-e9ed-4202-a384-59956acd6435" /><br/>  
+<img width="499" height="155" alt="vdk23_ctxmenu" src="https://github.com/user-attachments/assets/801f18c5-1070-434b-af18-beb91fe38fa2" /><br/>  
 
-Het verbeterdekaart menu toont een lijst met drie acties:  
-1. [Voorkeuren...](#1-voorkeuren)
-2. [Kopieer locatie](#2-kopieer-locatie)
-3. [Open webpagina](#3-open-webpagina)
-
-### 1. Voorkeuren...    
-Met deze optie kun je voorkeuren opgeven voor de plugin. Er zal een dialoogbox verschijnen met twee opties.  
+## Voorkeuren    
+Middels het keuzemenu kun je ook voorkeuren opgeven voor de plugin. Als je deze menuoptie kiest, dan zal er een dialoogbox verschijnen met twee opties.  
 
 <img width="467" height="441" alt="vdk23_settings" src="https://github.com/user-attachments/assets/1ef03de9-1264-42ff-99b8-997481b52067" /><br />  
 
@@ -102,13 +97,7 @@ Optie 1: ***Werkbalk knop***
 De instelling voor de werkbalk knop bepaalt hoe je de gewenste langingspagina opent. Dit is afhankelijk van je werkmodus. Je kunt in -*Ad hoc* modus werken. In dat geval krijg je het keuzemenu altijd eerst te zien als je op de werkbalk knop drukt. Je kunt ook in *Focus* modus werken. Dan kies je hier alvast een registratie, en zal de werkbalk knop direct de betreffende landingspagina openen. Door de knop kortstondig ingedrukt te houden, kun je alsnog makkelijk wisselen tussen langingspagina's.  
 
 Optie 2: ***schalingspercentage***.  
-Bij het openen van de verbeterdekaart website zal de plugin de huidige locatie en schaal van QGIS overnemen. Het kan echter zijn dat de verbeterdekaart website dan alsnog een afwijkende weergave geeft van de betreffende locatie. Om dit te synchroniseren, kun je een schalingspercentage opgeven. Waardes hoger dan 100% zullen de verbeterdekaart weergave vergroten.
-
-### 2. Kopieer locatie  
-Deze optie kopieert de huidige locatie en schaal als URL naar de clipboard in het format voor de gekozen registratie. Dit kun je gebruiken om een locatie te versturen naar een andere gebruiker.
-
-### 3. Open webpagina  
-Bij deze optie wordt de default browser geactiveerd met de verbeterdekaart URL voor de huidige QGIS locatie en schaal. In je browser kun je vervolgens een melding aanmaken volgens de stappen van de betreffende verbeterdekaart website.
+Bij het openen van de verbeterdekaart website zal de plugin de huidige locatie en schaal van QGIS overnemen. Het kan echter zijn dat de verbeterdekaart website dan alsnog een afwijkende weergave geeft van de betreffende locatie. Om dit te synchroniseren, kun je een schalingspercentage opgeven. Waardes hoger dan 100% zullen de verbeterdekaart weergave vergroten.  
 
 ## Werkmethodiek  
 Voor bronhouders is het van belang om regelmatig te controleren of er binnengekomen meldingen zijn. Meldingen moeten binnen 5 werkdagen in onderzoek worden genomen, dus ten minste éénmaal per week is sterk aan te raden. Met de verbeterdekaart toolbar kun je deze klus snel en efficient uitvoeren:
