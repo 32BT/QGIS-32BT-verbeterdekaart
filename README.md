@@ -8,8 +8,8 @@ QGIS-32BT-verbeterdekaart is een QGIS plugin voor ondersteuning in het beheer va
 5. [Knop 3: De rechter muis knop](#knop-3-de-rechter-muisknop)
 
 ## Installatie
-Middels de pluginbeheer omgeving kan de plugin geïnstalleerd worden volgens de gebruikelijke methode. De plugin kan eventueel ook van zipfile geïnstalleerd worden. De zipfile is beschikbaar via de Code-button die te vinden is op de github pagina. Zie:  
-https://docs.qgis.org/3.40/nl/docs/user_manual/plugins/plugins.html#the-install-from-zip-tab
+Middels de pluginbeheer omgeving kan de plugin geïnstalleerd worden volgens de gebruikelijke methode. De plugin kan eventueel ook van zipfile geïnstalleerd worden. De zipfile is beschikbaar via de Code-button die te vinden is op de github pagina.  
+Zie: https://docs.qgis.org/3.40/nl/docs/user_manual/plugins/plugins.html
 
 ## Gebruik
 Zorg dat de plugin op de juiste wijze is geïnstalleerd en op actief is gezet in de pluginbeheer omgeving. Als je de plugin succesvol hebt geïnstalleerd, zou er een toolbar moeten verschijnen met twee buttons:
