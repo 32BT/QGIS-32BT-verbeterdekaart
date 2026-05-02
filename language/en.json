@@ -4,51 +4,46 @@
 
     "CANVASMENU": {
         "TITLE": "verbeterdekaart",
-        "ITEM1": "Settings..."
+        "PREFS": "Settings..."
     },
 
-
-    "SETTINGSDIALOG": {
-        "TITLE":
-            "Settings",
-
-        "TARGET": {
-            "NOTE":
-                "Select the toolbarbutton targetmode.",
-
-            "INFO":
-                "Ad hoc mode always shows a targetpage selectionmenu.\nFocus mode opens the preselected targetpage directly. (You can still switch the targetpage by holding down the button temporarily.)",
-
-            "LABEL":
-                "Targetmode:"
+    "SERVICEDIALOG": {
+        "TITLE": "WFS Layer",
+        "SERVICE": {
+            "INFO": "Please select the desired WFS endpoint.",
+            "LABEL": "Servicetype: "
         },
-
-        "SCALE": {
-            "NOTE":
-                "Enter an optional scale adjustment.",
-
+        "FILTER": {
             "INFO":
-                "The maprepresentation of each website will be called with the same scale as the current document. The size of the websitemap may still be different due to system- and browsersettings. The scalesetting allows you to adjust the requested representation.",
-
-            "LABEL":
-                "Adjust scale:"
+                ["Type an optional maintainer ID (bronhoudercode)",
+                "for serverside featurefiltering."],
+            "LABEL": "Filterstring: "
+        },
+        "STYLING": {
+            "NOTE": "Status labels",
+            "OPTION1": "Standard",
+            "OPTION2": "Short",
+            "OPTION3": "Custom"
         }
     },
 
+    "SETTINGSDIALOG": {
+        "TITLE": "Settings",
 
-    "SERVICEDIALOG_TITLE":
-        "WFS Layer",
+        "TARGET": {
+            "TITLE": "Toolbar button",
+            "NOTE": "Select the toolbarbutton targetmode.",
+            "LABEL": "Targetmode: ",
+            "INFO":
+                "Ad hoc mode always shows a targetpage selectionmenu.\nFocus mode opens the preselected targetpage directly. (You can still switch the targetpage by holding down the button temporarily.)"
+        },
 
-    "SERVICEDIALOG_SERVICEINFO":
-        "Please select the desired WFS endpoint.",
-
-    "SERVICEDIALOG_SERVICELABEL":
-        "Servicetype:",
-
-    "SERVICEDIALOG_FILTERINFO":
-        ["Type an optional maintainer ID (bronhoudercode)",
-        "for serverside featurefiltering."],
-
-    "SERVICEDIALOG_FILTERLABEL":
-        "Filterstring:"
+        "SCALE": {
+            "TITLE": "Browserpage",
+            "NOTE": "Enter an optional scale adjustment.",
+            "LABEL": "Adjust scale: ",
+            "INFO":
+                "The maprepresentation of each website will be called with the same scale as the current document. The size of the websitemap may still be different due to system- and browsersettings. The scalesetting allows you to adjust the requested representation."
+        }
+    }
 }

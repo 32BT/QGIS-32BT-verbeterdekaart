@@ -56,8 +56,11 @@ class MenuButton(QToolButton):
         self.menu().prepare(mode)
         if mode in ('BAG', 'BGT', 'AERO'):
             self.setPopupMode(self.POPUPMODE.DELAYED)
+            mode = self.menu().findModeTitle(mode)
+            self._action.setText("Open "+mode)
         else:
             self.setPopupMode(self.POPUPMODE.INSTANT)
+            self._action.setText("Open Menu...")
 
     def menuButtonTriggered(self, action=None):
         self.instantActionTriggered.emit(self._action)

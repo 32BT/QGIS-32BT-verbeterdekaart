@@ -20,39 +20,33 @@ def _form():
 ### Labels
 ################################################################################
 
-import sys
-_MODULE = sys.modules.get(__name__.split('.')[0])
-
-_LABELS = _MODULE.LANGUAGE.LABELS({
+_LABELS = {
     "SETTINGSDIALOG": {
-        "TITLE":
-            "Voorkeuren",
+        "TITLE": "Voorkeuren",
 
         "TARGET": {
-            "NOTE":
-                "Kies een doelmodus voor de werkbalk knop.",
-
+            "TITLE": "Werkbalk knop",
+            "NOTE": "Kies een doelmodus voor de werkbalk knop.",
+            "LABEL": "Doelmodus:",
             "INFO":
-                "Ad hoc modus toont altijd een keuzemenu voor de landingspagina.\nFocus modus opent direct de voorgeselecteerde pagina. (Je kunt de voorselectie wisselen door de knop even ingedrukt te houden.)",
-
-            "LABEL":
-                "Doelmodus:",
+                "Ad hoc modus toont altijd een keuzemenu voor de landingspagina.\nFocus modus opent direct de voorgeselecteerde pagina. (Je kunt de voorselectie wisselen door de knop even ingedrukt te houden.)"
         },
 
         "SCALE": {
-            "NOTE":
-                "Geef eventueel een weergaveschaling op.",
-
+            "TITLE": "Website weergave",
+            "NOTE": "Geef eventueel een weergaveschaling op.",
+            "LABEL": "Schalingspercentage:",
             "INFO":
-                "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Deze waarde vergroot of verkleint de opgeroepen weergave.",
-
-            "LABEL":
-                "Schalingspercentage:"
+                "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Deze waarde vergroot of verkleint de opgeroepen weergave."
         }
     }
-})
+}
 
+import sys
+_MODULE = sys.modules.get(__name__.split('.')[0])
+_LABELS = _MODULE.LANGUAGE.LABELS(_LABELS)
 _LABELS = _LABELS.SETTINGSDIALOG
+
 ################################################################################
 ### Dialog
 ################################################################################
@@ -64,9 +58,11 @@ class Dialog(QDialog, _form()):
         self.setupUi(self)
         # Ensure translated labels
         self.setWindowTitle(_LABELS.TITLE)
+        self.targetGroup.setTitle(_LABELS.TARGET.TITLE)
         self.targetNote.setText(_LABELS.TARGET.NOTE)
         self.targetLabel.setText(_LABELS.TARGET.LABEL)
         self.targetInfo.setText(_LABELS.TARGET.INFO)
+        self.scaleGroup.setTitle(_LABELS.SCALE.TITLE)
         self.scaleNote.setText(_LABELS.SCALE.NOTE)
         self.scaleLabel.setText(_LABELS.SCALE.LABEL)
         self.scaleInfo.setText(_LABELS.SCALE.INFO)

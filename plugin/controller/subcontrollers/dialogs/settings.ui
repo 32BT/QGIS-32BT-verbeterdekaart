@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
+    <width>440</width>
     <height>385</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="targetGroup">
      <property name="title">
       <string>Werkbalk knop</string>
      </property>
@@ -102,7 +102,7 @@ Focus modus opent direct de voorgeselecteerde pagina. (Je kunt de voorselectie w
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="scaleGroup">
      <property name="title">
       <string>Website weergave</string>
      </property>

@@ -87,27 +87,34 @@ class Service(dict):
 ### Labels
 ################################################################################
 
+_LABELS = {
+    "SERVICEDIALOG": {
+        "TITLE": "Terugmeldingen",
+        "SERVICE": {
+            "INFO": "Selecteer het gewenste type terugmeldingen.",
+            "LABEL": "Servicetype: "
+        },
+        "FILTER": {
+            "INFO":
+                ["Voer optioneel een bronhoudercode in om",
+                "meldingen via de service te filteren."],
+            "LABEL": "Bronhoudercode: "
+        },
+        "STYLING": {
+            "NOTE": "Status indicatie",
+            "OPTION1": "Standaard",
+            "OPTION2": "Kort",
+            "OPTION3": "Aangepast"
+        }
+    }
+}
+
+
 import sys
 _MODULE = sys.modules.get(__name__.split('.')[0])
+_LABELS = _MODULE.LANGUAGE.LABELS(_LABELS)
 
-_LABELS = _MODULE.LANGUAGE.LABELS({
-    "SERVICEDIALOG_TITLE":
-        "Terugmeldingen",
-
-    "SERVICEDIALOG_SERVICEINFO":
-        "Selecteer het gewenste type terugmeldingen.",
-
-    "SERVICEDIALOG_SERVICELABEL":
-        "Servicetype:",
-
-    "SERVICEDIALOG_FILTERINFO":
-        ["Voer optioneel een bronhoudercode in om",
-        "meldingen via de service te filteren."],
-
-    "SERVICEDIALOG_FILTERLABEL":
-        "Bronhoudercode:"})
-
-_LABELS.SERVICEDIALOG_FILTERINFO = '\n'.join(_LABELS.SERVICEDIALOG_FILTERINFO)
+_LABELS.SERVICEDIALOG.FILTER.INFO = '\n'.join(_LABELS.SERVICEDIALOG.FILTER.INFO)
 
 ################################################################################
 ### .ui file
@@ -129,11 +136,15 @@ class Dialog(QDialog, _form()):
         super().__init__(parent)
         self.setupUi(self)
         # Ensure translated labels
-        self.setWindowTitle(_LABELS.SERVICEDIALOG_TITLE)
-        self.serviceInfo.setText(_LABELS.SERVICEDIALOG_SERVICEINFO)
-        self.serviceLabel.setText(_LABELS.SERVICEDIALOG_SERVICELABEL)
-        self.filterInfo.setText(_LABELS.SERVICEDIALOG_FILTERINFO)
-        self.filterLabel.setText(_LABELS.SERVICEDIALOG_FILTERLABEL)
+        self.setWindowTitle(_LABELS.SERVICEDIALOG.TITLE)
+        self.serviceInfo.setText(_LABELS.SERVICEDIALOG.SERVICE.INFO)
+        self.serviceLabel.setText(_LABELS.SERVICEDIALOG.SERVICE.LABEL)
+        self.filterInfo.setText(_LABELS.SERVICEDIALOG.FILTER.INFO)
+        self.filterLabel.setText(_LABELS.SERVICEDIALOG.FILTER.LABEL)
+        self.stylingNote.setText(_LABELS.SERVICEDIALOG.STYLING.NOTE)
+        self.stylingOption1.setText(_LABELS.SERVICEDIALOG.STYLING.OPTION1)
+        self.stylingOption2.setText(_LABELS.SERVICEDIALOG.STYLING.OPTION2)
+        self.stylingOption3.setText(_LABELS.SERVICEDIALOG.STYLING.OPTION3)
 
         self.serviceCombo.clear()
         self.serviceCombo.addItems(list(WFS.ENDPOINT.URL))

@@ -27,7 +27,8 @@ class _LABELS(dict):
 
     def get(self, k):
         v = super().get(k)
-        if isinstance(v, dict): v = _LABELS(v)
+        if type(v) == dict:
+            self[k] = v = _LABELS(v)
         return v or k or ""
 
 import os, json
