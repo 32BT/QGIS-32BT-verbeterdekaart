@@ -7,38 +7,33 @@
         "ITEM1": "Settings..."
     },
 
-    "SETTINGSDIALOG_TITLE":
-        "Settings",
 
-    "SETTINGSDIALOG_LABEL1":
-        ["Enter a percentage to adjust the scale of",
-        "the verbeterdekaart representation."],
+    "SETTINGSDIALOG": {
+        "TITLE":
+            "Settings",
 
-    "SETTINGSDIALOG_LABEL2":
-        "Adjust scale:",
+        "TARGET": {
+            "NOTE":
+                "Select the toolbarbutton targetmode.",
 
+            "INFO":
+                "Ad hoc mode always shows a targetpage selectionmenu.\nFocus mode opens the preselected targetpage directly. (You can still switch the targetpage by holding down the button temporarily.)",
 
-    "SETTINGSDIALOG_TITLE":
-        "Settings",
+            "LABEL":
+                "Targetmode:"
+        },
 
-    "SETTINGSDIALOG_TARGETINFO":
-        "Select the targetwebservice.",
+        "SCALE": {
+            "NOTE":
+                "Enter an optional scale adjustment.",
 
-    "SETTINGSDIALOG_TARGETNOTE":
-        "n.b.: This option is also available by temporarily holding down the toolbar button.",
+            "INFO":
+                "The maprepresentation of each website will be called with the same scale as the current document. The size of the websitemap may still be different due to system- and browsersettings. The scalesetting allows you to adjust the requested representation.",
 
-    "SETTINGSDIALOG_TARGETLABEL":
-        "Targetmode:",
-
-    "SETTINGSDIALOG_SCALEINFO":
-        "Enter an optional representationscale.",
-
-    "SETTINGSDIALOG_SCALENOTE":
-        "The maprepresentation of each website will be called with the same scale as the current document. The size of the websitemap may still be different due to system- and browsersettings. The scalesetting allows you to adjust the requested representation.",
-
-    "SETTINGSDIALOG_SCALELABEL":
-        "Adjust scale:",
-
+            "LABEL":
+                "Adjust scale:"
+        }
+    },
 
 
     "SERVICEDIALOG_TITLE":

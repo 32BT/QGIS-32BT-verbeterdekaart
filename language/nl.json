@@ -11,26 +11,6 @@
     "MENU_ITEM3":
         "Open webpagina",
 
-    "SETTINGSDIALOG_TITLE":
-        "Voorkeuren",
-
-    "SETTINGSDIALOG_TARGETINFO":
-        "Kies de verbeterdekaart landingspagina.",
-
-    "SETTINGSDIALOG_TARGETNOTE":
-        "n.b.: Deze optie is ook beschikbaar als je de werkbalk knop kortstondig ingedrukt houdt.",
-
-    "SETTINGSDIALOG_TARGETLABEL":
-        "Landingspagina:",
-
-    "SETTINGSDIALOG_SCALEINFO":
-        "Geef eventueel een weergaveschaling op.",
-
-    "SETTINGSDIALOG_SCALENOTE":
-        "De kaartweergave op de website wordt opgeroepen met dezelfde schaal als je werkblad. Er kunnen alsnog schalingsverschillen bestaan. Het schalingspercentage vergroot of verkleint de opgeroepen weergave.",
-
-    "SETTINGSDIALOG_SCALELABEL":
-        "Schalingspercentage:",
 
     "SERVICEDIALOG_TITLE":
         "Terugmeldingen",

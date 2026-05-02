@@ -7,9 +7,4 @@
             <path d="M 0 0 L -40 52 L -12 52 L -12 90 L +12 90 L +12 52 L +40 52 Z"/>
         </g>
     </g>
-    <g transform="translate(110, 128)">
-        <g fill="none" stroke="none">
-            <path d="M 0 0 L -18 -18 L +18 -18 Z"/>
-        </g>
-    </g>
 </svg>

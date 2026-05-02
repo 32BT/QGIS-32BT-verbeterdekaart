@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>320</width>
+    <width>340</width>
     <height>370</height>
    </rect>
   </property>
@@ -114,7 +114,7 @@
         <item>
          <widget class="QLabel" name="filterInfo">
           <property name="text">
-           <string>Voer optioneel een bronhoudercode in om meldingen via de service te filteren.</string>
+           <string>Type an optional maintainer ID (bronhoudercode)</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
