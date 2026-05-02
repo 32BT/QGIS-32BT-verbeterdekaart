@@ -96,16 +96,10 @@ Het verbeterdekaart menu toont een lijst met drie acties:
 ### 1. Voorkeuren...    
 Met deze optie kun je voorkeuren opgeven voor de plugin. Er zal een dialoogbox verschijnen met twee opties.  
 
-<img width="358" height="367" alt="image" src="https://github.com/user-attachments/assets/4d70a922-b5c5-4ca9-a548-60646f1e9738" />
-<br />  
+<img width="467" height="441" alt="vdk23_settings" src="https://github.com/user-attachments/assets/1ef03de9-1264-42ff-99b8-997481b52067" /><br />  
 
 Optie 1: ***Werkbalk knop***  
-Met de "VDK" knop kun je een verbeterdekaart webpagina openen in je browser. Er zijn drie websites voor het maken van meldingen:  
-- https://bagviewer.kadaster.nl voor BAG meldingen,
-- https://www.verbeterdekaart.nl voor BGT, BRT, en 3D meldingen,
-- https://www.verbeterdeluchtvaartkaart.nl voor AERO meldingen.
-
-Middels het keuzemenu kun je de gewenste langingspagina kiezen. Hoe je die keuze maakt is afhankelijk van je werkmodus. Je kunt in **Ad hoc modus** werken. In dat geval krijg je het keuzemenu altijd eerst te zien als je op de werkbalk knop drukt. Je kunt ook in **Focus modus** werken. Dan kies je hier alvast een registratie als voorselectie, en zal de werkbalk knop direct de betreffende landingspagina openen. Door de knop kortstondig ingedrukt te houden, kun je alsnog makkelijk wisselen tussen langingspagina's.  
+De instelling voor de werkbalk knop bepaalt hoe je de gewenste langingspagina opent. Dit is afhankelijk van je werkmodus. Je kunt in -*Ad hoc* modus werken. In dat geval krijg je het keuzemenu altijd eerst te zien als je op de werkbalk knop drukt. Je kunt ook in *Focus* modus werken. Dan kies je hier alvast een registratie, en zal de werkbalk knop direct de betreffende landingspagina openen. Door de knop kortstondig ingedrukt te houden, kun je alsnog makkelijk wisselen tussen langingspagina's.  
 
 Optie 2: ***schalingspercentage***.  
 Bij het openen van de verbeterdekaart website zal de plugin de huidige locatie en schaal van QGIS overnemen. Het kan echter zijn dat de verbeterdekaart website dan alsnog een afwijkende weergave geeft van de betreffende locatie. Om dit te synchroniseren, kun je een schalingspercentage opgeven. Waardes hoger dan 100% zullen de verbeterdekaart weergave vergroten.
