@@ -2,9 +2,9 @@
 
 import math
 
-################################################################################
+###############################################################################
 ### TMS.VDK
-################################################################################
+###############################################################################
 
 class VDK:
     class TARGET:
@@ -17,6 +17,7 @@ class VDK:
         class CRS:
             BGT = 'EPSG:28992'
 
+
     @classmethod
     def get_service_crs(cls, service='BGT'):
         return cls._get_crs(service)
@@ -25,7 +26,8 @@ class VDK:
     def get_service_url(cls, service, point, scale):
         url = cls._get_url(service)
         prm = cls._get_prm(point, scale)
-        return url+prm
+        utm = cls._get_utm()
+        return url + '&'.join((prm, utm))
 
     @classmethod
     def _get_crs(cls, service='BGT'):
@@ -48,3 +50,9 @@ class VDK:
             'geometry.x={:.03f}'.format(p.x()),
             'geometry.y={:.03f}'.format(p.y()),
             'zoomlevel={:.03f}'.format(s)))
+
+    @staticmethod
+    def _get_utm(source='qgis', medium='plugin'):
+        return '&'.join((
+            f'utm_source={source}',
+            f'utm_medium={medium}'))
