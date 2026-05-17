@@ -87,19 +87,38 @@ class Controller:
     Verbeterdekaart is only meaningful within countrybounds.
     If the visible extent does not overlap the country extent, then the tool-
     button will be disabled, and the canvasmenu will not be attached.
+
+    Note: catching exceptions or warnings will not stop qgswarning messages.
     '''
+    _RD = QgsCoordinateReferenceSystem('EPSG:28992')
+    _SRC_RECT_RD = QgsRectangle(0, 300000, 300000, 630000)
+    _84 = QgsCoordinateReferenceSystem('EPSG:4326')
+    _SRC_RECT_84 = QgsRectangle(
+        3.19465136212365097,
+        50.66919756338005243,
+        7.57938723246162294,
+        53.63599679942443288)
+
     def isDomainVisible(self):
-        crs = QgsCoordinateReferenceSystem('EPSG:28992')
-        mapR = self._mapCanvas.visibleExtent(crs)
-        dstR = QgsRectangle(0, 300000, 300000, 630000)
-        return mapR.intersects(dstR)
+        try:
+            mapR = self._mapCanvas.visibleExtent()
+            mapCrs = self._mapCanvas.getCrs()
+            if mapCrs != self._RD:
+                if mapCrs != self._84:
+                    T = QgsTransform(
+                        mapCrs, self._84, QgsProject.instance())
+                    mapR = T.transform(mapR)
+                return mapR.intersects(self._SRC_RECT_84)
+            return mapR.intersects(self._SRC_RECT_RD)
+        except (Exception, Warning):
+            return False
 
     '''
     Button updates are triggered by mapCanvas extentsChanged signal.
     '''
     def updateButtons(self):
-        enable = self.isDomainVisible()
-        self._menuButton.setEnabled(enable)
+        hasLayers = len(QgsProject.instance().mapLayers()) > 0
+        self._menuButton.setEnabled(hasLayers and self.isDomainVisible())
 
     #######################################################################
     ### Contextmenu preparation
