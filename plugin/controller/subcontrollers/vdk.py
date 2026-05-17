@@ -105,7 +105,7 @@ class Controller:
             mapCrs = self._mapCanvas.getCrs()
             if mapCrs != self._RD:
                 if mapCrs != self._84:
-                    T = QgsTransform(
+                    T = QgsCoordinateTransform(
                         mapCrs, self._84, QgsProject.instance())
                     mapR = T.transform(mapR)
                 return mapR.intersects(self._SRC_RECT_84)
@@ -131,7 +131,8 @@ class Controller:
     This must be done each time the signal is triggered.
     '''
     def contextMenuAboutToShow(self, contextMenu, event):
-        if self.isDomainVisible():
+        hasLayers = len(QgsProject.instance().mapLayers()) > 0
+        if hasLayers and self.isDomainVisible():
             if len(contextMenu.actions()) == 1:
                 contextMenu.addSeparator()
             # Add our menu to context menu
